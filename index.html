@@ -4,672 +4,766 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Curso Básico de Programação em Python para Profissionais de Redes Cisco</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            margin: 0;
-            padding: 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        h1, h2, h3 {
-            color: #2c3e50;
-        }
-        h1 {
-            text-align: center;
-        }
-        code {
-            background: #f4f4f4;
-            padding: 2px 5px;
-            border-radius: 3px;
-            font-family: 'Courier New', Courier, monospace;
-        }
-        pre {
-            background: #f4f4f4;
-            padding: 10px;
-            border-radius: 5px;
-            overflow-x: auto;
-        }
-        ul, ol {
-            margin: 10px 0;
-            padding-left: 20px;
-        }
-        a {
-            color: #3498db;
-            text-decoration: none;
-        }
-        a:hover {
-            text-decoration: underline;
-        }
-        .module {
-            margin-bottom: 40px;
-        }
-        .sumario {
-            background: #ecf0f1;
-            padding: 15px;
-            border-radius: 5px;
-        }
-        .sumario ul {
-            list-style: none;
-            padding: 0;
-        }
-        .sumario li {
-            margin: 10px 0;
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Curso Básico de Programação em Python para Profissionais de Redes Cisco</h1>
-    <p>Este curso é projetado para profissionais de redes Cisco que desejam aprender programação em Python para automação e gerenciamento de redes. Cada módulo inclui conceitos fundamentais, exemplos práticos voltados para redes, instruções detalhadas, referências e uma avaliação para consolidar o aprendizado. O curso é estruturado para iniciantes, com explicações claras e progressão gradual, enfatizando aplicações em redes Cisco.</p>
+    <header>
+        <h1>Curso Básico de Programação em Python para Profissionais de Redes Cisco</h1>
+        <p>Um curso introdutório para profissionais de redes aprenderem Python com foco em automação de redes, configuração de dispositivos Cisco e análise de logs.</p>
+    </header>
 
-    <div class="sumario">
-        <h2>Sumário</h2>
+    <nav>
+        <h2>Índice</h2>
         <ul>
-            <li><a href="#módulo-1-introdução-ao-python-e-programação">Introdução ao Python e Programação</a></li>
-            <li><a href="#módulo-2-variáveis-e-tipos-de-dados">Variáveis e Tipos de Dados</a></li>
-            <li><a href="#módulo-3-estruturas-condicionais">Estruturas Condicionais</a></li>
-            <li><a href="#módulo-4-laços-de-repetição">Laços de Repetição</a></li>
-            <li><a href="#módulo-5-funções">Funções</a></li>
-            <li><a href="#módulo-6-listas-e-dicionários">Listas e Dicionários</a></li>
-            <li><a href="#módulo-7-manipulação-de-arquivos">Manipulação de Arquivos</a></li>
-            <li><a href="#módulo-8-introdução-à-automatização-de-redes-com-python">Introdução à Automação de Redes com Python</a></li>
+            <li><a href="#modulo1">Módulo 1: Introdução ao Python e Programação</a></li>
+            <li><a href="#modulo2">Módulo 2: Variáveis e Tipos de Dados</a></li>
+            <li><a href="#modulo3">Módulo 3: Estruturas Condicionais</a></li>
+            <li><a href="#modulo4">Módulo 4: Laços de Repetição</a></li>
+            <li><a href="#modulo5">Módulo 5: Funções</a></li>
+            <li><a href="#modulo6">Módulo 6: Listas e Dicionários</a></li>
+            <li><a href="#modulo7">Módulo 7: Manipulação de Arquivos</a></li>
+            <li><a href="#modulo8">Módulo 8: Introdução à Automação de Redes com Python</a></li>
+            <li><a href="#modulo9">Módulo 9: Automação Avançada com Netmiko</a></li>
         </ul>
-    </div>
+    </nav>
 
-    <div class="module" id="módulo-1-introdução-ao-python-e-programação">
-        <h2>Módulo 1: Introdução ao Python e Programação</h2>
-        <h3>Objetivos</h3>
-        <ul>
-            <li>Entender o que é Python e sua aplicação em redes.</li>
-            <li>Configurar o ambiente de desenvolvimento no Windows e Linux.</li>
-            <li>Criar, salvar e executar o primeiro programa em Python usando um editor/IDE.</li>
-        </ul>
+    <main>
+        <!-- Módulo 1 -->
+        <section id="modulo1">
+            <h2>Módulo 1: Introdução ao Python e Programação</h2>
+            <h3>O que é Programação?</h3>
+            <p>Programação é o ato de criar instruções que um computador pode executar para realizar tarefas específicas. Em redes, a programação é usada para automatizar configurações de dispositivos (como roteadores e switches Cisco), monitorar tráfego, analisar logs e gerenciar infraestruturas de rede de forma eficiente.</p>
+            <p>Python é uma linguagem de programação de alto nível, conhecida por sua sintaxe clara e legibilidade. É amplamente adotada em automação de redes devido a bibliotecas como Netmiko, Paramiko e Napalm, que facilitam a interação com dispositivos de rede. Python é interpretado, o que significa que o código é executado linha por linha, ideal para scripts rápidos em ambientes de rede.</p>
+            <p><strong>Por que Python em Redes?</strong> Python permite reduzir tarefas manuais, como configurar VLANs em múltiplos switches, coletar dados de interfaces ou verificar o status de dispositivos, economizando tempo e minimizando erros humanos.</p>
 
-        <h3>Conteúdo</h3>
-        <h4>O que é Python?</h4>
-        <p>Python é uma linguagem de programação de alto nível, interpretada, de sintaxe simples e legível. Em redes, é amplamente usada para:</p>
-        <ul>
-            <li><strong>Automação:</strong> Configurar dispositivos Cisco via scripts.</li>
-            <li><strong>Análise de Logs:</strong> Processar logs de roteadores/switches.</li>
-            <li><strong>Monitoramento:</strong> Verificar status de interfaces ou dispositivos.</li>
-        </ul>
+            <h3>Instalando o Python</h3>
+            <h4>No Windows</h4>
+            <ol>
+                <li>Baixe o instalador do Python em <a href="https://www.python.org/downloads/">python.org</a> (recomenda-se a versão mais recente, ex.: 3.11 ou superior).</li>
+                <li>Execute o instalador. Marque a opção "Add Python to PATH" para facilitar o uso no Prompt de Comando.</li>
+                <li>Siga as instruções do instalador, escolhendo a instalação padrão.</li>
+                <li>Verifique a instalação abrindo o Prompt de Comando e digitando: <code>python --version</code>. Você deve ver a versão instalada (ex.: Python 3.11.7).</li>
+                <li>Instale um editor de código, como Visual Studio Code, para escrever scripts Python.</li>
+            </ol>
 
-        <h4>Instalação do Python</h4>
-        <h5>No Windows</h5>
-        <ol>
-            <li>Acesse <a href="https://www.python.org/downloads/">python.org/downloads</a>.</li>
-            <li>Baixe a versão mais recente (e.g., Python 3.11 ou superior).</li>
-            <li>Execute o instalador:
+            <h4>No Linux</h4>
+            <ol>
+                <li>Abra o terminal.</li>
+                <li>Verifique se o Python 3 está instalado: <code>python3 --version</code>.</li>
+                <li>Se não estiver, instale com: <code>sudo apt update && sudo apt install python3 python3-pip -y</code> (para Ubuntu/Debian). Para outras distribuições, use o gerenciador de pacotes correspondente (ex.: <code>yum</code> para CentOS).</li>
+                <li>Verifique a instalação do pip (gerenciador de pacotes Python): <code>pip3 --version</code>.</li>
+                <li>Considere instalar um editor como VS Code ou usar editores de terminal como Vim ou Nano.</li>
+            </ol>
+
+            <h3>Criando e Executando um Arquivo .py</h3>
+            <p>Arquivos Python têm a extensão <code>.py</code> e contêm código que pode ser executado pelo interpretador Python.</p>
+            <ol>
+                <li>Crie um arquivo chamado <code>hello.py</code> usando um editor de texto (Notepad++, VS Code, etc.).</li>
+                <li>Adicione o seguinte código:
+                    <pre><code>print("Olá, Redes!")</code></pre>
+                </li>
+                <li>Salve o arquivo em uma pasta acessível.</li>
+                <li>Abra o terminal/Prompt de Comando, navegue até a pasta com <code>cd caminho/para/pasta</code>, e execute: <code>python hello.py</code> (Windows) ou <code>python3 hello.py</code> (Linux).</li>
+                <li>O resultado será: <code>Olá, Redes!</code></li>
+            </ol>
+
+            <h3>Exemplo de Rede</h3>
+            <p>Este script imprime uma mensagem de boas-vindas para administradores de rede:</p>
+            <pre><code>print("Bem-vindo ao Python para Automação de Redes Cisco!")
+print("Este script pode ser usado para gerenciar roteadores e switches.")</code></pre>
+
+            <h3>Exercícios</h3>
+            <ol>
+                <li>Instale o Python no seu sistema e verifique a versão instalada.</li>
+                <li>Crie um arquivo <code>network_hello.py</code> que imprime "Bem-vindo à automação de redes!" e execute-o.</li>
+                <li>Crie um arquivo <code>device_info.py</code> que imprime o nome de um dispositivo Cisco (ex.: "Router1") e seu IP (ex.: "192.168.1.1").</li>
+            </ol>
+
+            <h3>Soluções dos Exercícios</h3>
+            <ol>
+                <li>Após instalar, execute <code>python --version</code> ou <code>python3 --version</code>. Exemplo de saída: <code>Python 3.11.7</code>.</li>
+                <li>Código para <code>network_hello.py</code>:
+                    <pre><code>print("Bem-vindo à automação de redes!")</code></pre>
+                    Execute: <code>python network_hello.py</code> ou <code>python3 network_hello.py</code>.
+                </li>
+                <li>Código para <code>device_info.py</code>:
+                    <pre><code>print("Dispositivo: Router1")
+print("IP: 192.168.1.1")</code></pre>
+                    Execute: <code>python device_info.py</code> ou <code>python3 device_info.py</code>.
+                </li>
+            </ol>
+
+            <h3>Avaliação</h3>
+            <ol>
+                <li>O que é programação? (Resposta: Escrever instruções para o computador executar tarefas.)</li>
+                <li>Qual comando verifica a versão do Python? (Resposta: <code>python --version</code> ou <code>python3 --version</code>.)</li>
+                <li>Por que Python é útil em redes? (Resposta: Automatiza tarefas como configuração, monitoramento e análise de logs.)</li>
+            </ol>
+
+            <h3>Referências</h3>
+            <ul>
+                <li><a href="https://www.python.org">Site oficial do Python</a></li>
+                <li><a href="https://realpython.com/installing-python/">Guia de Instalação do Python</a></li>
+                <li><a href="https://docs.python.org/3/tutorial/introduction.html">Tutorial Oficial do Python</a></li>
+                <li><a href="https://pynet.twb-tech.com/blog/python/why-python-for-networking.html">Por que Python para Redes</a></li>
+            </ul>
+        </section>
+
+        <!-- Módulo 2 -->
+        <section id="modulo2">
+            <h2>Módulo 2: Variáveis e Tipos de Dados</h2>
+            <p>Variáveis são como contêineres que armazenam dados na memória do computador. Em Python, você não precisa declarar o tipo de variável explicitamente; o tipo é inferido automaticamente.</p>
+            <p><strong>Tipos de Dados Comuns:</strong>
                 <ul>
-                    <li>Marque a opção <code>Add Python to PATH</code>.</li>
-                    <li>Escolha <code>Install Now</code>.</li>
+                    <li><code>str</code>: Cadeia de caracteres (texto), ex.: <code>"Router1"</code> ou <code>"192.168.1.1"</code>.</li>
+                    <li><code>int</code>: Número inteiro, ex.: <code>80</code> (porta) ou <code>100</code> (VLAN).</li>
+                    <li><code>float</code>: Número decimal, ex.: <code>1.5</code> (largura de banda em Gbps).</li>
+                    <li><code>bool</code>: Valores lógicos <code>True</code> ou <code>False</code>, ex.: status de uma interface.</li>
                 </ul>
-            </li>
-            <li>Verifique a instalação:
+            </p>
+            <p>Em redes, variáveis são usadas para armazenar informações como endereços IP, números de portas, configurações de dispositivos e status de conexões.</p>
+
+            <h3>Exemplos de Rede</h3>
+            <h4>Exemplo 1: Configuração de Interface</h4>
+            <pre><code>ip_address = "192.168.1.1"  # str
+port = 80                   # int
+bandwidth = 1.5             # float
+is_active = True            # bool
+print(f"Interface configurada com IP {ip_address}, porta {port}, banda {bandwidth} Gbps, ativa: {is_active}")
+            </code></pre>
+
+            <h4>Exemplo 2: Informações de Dispositivo</h4>
+            <pre><code>device_name = "Switch1"
+vlan_id = 10
+uptime = 99.9
+is_managed = True
+print(f"Dispositivo: {device_name}, VLAN: {vlan_id}, Uptime: {uptime}%, Gerenciado: {is_managed}")
+            </code></pre>
+
+            <h3>Exercícios</h3>
+            <ol>
+                <li>Crie variáveis para armazenar o nome de um roteador ("R1"), sua porta (23), largura de banda (2.0) e status ativo (True). Imprima todas em uma frase.</li>
+                <li>Crie uma variável com o endereço MAC "00:1A:2B:3C:4D:5E" e imprima com a mensagem "Endereço MAC do dispositivo:".</li>
+                <li>Crie variáveis para um switch com nome "SW1", IP "10.0.0.2" e número de portas 24. Imprima todas.</li>
+            </ol>
+
+            <h3>Soluções dos Exercícios</h3>
+            <ol>
+                <li><pre><code>router_name = "R1"
+port = 23
+bandwidth = 2.0
+is_active = True
+print(f"Roteador {router_name} usa porta {port}, banda {bandwidth} Gbps, ativo: {is_active}")
+                </code></pre></li>
+                <li><pre><code>mac_address = "00:1A:2B:3C:4D:5E"
+print(f"Endereço MAC do dispositivo: {mac_address}")
+                </code></pre></li>
+                <li><pre><code>switch_name = "SW1"
+ip_address = "10.0.0.2"
+port_count = 24
+print(f"Switch: {switch_name}, IP: {ip_address}, Portas: {port_count}")
+                </code></pre></li>
+            </ol>
+
+            <h3>Avaliação</h3>
+            <ol>
+                <li>Qual é o tipo de dado de "10.0.0.1"? (Resposta: <code>str</code>)</li>
+                <li>Crie uma variável <code>vlan</code> com valor 100. Qual é seu tipo? (Resposta: <code>int</code>)</li>
+                <li>Qual tipo de dado é apropriado para armazenar o status de uma interface (ativa/inativa)? (Resposta: <code>bool</code>)</li>
+            </ol>
+
+            <h3>Referências</h3>
+            <ul>
+                <li><a href="https://realpython.com/python-variables/">Python Variables</a></li>
+                <li><a href="https://docs.python.org/3/tutorial/introduction.html">Python Tutorial: Introduction</a></li>
+                <li><a href="https://www.w3schools.com/python/python_datatypes.asp">Python Data Types</a></li>
+                <li><a href="https://pynet.twb-tech.com/blog/python/python-variables-network.html">Python Variables for Networking</a></li>
+            </ul>
+        </section>
+
+        <!-- Módulo 3 -->
+        <section id="modulo3">
+            <h2>Módulo 3: Estruturas Condicionais</h2>
+            <p>Estruturas condicionais (<code>if</code>, <code>elif</code>, <code>else</code>) permitem que o programa tome decisões com base em condições. Em redes, isso é útil para verificar estados de dispositivos, validar configurações ou alertar sobre falhas.</p>
+            <p><strong>Operadores de Comparação:</strong>
                 <ul>
-                    <li>Abra o Prompt de Comando (tecle <code>cmd</code> no menu Iniciar).</li>
-                    <li>Digite <code>python --version</code> e pressione Enter. Você deve ver algo como <code>Python 3.11.x</code>.</li>
+                    <li><code>==</code>: Igual a</li>
+                    <li><code>!=</code>: Diferente de</li>
+                    <li><code>&lt;</code>, <code>&gt;</code>, <code>&lt;=</code>, <code>&gt;=</code>: Menor, maior, menor ou igual, maior ou igual</li>
                 </ul>
-            </li>
-            <li>Instale o pip (gerenciador de pacotes):
-                <ul>
-                    <li>Digite <code>python -m ensurepip --upgrade</code>.</li>
-                    <li>Verifique com <code>pip --version</code>.</li>
-                </ul>
-            </li>
-        </ol>
+            </p>
+            <p><strong>Operadores Lógicos:</strong> <code>and</code>, <code>or</code>, <code>not</code> combinam condições.</p>
 
-        <h5>No Linux (Ubuntu/Debian)</h5>
-        <ol>
-            <li>Abra o terminal (<code>Ctrl + Alt + T</code>).</li>
-            <li>Atualize os pacotes: <code>sudo apt update</code>.</li>
-            <li>Instale o Python: <code>sudo apt install python3 python3-pip -y</code>.</li>
-            <li>Verifique a instalação:
-                <ul>
-                    <li>Digite <code>python3 --version</code>. Você deve ver algo como <code>Python 3.10.x</code> ou superior.</li>
-                    <li>Verifique o pip: <code>pip3 --version</code>.</li>
-                </ul>
-            </li>
-            <li>(Opcional) Instale o gerenciador de pacotes: <code>sudo apt install python3-venv -y</code>.</li>
-        </ol>
-
-        <h4>Configurando um Editor/IDE</h4>
-        <p>Recomendamos o Visual Studio Code (VS Code) por sua simplicidade e suporte a Python.</p>
-        <h5>Instalação do VS Code:</h5>
-        <ul>
-            <li><strong>Windows:</strong> Baixe em <a href="https://code.visualstudio.com">code.visualstudio.com</a> e execute o instalador.</li>
-            <li><strong>Linux:</strong> No Ubuntu, use: <code>sudo snap install --classic code</code> ou baixe o .deb do site.</li>
-        </ul>
-        <h5>Configurando o VS Code para Python:</h5>
-        <ol>
-            <li>Abra o VS Code.</li>
-            <li>Instale a extensão Python:
-                <ul>
-                    <li>Clique no ícone de extensões (ou <code>Ctrl + Shift + X</code>).</li>
-                    <li>Pesquise por "Python" (da Microsoft) e clique em <code>Install</code>.</li>
-                </ul>
-            </li>
-            <li>Selecione o interpretador Python:
-                <ul>
-                    <li>Pressione <code>Ctrl + Shift + P</code>, digite <code>Python: Select Interpreter</code>.</li>
-                    <li>Escolha a versão instalada (e.g., Python 3.11).</li>
-                </ul>
-            </li>
-        </ol>
-
-        <h4>Criando, Salvando e Executando um Script</h4>
-        <h5>Criando um Arquivo:</h5>
-        <ol>
-            <li>No VS Code, clique em <code>File > New File</code>.</li>
-            <li>Escreva o seguinte código:</li>
-        </ol>
-        <pre><code class="language-python">print("Bem-vindo à automação de redes com Python!")</code></pre>
-
-        <h5>Salvando o Arquivo:</h5>
-        <ol>
-            <li>Clique em <code>File > Save</code> (ou <code>Ctrl + S</code>).</li>
-            <li>Escolha um local (e.g., <code>C:\Users\SeuNome\PythonScripts</code> no Windows ou <code>~/python_scripts</code> no Linux).</li>
-            <li>Nomeie o arquivo como <code>hello.py</code> (a extensão <code>.py</code> é obrigatória).</li>
-        </ol>
-
-        <h5>Executando o Script:</h5>
-        <p><strong>Via VS Code:</strong></p>
-        <ul>
-            <li>Clique no botão "Run" (triângulo verde no canto superior direito) ou pressione <code>F5</code>.</li>
-            <li>A saída aparecerá no terminal integrado do VS Code.</li>
-        </ul>
-        <p><strong>Via Terminal:</strong></p>
-        <ol>
-            <li>Abra o terminal no VS Code (<code>Ctrl + `</code>) ou use o Prompt de Comando/Terminal do sistema.</li>
-            <li>Navegue até o diretório do arquivo:
-                <ul>
-                    <li>Windows: <code>cd C:\Users\SeuNome\PythonScripts</code></li>
-                    <li>Linux: <code>cd ~/python_scripts</code></li>
-                </ul>
-            </li>
-            <li>Execute: <code>python hello.py</code> (Windows) ou <code>python3 hello.py</code> (Linux).</li>
-            <li>A saída será: <code>Bem-vindo à automação de redes com Python!</code></li>
-        </ol>
-
-        <h4>Exemplo de Rede</h4>
-        <p>Exibir uma mensagem com o nome de um roteador Cisco.</p>
-        <pre><code class="language-python">router_name = "R1-Cisco"
-print(f"Configurando o roteador {router_name}")</code></pre>
-        <p><strong>Como Criar:</strong></p>
-        <ol>
-            <li>No VS Code, crie um novo arquivo (<code>File > New File</code>).</li>
-            <li>Cole o código acima.</li>
-        </ol>
-        <p><strong>Como Salvar:</strong></p>
-        <ul>
-            <li>Salve como <code>router_config.py</code> em um diretório de sua escolha.</li>
-        </ul>
-        <p><strong>Como Executar:</strong></p>
-        <ul>
-            <li>Use o terminal: <code>python router_config.py</code> (ou <code>python3 router_config.py</code> no Linux).</li>
-            <li>Saída: <code>Configurando o roteador R1-Cisco</code>.</li>
-        </ul>
-
-        <h4>Referências</h4>
-        <ul>
-            <li><a href="https://www.python.org/doc/">Documentação Oficial do Python</a></li>
-            <li><a href="https://developer.cisco.com/learning/tracks/devnet-start/python">Cisco DevNet: Getting Started with Python</a></li>
-            <li><a href="https://code.visualstudio.com/docs/python/python-tutorial">VS Code Python Tutorial</a></li>
-        </ul>
-
-        <h4>Avaliação</h4>
-        <ol>
-            <li>Instale o Python no seu sistema (Windows ou Linux) e verifique a versão com <code>python --version</code> (ou <code>python3 --version</code>).</li>
-            <li>Instale o VS Code e a extensão Python.</li>
-            <li>Crie um arquivo chamado <code>switch_config.py</code> com o código:</li>
-            <pre><code class="language-python">print("Iniciando configuração do switch SW1")</code></pre>
-            <li>Salve o arquivo em um diretório específico.</li>
-            <li>Execute o script via VS Code e via terminal.</li>
-            <li><strong>(Bônus)</strong> Modifique o programa para usar uma variável com o nome do switch (e.g., <code>switch_name = "SW1"</code>) e exiba a mensagem usando essa variável.</li>
-        </ol>
-    </div>
-
-    <div class="module" id="módulo-2-variáveis-e-tipos-de-dados">
-        <h2>Módulo 2: Variáveis e Tipos de Dados</h2>
-        <h3>Objetivos</h3>
-        <ul>
-            <li>Compreender variáveis e tipos de dados.</li>
-            <li>Aplicar variáveis em cenários de redes Cisco.</li>
-        </ul>
-
-        <h3>Conteúdo</h3>
-        <p><strong>Variáveis:</strong> Espaços na memória para armazenar dados. Regras:</p>
-        <ul>
-            <li>Nomes devem começar com letras ou <code>_</code> (e.g., <code>ip_address</code>, <code>_port</code>).</li>
-            <li>Não use palavras reservadas (e.g., <code>if</code>, <code>for</code>).</li>
-        </ul>
-        <p>Exemplo:</p>
-        <pre><code class="language-python">ip_address = "192.168.1.1"</code></pre>
-
-        <p><strong>Tipos de Dados:</strong></p>
-        <ul>
-            <li><strong>Inteiro (int):</strong> Números inteiros, como portas ou IDs de VLAN.</li>
-            <pre><code class="language-python">port = 80
-vlan_id = 100</code></pre>
-            <li><strong>String (str):</strong> Texto, como nomes de dispositivos ou configurações.</li>
-            <pre><code class="language-python">device = "Cisco IOS"</code></pre>
-            <li><strong>Booleano (bool):</strong> Verdadeiro (<code>True</code>) ou falso (<code>False</code>), útil para status.</li>
-            <pre><code class="language-python">is_active = True</code></pre>
-            <li><strong>Float (float):</strong> Números decimais, como largura de banda.</li>
-            <pre><code class="language-python">bandwidth = 1.5  # 1.5 Gbps</code></pre>
-        </ul>
-
-        <p><strong>Operações Básicas:</strong></p>
-        <ul>
-            <li>Concatenar strings: <code>device + " ativo"</code></li>
-            <li>Aritmética com inteiros/floats: <code>port + 1</code>, <code>bandwidth * 1000</code></li>
-        </ul>
-        <p>Exemplo:</p>
-        <pre><code class="language-python">vlan_id = 10
-vlan_id = vlan_id + 1  # Incrementa para 11
-print(f"Nova VLAN: {vlan_id}")</code></pre>
-
-        <h4>Exemplo de Rede</h4>
-        <p>Armazenar e exibir informações de um dispositivo.</p>
-        <pre><code class="language-python">hostname = "Router1"
-ip_address = "10.0.0.1"
-is_online = True
-ports = 24
-print(f"Dispositivo: {hostname}, IP: {ip_address}, Online: {is_online}, Portas: {ports}")</code></pre>
-        <p><strong>Como Criar/Salvar/Executar:</strong></p>
-        <ol>
-            <li>Crie um arquivo <code>device_info.py</code> no VS Code.</li>
-            <li>Cole o código acima.</li>
-            <li>Salve em seu diretório de scripts (e.g., <code>C:\Users\SeuNome\PythonScripts</code>).</li>
-            <li>Execute via VS Code (botão "Run") ou terminal: <code>python device_info.py</code>.</li>
-        </ol>
-
-        <h4>Referências</h4>
-        <ul>
-            <li><a href="https://docs.python.org/3/tutorial/introduction.html#using-python-as-a-calculator">Python Variables</a></li>
-            <li><a href="https://developer.cisco.com/learning/tracks/network-automation">Cisco DevNet: Network Automation</a></li>
-        </ul>
-
-        <h4>Avaliação</h4>
-        <ol>
-            <li>Crie variáveis para armazenar o nome de um switch (e.g., <code>SW1</code>), seu endereço IP (e.g., <code>192.168.1.2</code>) e o número de portas (e.g., <code>24</code>).</li>
-            <li>Escreva um programa em um arquivo <code>switch_info.py</code> que exiba: <code>Switch: [nome], IP: [ip], Portas: [portas]</code>.</li>
-            <li>Salve e execute o script.</li>
-            <li>Incremente o número de portas em 4 e exiba o novo valor.</li>
-            <li><strong>(Bônus)</strong> Adicione uma variável booleana <code>is_managed</code> e exiba seu valor.</li>
-        </ol>
-    </div>
-
-    <div class="module" id="módulo-3-estruturas-condicionais">
-        <h2>Módulo 3: Estruturas Condicionais</h2>
-        <h3>Objetivos</h3>
-        <ul>
-            <li>Usar estruturas <code>if</code>, <code>elif</code> e <code>else</code>.</li>
-            <li>Aplicar condicionais em decisões de rede.</li>
-        </ul>
-
-        <h3>Conteúdo</h3>
-        <p><strong>Estruturas Condicionais:</strong></p>
-        <p>Usadas para tomar decisões com base em condições.</p>
-        <p>Sintaxe:</p>
-        <pre><code class="language-python">if condição:
-    # Código
-elif outra_condição:
-    # Código
-else:
-    # Código</code></pre>
-
-        <p><strong>Operadores de Comparação:</strong></p>
-        <ul>
-            <li>Igual: <code>==</code></li>
-            <li>Diferente: <code>!=</code></li>
-            <li>Maior/Menor: <code>&gt;</code>, <code>&lt;</code>, <code>&gt;=</code>, <code>&lt;=</code></li>
-        </ul>
-        <p>Exemplo:</p>
-        <pre><code class="language-python">port = 80
-if port == 80:
-    print("Porta HTTP detectada")</code></pre>
-
-        <p><strong>Operadores Lógicos:</strong></p>
-        <ul>
-            <li><code>and</code>, <code>or</code>, <code>not</code></li>
-        </ul>
-        <p>Exemplo:</p>
-        <pre><code class="language-python">status = "up"
-speed = 1000
-if status == "up" and speed >= 1000:
-    print("Interface rápida e ativa")</code></pre>
-
-        <h4>Exemplo de Rede</h4>
-        <p>Verificar o status de uma interface.</p>
-        <pre><code class="language-python">interface_status = "up"
-if interface_status == "up":
+            <h3>Exemplos de Rede</h3>
+            <h4>Exemplo 1: Verificar Status de Interface</h4>
+            <pre><code>status = "up"
+if status == "up":
     print("Interface está ativa!")
 else:
-    print("Interface está inativa.")</code></pre>
-        <p><strong>Como Criar/Salvar/Executar:</strong></p>
-        <ol>
-            <li>Crie um arquivo <code>interface_check.py</code> no VS Code.</li>
-            <li>Cole o código acima.</li>
-            <li>Salve em seu diretório de scripts.</li>
-            <li>Execute: <code>python interface_check.py</code>.</li>
-        </ol>
+    print("Interface está inativa.")
+            </code></pre>
 
-        <h4>Referências</h4>
-        <ul>
-            <li><a href="https://docs.python.org/3/tutorial/controlflow.html#if-statements">Python Conditionals</a></li>
-            <li><a href="https://developer.cisco.com/docs/automation">Automating Cisco Networks</a></li>
-        </ul>
+            <h4>Exemplo 2: Validar Porta de Rede</h4>
+            <pre><code>port = 80
+if port == 80:
+    print("Porta HTTP detectada")
+elif port == 443:
+    print("Porta HTTPS detectada")
+else:
+    print("Porta desconhecida")
+            </code></pre>
 
-        <h4>Avaliação</h4>
-        <ol>
-            <li>Crie um arquivo <code>ip_check.py</code> que verifica se o IP de um dispositivo é <code>192.168.1.1</code>. Se for, exiba <code>IP padrão detectado</code>.</li>
-            <li>Adicione uma condição para exibir <code>IP não padrão</code> caso o IP seja diferente.</li>
-            <li><strong>(Bônus)</strong> Inclua uma verificação para saber se uma VLAN (e.g., <code>vlan_id = 20</code>) está dentro do intervalo permitido (1-4094).</li>
-            <li>Salve e execute o script.</li>
-        </ol>
-    </div>
+            <h3>Exercícios</h3>
+            <ol>
+                <li>Crie um programa que verifica se uma porta (ex.: 80) é HTTP. Se for 80, imprima "Porta HTTP". Caso contrário, imprima "Porta desconhecida".</li>
+                <li>Crie um programa que verifica se a VLAN (ex.: 10) está no intervalo 1-100. Se sim, imprima "VLAN válida".</li>
+                <li>Crie um programa que verifica o status de um link ("up" ou "down") e a largura de banda (ex.: 1.0). Se o link estiver "up" e a banda for maior que 0.5, imprima "Link de alta qualidade".</li>
+            </ol>
 
-    <div class="module" id="módulo-4-laços-de-repetição">
-        <h2>Módulo 4: Laços de Repetição</h2>
-        <h3>Objetivos</h3>
-        <ul>
-            <li>Utilizar laços <code>for</code> e <code>while</code>.</li>
-            <li>Aplicar laços em tarefas repetitivas de redes.</li>
-        </ul>
+            <h3>Soluções dos Exercícios</h3>
+            <ol>
+                <li><pre><code>port = 80
+if port == 80:
+    print("Porta HTTP")
+else:
+    print("Porta desconhecida")
+                </code></pre></li>
+                <li><pre><code>vlan = 10
+if 1 <= vlan <= 100:
+    print("VLAN válida")
+else:
+    print("VLAN inválida")
+                </code></pre></li>
+                <li><pre><code>status = "up"
+bandwidth = 1.0
+if status == "up" and bandwidth > 0.5:
+    print("Link de alta qualidade")
+else:
+    print("Link não qualificado")
+                </code></pre></li>
+            </ol>
 
-        <h3>Conteúdo</h3>
-        <p><strong>Laço for:</strong></p>
-        <p>Itera sobre uma sequência (lista, intervalo, etc.).</p>
-        <p>Sintaxe:</p>
-        <pre><code class="language-python">for item in sequência:
-    # Código</code></pre>
-        <p>Exemplo com <code>range</code>:</p>
-        <pre><code class="language-python">for i in range(1, 5):  # De 1 a 4
-    print(f"Porta {i}")</code></pre>
+            <h3>Avaliação</h3>
+            <ol>
+                <li>O que faz o operador <code>==</code>? (Resposta: Compara igualdade.)</li>
+                <li>Escreva um <code>if</code> que verifica se uma interface está "down". (Resposta: <code>if status == "down": print("Interface inativa")</code>)</li>
+                <li>Qual é a função do <code>elif</code>? (Resposta: Testa uma nova condição se a anterior for falsa.)</li>
+            </ol>
 
-        <p><strong>Laço while:</strong></p>
-        <p>Executa enquanto uma condição for verdadeira.</p>
-        <p>Sintaxe:</p>
-        <pre><code class="language-python">while condição:
-    # Código</code></pre>
-        <p>Exemplo:</p>
-        <pre><code class="language-python">count = 1
-while count <= 3:
-    print(f"Verificando dispositivo {count}")
-    count += 1</code></pre>
+            <h3>Referências</h3>
+            <ul>
+                <li><a href="https://realpython.com/python-conditional-statements/">Python Conditionals</a></li>
+                <li><a href="https://docs.python.org/3/tutorial/controlflow.html">Python Control Flow</a></li>
+                <li><a href="https://www.w3schools.com/python/python_conditions.asp">Python If...Else</a></li>
+                <li><a href="https://pynet.twb-tech.com/blog/python/conditionals-network-automation.html">Conditionals in Network Automation</a></li>
+            </ul>
+        </section>
 
-        <h4>Exemplo de Rede</h4>
-        <p>Listar interfaces de um dispositivo.</p>
-        <pre><code class="language-python">interfaces = ["Gig0/1", "Gig0/2", "Gig0/3"]
-for interface in interfaces:
-    print(f"Configurando {interface}")</code></pre>
-        <p><strong>Como Criar/Salvar/Executar:</strong></p>
-        <ol>
-            <li>Crie um arquivo <code>interface_list.py</code> no VS Code.</li>
-            <li>Cole o código acima.</li>
-            <li>Salve em seu diretório de scripts.</li>
-            <li>Execute: <code>python interface_list.py</code>.</li>
-        </ol>
+        <!-- Módulo 4 -->
+        <section id="modulo4">
+            <h2>Módulo 4: Laços de Repetição</h2>
+            <p>Laços de repetição permitem executar um bloco de código várias vezes. Em redes, laços são úteis para iterar sobre interfaces, VLANs ou dispositivos em uma topologia.</p>
+            <p><strong>Tipos de Laços:</strong>
+                <ul>
+                    <li><code>for</code>: Itera sobre uma sequência (ex.: lista, intervalo).</li>
+                    <li><code>while</code>: Repete enquanto uma condição é verdadeira.</li>
+                </ul>
+            </p>
 
-        <h4>Referências</h4>
-        <ul>
-            <li><a href="https://docs.python.org/3/tutorial/controlflow.html#for-statements">Python Loops</a></li>
-            <li><a href="https://developer.cisco.com/docs/python-loops">Cisco DevNet: Python Loops</a></li>
-        </ul>
+            <h3>Exemplos de Rede</h3>
+            <h4>Exemplo 1: Verificar Interfaces</h4>
+            <pre><code>for i in range(1, 5):
+    print(f"Verificando interface eth0/{i}")
+            </code></pre>
 
-        <h4>Avaliação</h4>
-        <ol>
-            <li>Crie um arquivo <code>ip_list.py</code> com uma lista de 3 endereços IP e exiba cada um usando um laço <code>for</code>.</li>
-            <li>Escreva um programa em <code>port_check.py</code> que use um laço <code>while</code> para contar de 1 a 5, exibindo <code>Verificando porta [número]</code>.</li>
-            <li><strong>(Bônus)</strong> Crie um programa em <code>vlan_list.py</code> que liste VLANs de 10 a 15 usando um laço <code>for</code>.</li>
-            <li>Salve e execute cada script.</li>
-        </ol>
-    </div>
+            <h4>Exemplo 2: Tentativas de Conexão</h4>
+            <pre><code>attempt = 1
+while attempt <= 3:
+    print(f"Tentando conectar ao dispositivo... Tentativa {attempt}")
+    attempt += 1
+            </code></pre>
 
-    <div class="module" id="módulo-5-funções">
-        <h2>Módulo 5: Funções</h2>
-        <h3>Objetivos</h3>
-        <ul>
-            <li>Criar e usar funções.</li>
-            <li>Aplicar funções em tarefas de redes.</li>
-        </ul>
+            <h3>Exercícios</h3>
+            <ol>
+                <li>Crie um laço <code>for</code> que imprime "Configurando VLAN X" para VLANs de 10 a 15.</li>
+                <li>Crie um laço <code>while</code> que tenta conectar a um dispositivo até 3 tentativas, imprimindo "Tentativa X".</li>
+                <li>Crie um laço <code>for</code> que imprime "Interface GigabitEthernet0/X está ativa" para interfaces de 1 a 4.</li>
+            </ol>
 
-        <h3>Conteúdo</h3>
-        <p><strong>Definindo Funções:</strong></p>
-        <p>Funções permitem reutilizar código.</p>
-        <p>Sintaxe:</p>
-        <pre><code class="language-python">def nome_funcao(parametros):
-    # Código
-    return resultado</code></pre>
+            <h3>Soluções dos Exercícios</h3>
+            <ol>
+                <li><pre><code>for vlan in range(10, 16):
+    print(f"Configurando VLAN {vlan}")
+                </code></pre></li>
+                <li><pre><code>attempt = 1
+while attempt <= 3:
+    print(f"Tentativa {attempt}")
+    attempt += 1
+                </code></pre></li>
+                <li><pre><code>for i in range(1, 5):
+    print(f"Interface GigabitEthernet0/{i} está ativa")
+                </code></pre></li>
+            </ol>
 
-        <p><strong>Parâmetros e Retorno:</strong></p>
-        <ul>
-            <li><strong>Parâmetros:</strong> Dados passados para a função.</li>
-            <li><strong>Retorno:</strong> Resultado devolvido com <code>return</code>.</li>
-        </ul>
-        <p>Exemplo:</p>
-        <pre><code class="language-python">def double_port(port):
-    return port * 2
-print(double_port(80))  # Saída: 160</code></pre>
+            <h3>Avaliação</h3>
+            <ol>
+                <li>Qual é a diferença entre <code>for</code> e <code>while</code>? (Resposta: <code>for</code> itera sobre uma sequência; <code>while</code> repete enquanto uma condição é verdadeira.)</li>
+                <li>Escreva um laço que imprime portas de 1 a 4. (Resposta: <code>for port in range(1, 5): print(f"Porta {port}")</code>)</li>
+                <li>O que faz <code>range(1, 5)</code>? (Resposta: Gera uma sequência de 1 a 4.)</li>
+            </ol>
 
-        <h4>Exemplo de Rede</h4>
-        <p>Função para verificar status de interface.</p>
-        <pre><code class="language-python">def check_interface(status):
-    if status == "up":
-        return "Interface ativa"
-    return "Interface inativa"
+            <h3>Referências</h3>
+            <ul>
+                <li><a href="https://realpython.com/python-for-loop/">Python For Loops</a></li>
+                <li><a href="https://realpython.com/python-while-loop/">Python While Loops</a></li>
+                <li><a href="https://docs.python.org/3/tutorial/controlflow.html#for-statements">Python For Statements</a></li>
+                <li><a href="https://pynet.twb-tech.com/blog/python/loops-network-automation.html">Loops in Network Automation</a></li>
+            </ul>
+        </section>
 
-print(check_interface("up"))</code></pre>
-        <p><strong>Como Criar/Salvar/Executar:</strong></p>
-        <ol>
-            <li>Crie um arquivo <code>interface_status.py</code> no VS Code.</li>
-            <li>Cole o código acima.</li>
-            <li>Salve em seu diretório de scripts.</li>
-            <li>Execute: <code>python interface_status.py</code>.</li>
-        </ol>
+        <!-- Módulo 5 -->
+        <section id="modulo5">
+            <h2>Módulo 5: Funções</h2>
+            <p>Funções são blocos de código reutilizáveis que realizam uma tarefa específica. Elas aceitam parâmetros (entradas) e podem retornar valores. Em redes, funções são usadas para modularizar tarefas como validar IPs, verificar status de interfaces ou enviar comandos a dispositivos.</p>
+            <p><strong>Componentes de uma Função:</strong>
+                <ul>
+                    <li><code>def</code>: Define a função.</li>
+                    <li>Nome da função: Descritivo, ex.: <code>check_interface</code>.</li>
+                    <li>Parâmetros: Entradas opcionais.</li>
+                    <li><code>return</code>: Retorna um valor (opcional).</li>
+                </ul>
+            </p>
 
-        <h4>Referências</h4>
-        <ul>
-            <li><a href="https://docs.python.org/3/tutorial/controlflow.html#defining-functions">Python Functions</a></li>
-            <li><a href="https://developer.cisco.com/docs/modular-code">Cisco DevNet: Modular Code</a></li>
-        </ul>
+            <h3>Exemplos de Rede</h3>
+            <h4>Exemplo 1: Verificar Interface</h4>
+            <pre><code>def check_interface(status):
+    return "Ativa" if status == "up" else "Inativa"
 
-        <h4>Avaliação</h4>
-        <ol>
-            <li>Crie um arquivo <code>router_config.py</code> com uma função que receba o nome de um roteador e retorne: <code>Configurando [nome]</code>.</li>
-            <li>Escreva um programa em <code>port_validation.py</code> com uma função que receba um número de porta e verifique se é válida (1-65535).</li>
-            <li><strong>(Bônus)</strong> Crie uma função em <code>ip_display.py</code> que receba uma lista de IPs e exiba cada um.</li>
-            <li>Salve e execute cada script.</li>
-        </ol>
-    </div>
+print(check_interface("up"))
+print(check_interface("down"))
+            </code></pre>
 
-    <div class="module" id="módulo-6-listas-e-dicionários">
-        <h2>Módulo 6: Listas e Dicionários</h2>
-        <h3>Objetivos</h3>
-        <ul>
-            <li>Trabalhar com listas e dicionários.</li>
-            <li>Usar estruturas de dados em cenários de redes.</li>
-        </ul>
+            <h4>Exemplo 2: Validar Endereço IP</h4>
+            <pre><code>def is_private_ip(ip):
+    return "IP privado" if ip.startswith("192.168") else "IP público"
 
-        <h3>Conteúdo</h3>
-        <p><strong>Listas:</strong></p>
-        <p>Coleções ordenadas de itens.</p>
-        <p>Métodos comuns: <code>append()</code>, <code>remove()</code>, <code>pop()</code>.</p>
-        <p>Exemplo:</p>
-        <pre><code class="language-python">devices = ["R1", "R2", "SW1"]
-devices.append("SW2")  # Adiciona SW2
-print(devices[0])  # Acessa R1</code></pre>
+print(is_private_ip("192.168.1.1"))
+print(is_private_ip("8.8.8.8"))
+            </code></pre>
 
-        <p><strong>Dicionários:</strong></p>
-        <p>Estruturas chave-valor.</p>
-        <p>Exemplo:</p>
-        <pre><code class="language-python">router = {"hostname": "R1", "ip": "10.0.0.1", "ports": 24}
-print(router["ip"])  # Acessa 10.0.0.1
-router["status"] = "up"  # Adiciona nova chave</code></pre>
+            <h3>Exercícios</h3>
+            <ol>
+                <li>Crie uma função que recebe um número de porta e retorna "SSH" se for 22, senão "Outra porta".</li>
+                <li>Crie uma função que recebe um IP e retorna "Válido" se começa com "192.168".</li>
+                <li>Crie uma função que recebe o nome de uma VLAN (ex.: "VLAN10") e retorna "VLAN padrão" se for "VLAN1", senão "VLAN personalizada".</li>
+            </ol>
 
-        <h4>Exemplo de Rede</h4>
-        <p>Armazenar configurações de dispositivos.</p>
-        <pre><code class="language-python">network = {
-    "R1": {"ip": "10.0.0.1", "status": "up"},
-    "R2": {"ip": "10.0.0.2", "status": "down"}
-}
-for device, info in network.items():
-    print(f"{device}: IP={info['ip']}, Status={info['status']}")</code></pre>
-        <p><strong>Como Criar/Salvar/Executar:</strong></p>
-        <ol>
-            <li>Crie um arquivo <code>network_config.py</code> no VS Code.</li>
-            <li>Cole o código acima.</li>
-            <li>Salve em seu diretório de scripts.</li>
-            <li>Execute: <code>python network_config.py</code>.</li>
-        </ol>
+            <h3>Soluções dos Exercícios</h3>
+            <ol>
+                <li><pre><code>def check_port(port):
+    return "SSH" if port == 22 else "Outra porta"
 
-        <h4>Referências</h4>
-        <ul>
-            <li><a href="https://docs.python.org/3/tutorial/datastructures.html#more-on-lists">Python Lists</a></li>
-            <li><a href="https://docs.python.org/3/tutorial/datastructures.html#dictionaries">Python Dictionaries</a></li>
-        </ul>
+print(check_port(22))
+                </code></pre></li>
+                <li><pre><code>def check_ip(ip):
+    return "Válido" if ip.startswith("192.168") else "Inválido"
 
-        <h4>Avaliação</h4>
-        <ol>
-            <li>Crie um arquivo <code>interface_list.py</code> com uma lista de 4 interfaces e adicione uma nova interface.</li>
-            <li>Crie um arquivo <code>switch_info.py</code> com um dicionário contendo informações de um switch (nome, IP, número de portas) e exiba o IP.</li>
-            <li><strong>(Bônus)</strong> Crie um arquivo <code>routers_info.py</code> com um dicionário de dois roteadores e seus IPs, exibindo todos com um laço.</li>
-            <li>Salve e execute cada script.</li>
-        </ol>
-    </div>
+print(check_ip("192.168.1.1"))
+                </code></pre></li>
+                <li><pre><code>def check_vlan(vlan_name):
+    return "VLAN padrão" if vlan_name == "VLAN1" else "VLAN personalizada"
 
-    <div class="module" id="módulo-7-manipulação-de-arquivos">
-        <h2>Módulo 7: Manipulação de Arquivos</h2>
-        <h3>Objetivos</h3>
-        <ul>
-            <li>Ler e escrever arquivos.</li>
-            <li>Aplicar manipulação de arquivos em logs de rede.</li>
-        </ul>
+print(check_vlan("VLAN10"))
+                </code></pre></li>
+            </ol>
 
-        <h3>Conteúdo</h3>
-        <p><strong>Leitura de Arquivos:</strong></p>
-        <p>Usa <code>open()</code> com modo <code>"r"</code> (read).</p>
-        <p>Exemplo:</p>
-        <pre><code class="language-python">with open("config.txt", "r") as file:
-    content = file.read()
-    print(content)</code></pre>
+            <h3>Avaliação</h3>
+            <ol>
+                <li>O que é uma função? (Resposta: Bloco de código reutilizável que executa uma tarefa.)</li>
+                <li>Escreva uma função que retorna "VLAN OK" se o número da VLAN é 1. (Resposta: <code>def check_vlan(vlan): return "VLAN OK" if vlan == 1 else "VLAN diferente"</code>)</li>
+                <li>Qual é a utilidade do <code>return</code>? (Resposta: Envia um valor de volta para quem chamou a função.)</li>
+            </ol>
 
-        <p><strong>Escrita de Arquivos:</strong></p>
-        <p>Usa <code>open()</code> com modo <code>"w"</code> (write) ou <code>"a"</code> (append).</p>
-        <p>Exemplo:</p>
-        <pre><code class="language-python">with open("config.txt", "w") as file:
-    file.write("interface Gig0/1\n ip address 192.168.1.1")</code></pre>
+            <h3>Referências</h3>
+            <ul>
+                <li><a href="https://realpython.com/defining-your-own-python-function/">Python Functions</a></li>
+                <li><a href="https://docs.python.org/3/tutorial/controlflow.html#defining-functions">Python Defining Functions</a></li>
+                <li><a href="https://www.w3schools.com/python/python_functions.asp">Python Functions</a></li>
+                <li><a href="https://pynet.twb-tech.com/blog/python/functions-network-automation.html">Functions in Network Automation</a></li>
+            </ul>
+        </section>
 
-        <h4>Exemplo de Rede</h4>
-        <p>Salvar configuração de um roteador.</p>
-        <pre><code class="language-python">config = "hostname R1\ninterface Gig0/1\n ip address 10.0.0.1 255.255.255.0"
-with open("router_config.txt", "w") as file:
-    file.write(config)</code></pre>
-        <p><strong>Como Criar/Salvar/Executar:</strong></p>
-        <ol>
-            <li>Crie um arquivo <code>save_config.py</code> no VS Code.</li>
-            <li>Cole o código acima.</li>
-            <li>Salve em seu diretório de scripts.</li>
-            <li>Execute: <code>python save_config.py</code>.</li>
-            <li>Verifique o arquivo <code>router_config.txt</code> criado no mesmo diretório.</li>
-        </ol>
+        <!-- Módulo 6 -->
+        <section id="modulo6">
+            <h2>Módulo 6: Listas e Dicionários</h2>
+            <p>Listas e dicionários são estruturas de dados que armazenam múltiplos valores. Em redes, listas podem armazenar interfaces ou VLANs, enquanto dicionários são ideais para configurações de dispositivos com pares chave-valor.</p>
+            <p><strong>Listas:</strong> Sequências ordenadas, acessadas por índices (começando em 0).</p>
+            <p><strong>Dicionários:</strong> Coleções de pares chave-valor, acessadas por chaves.</p>
 
-        <h4>Referências</h4>
-        <ul>
-            <li><a href="https://docs.python.org/3/tutorial/inputoutput.html#reading-and-writing-files">Python File Handling</a></li>
-            <li><a href="https://www.cisco.com/c/en/us/support/docs/file-operations.html">Cisco: File Operations</a></li>
-        </ul>
+            <h3>Exemplos de Rede</h3>
+            <h4>Exemplo 1: Lista de Interfaces</h4>
+            <pre><code>interfaces = ["eth0/1", "eth0/2", "eth0/3"]
+print(f"Primeira interface: {interfaces[0]}")
+interfaces.append("eth0/4")  # Adiciona nova interface
+print(f"Interfaces atualizadas: {interfaces}")
+            </code></pre>
 
-        <h4>Avaliação</h4>
-        <ol>
-            <li>Crie um arquivo <code>write_config.py</code> que escreva uma configuração simples (<code>hostname SW1</code>) em um arquivo <code>switch_config.txt</code>.</li>
-            <li>Crie um arquivo <code>read_config.py</code> que leia o arquivo criado e exiba seu conteúdo.</li>
-            <li><strong>(Bônus)</strong> Crie um arquivo <code>append_config.py</code> que adicione uma nova linha ao arquivo com <code>ip address 192.168.1.2</code>.</li>
-            <li>Salve e execute cada script.</li>
-        </ol>
-    </div>
+            <h4>Exemplo 2: Dicionário de Dispositivo</h4>
+            <pre><code>router = {"ip": "192.168.1.1", "model": "Cisco 2901", "ports": 4}
+print(f"IP do roteador: {router['ip']}")
+router["status"] = "active"  # Adiciona nova chave
+print(f"Dicionário atualizado: {router}")
+            </code></pre>
 
-    <div class="module" id="módulo-8-introdução-à-automatização-de-redes-com-python">
-        <h2>Módulo 8: Introdução à Automação de Redes com Python</h2>
-        <h3>Objetivos</h3>
-        <ul>
-            <li>Usar bibliotecas como <code>netmiko</code> para automação.</li>
-            <li>Conectar a dispositivos Cisco via SSH.</li>
-        </ul>
+            <h3>Exercícios</h3>
+            <ol>
+                <li>Crie uma lista com 3 VLANs (10, 20, 30) e imprima a segunda VLAN.</li>
+                <li>Crie um dicionário com o nome do dispositivo ("Switch1") e IP ("10.0.0.2"). Imprima o IP.</li>
+                <li>Crie uma lista com 4 interfaces ("Gig0/1", "Gig0/2", "Gig0/3", "Gig0/4") e adicione uma nova interface "Gig0/5". Imprima a lista atualizada.</li>
+            </ol>
 
-        <h3>Conteúdo</h3>
-        <p><strong>Biblioteca Netmiko:</strong></p>
-        <p>Simplifica conexões SSH a dispositivos de rede.</p>
-        <p><strong>Instalação:</strong></p>
-        <p>No terminal, execute: <code>pip install netmiko</code> (Windows) ou <code>pip3 install netmiko</code> (Linux).</p>
-        <p>Exemplo:</p>
-        <pre><code class="language-python">from netmiko import ConnectHandler
+            <h3>Soluções dos Exercícios</h3>
+            <ol>
+                <li><pre><code>vlans = [10, 20, 30]
+print(vlans[1])
+                </code></pre></li>
+                <li><pre><code>device = {"name": "Switch1", "ip": "10.0.0.2"}
+print(device["ip"])
+                </code></pre></li>
+                <li><pre><code>interfaces = ["Gig0/1", "Gig0/2", "Gig0/3", "Gig0/4"]
+interfaces.append("Gig0/5")
+print(interfaces)
+                </code></pre></li>
+            </ol>
+
+            <h3>Avaliação</h3>
+            <ol>
+                <li>Qual é a diferença entre lista e dicionário? (Resposta: Lista é uma sequência ordenada; dicionário usa chaves para acessar valores.)</li>
+                <li>Como acessar o segundo item de <code>ports = ["port1", "port2", "port3"]</code>? (Resposta: <code>ports[1]</code>)</li>
+                <li>Como adicionar uma nova chave a um dicionário? (Resposta: <code>dict["nova_chave"] = valor</code>)</li>
+            </ol>
+
+            <h3>Referências</h3>
+            <ul>
+                <li><a href="https://realpython.com/python-lists-tuples/">Python Lists</a></li>
+                <li><a href="https://realpython.com/python-dicts/">Python Dictionaries</a></li>
+                <li><a href="https://docs.python.org/3/tutorial/datastructures.html">Python Data Structures</a></li>
+                <li><a href="https://pynet.twb-tech.com/blog/python/lists-dicts-network.html">Lists and Dicts in Networking</a></li>
+            </ul>
+        </section>
+
+        <!-- Módulo 7 -->
+        <section id="modulo7">
+            <h2>Módulo 7: Manipulação de Arquivos</h2>
+            <p>Python permite ler e escrever arquivos, o que é essencial em redes para gerenciar configurações, salvar logs ou exportar dados de dispositivos. Arquivos podem ser abertos em modos como <code>"r"</code> (leitura), <code>"w"</code> (escrita, sobrescreve) ou <code>"a"</code> (escrita, adiciona).</p>
+            <p>Usar a instrução <code>with</code> garante que o arquivo seja fechado automaticamente após o uso.</p>
+
+            <h3>Exemplos de Rede</h3>
+            <h4>Exemplo 1: Criar Configuração</h4>
+            <pre><code>with open("config.txt", "w") as file:
+    file.write("interface eth0/1\nip address 192.168.1.1 255.255.255.0")
+
+with open("config.txt", "r") as file:
+    print(file.read())
+            </code></pre>
+
+            <h4>Exemplo 2: Registrar IPs</h4>
+            <pre><code>ips = ["192.168.1.1", "10.0.0.2", "172.16.0.1"]
+with open("ip_list.txt", "w") as file:
+    for ip in ips:
+        file.write(f"{ip}\n")
+
+with open("ip_list.txt", "r") as file:
+    for line in file:
+        print(f"IP lido: {line.strip()}")
+            </code></pre>
+
+            <h3>Exercícios</h3>
+            <ol>
+                <li>Crie um arquivo <code>vlans.txt</code> com a lista de VLANs "VLAN 10, VLAN 20".</li>
+                <li>Leia e imprima o conteúdo de <code>vlans.txt</code>.</li>
+                <li>Crie um arquivo <code>interfaces.txt</code> com duas interfaces ("Gig0/1", "Gig0/2") e adicione uma terceira ("Gig0/3") usando o modo <code>"a"</code>.</li>
+            </ol>
+
+            <h3>Soluções dos Exercícios</h3>
+            <ol>
+                <li><pre><code>with open("vlans.txt", "w") as file:
+    file.write("VLAN 10, VLAN 20")
+                </code></pre></li>
+                <li><pre><code>with open("vlans.txt", "r") as file:
+    print(file.read())
+                </code></pre></li>
+                <li><pre><code>with open("interfaces.txt", "w") as file:
+    file.write("Gig0/1\nGig0/2\n")
+with open("interfaces.txt", "a") as file:
+    file.write("Gig0/3\n")
+                </code></pre></li>
+            </ol>
+
+            <h3>Avaliação</h3>
+            <ol>
+                <li>O que faz o modo <code>"w"</code> ao abrir um arquivo? (Resposta: Escreve, sobrescrevendo o arquivo.)</li>
+                <li>Como ler um arquivo chamado <code>log.txt</code>? (Resposta: <code>with open("log.txt", "r") as file: print(file.read())</code>)</li>
+                <li>Qual é a diferença entre os modos <code>"w"</code> e <code>"a"</code>? (Resposta: <code>"w"</code> sobrescreve; <code>"a"</code> adiciona ao final.)</li>
+            </ol>
+
+            <h3>Referências</h3>
+            <ul>
+                <li><a href="https://realpython.com/read-write-files-python/">Python File Handling</a></li>
+                <li><a href="https://docs.python.org/3/tutorial/inputoutput.html#reading-and-writing-files">Python File I/O</a></li>
+                <li><a href="https://www.w3schools.com/python/python_file_handling.asp">Python File Handling</a></li>
+                <li><a href="https://pynet.twb-tech.com/blog/python/file-handling-network.html">File Handling in Networking</a></li>
+            </ul>
+        </section>
+
+        <!-- Módulo 8 -->
+        <section id="modulo8">
+            <h2>Módulo 8: Introdução à Automação de Redes com Python</h2>
+            <p>Automatizar tarefas de rede com Python reduz o trabalho manual e aumenta a eficiência. Bibliotecas como <code>telnetlib</code> (para Telnet) e <code>paramiko</code> (para SSH) permitem interagir com dispositivos Cisco, enviando comandos e coletando outputs.</p>
+            <p><strong>Nota:</strong> Use ambientes de teste (ex.: Cisco Packet Tracer) para evitar impactos em redes de produção.</p>
+
+            <h3>Exemplos de Rede</h3>
+            <h4>Exemplo 1: Usando telnetlib</h4>
+            <pre><code>import telnetlib
+
+host = "192.168.1.1"
+user = "admin"
+password = "cisco"
+
+tn = telnetlib.Telnet(host)
+tn.read_until(b"Username: ")
+tn.write(user.encode("ascii") + b"\n")
+tn.read_until(b"Password: ")
+tn.write(password.encode("ascii") + b"\n")
+tn.write(b"show version\n")
+tn.write(b"exit\n")
+print(tn.read_all().decode("ascii"))
+            </code></pre>
+
+            <h4>Exemplo 2: Verificar Interfaces</h4>
+            <pre><code>import telnetlib
+
+host = "192.168.1.1"
+user = "admin"
+password = "cisco"
+
+tn = telnetlib.Telnet(host)
+tn.read_until(b"Username: ")
+tn.write(user.encode("ascii") + b"\n")
+tn.read_until(b"Password: ")
+tn.write(password.encode("ascii") + b"\n")
+tn.write(b"show ip interface brief\n")
+tn.write(b"exit\n")
+output = tn.read_all().decode("ascii")
+print("Status das interfaces:")
+print(output)
+            </code></pre>
+
+            <h3>Exercícios</h3>
+            <ol>
+                <li>Modifique o exemplo 1 para executar o comando <code>show ip interface brief</code>.</li>
+                <li>Crie um script que armazena o output do comando <code>show version</code> em um arquivo <code>output.txt</code>.</li>
+                <li>Crie um script que executa o comando <code>show running-config</code> e imprime apenas as linhas que contêm "interface".</li>
+            </ol>
+
+            <h3>Soluções dos Exercícios</h3>
+            <ol>
+                <li><pre><code>import telnetlib
+
+host = "192.168.1.1"
+user = "admin"
+password = "cisco"
+
+tn = telnetlib.Telnet(host)
+tn.read_until(b"Username: ")
+tn.write(user.encode("ascii") + b"\n")
+tn.read_until(b"Password: ")
+tn.write(password.encode("ascii") + b"\n")
+tn.write(b"show ip interface brief\n")
+tn.write(b"exit\n")
+print(tn.read_all().decode("ascii"))
+                </code></pre></li>
+                <li><pre><code>import telnetlib
+
+host = "192.168.1.1"
+user = "admin"
+password = "cisco"
+
+tn = telnetlib.Telnet(host)
+tn.read_until(b"Username: ")
+tn.write(user.encode("ascii") + b"\n")
+tn.read_until(b"Password: ")
+tn.write(password.encode("ascii") + b"\n")
+tn.write(b"show version\n")
+tn.write(b"exit\n")
+output = tn.read_all().decode("ascii")
+with open("output.txt", "w") as file:
+    file.write(output)
+                </code></pre></li>
+                <li><pre><code>import telnetlib
+
+host = "192.168.1.1"
+user = "admin"
+password = "cisco"
+
+tn = telnetlib.Telnet(host)
+tn.read_until(b"Username: ")
+tn.write(user.encode("ascii") + b"\n")
+tn.read_until(b"Password: ")
+tn.write(password.encode("ascii") + b"\n")
+tn.write(b"show running-config\n")
+tn.write(b"exit\n")
+output = tn.read_all().decode("ascii")
+for line in output.splitlines():
+    if "interface" in line.lower():
+        print(line)
+                </code></pre></li>
+            </ol>
+
+            <h3>Avaliação</h3>
+            <ol>
+                <li>Qual biblioteca é usada no exemplo? (Resposta: <code>telnetlib</code>)</li>
+                <li>Como salvar o output em um arquivo? (Resposta: Usar <code>with open("file.txt", "w") as file: file.write(output)</code>)</li>
+                <li>Por que é importante usar ambientes de teste para automação? (Resposta: Para evitar impactos em redes de produção.)</li>
+            </ol>
+
+            <h3>Referências</h3>
+            <ul>
+                <li><a href="https://docs.python.org/3/library/telnetlib.html">Python telnetlib</a></li>
+                <li><a href="https://realpython.com/python-telnet/">Python Telnet Automation</a></li>
+                <li><a href="https://pynet.twb-tech.com/blog/automation/telnetlib.html">Telnetlib for Network Automation</a></li>
+                <li><a href="https://www.networkworld.com/article/3662778/using-python-for-network-automation.html">Python for Network Automation</a></li>
+            </ul>
+        </section>
+
+        <!-- Módulo 9 -->
+        <section id="modulo9">
+            <h2>Módulo 9: Automação Avançada com Netmiko</h2>
+            <p>Netmiko é uma biblioteca Python que simplifica a automação de redes via SSH, suportando dispositivos Cisco e outros. É mais robusta que <code>telnetlib</code> e ideal para configurar dispositivos, coletar dados e gerenciar redes.</p>
+            <p><strong>Instalação:</strong> <code>pip install netmiko</code></p>
+            <p><strong>Funcionalidades:</strong>
+                <ul>
+                    <li>Enviar comandos de show (<code>send_command</code>).</li>
+                    <li>Enviar configurações (<code>send_config_set</code>).</li>
+                    <li>Gerenciar conexões SSH com dispositivos de rede.</li>
+                </ul>
+            </p>
+
+            <h3>Exemplos de Rede</h3>
+            <h4>Exemplo 1: Coletar Informações</h4>
+            <pre><code>from netmiko import ConnectHandler
 
 device = {
     "device_type": "cisco_ios",
-    "ip": "192.168.1.1",
+    "host": "192.168.1.1",
     "username": "admin",
-    "password": "cisco"
+    "password": "cisco",
 }
 
 connection = ConnectHandler(**device)
-output = connection.send_command("show ip int brief")
+output = connection.send_command("show version")
 print(output)
-connection.disconnect()</code></pre>
+connection.disconnect()
+            </code></pre>
 
-        <h4>Exemplo de Rede</h4>
-        <p>Exibir e salvar configurações de um roteador Cisco.</p>
-        <pre><code class="language-python">from netmiko import ConnectHandler
+            <h4>Exemplo 2: Configurar Interface</h4>
+            <pre><code>from netmiko import ConnectHandler
 
 device = {
     "device_type": "cisco_ios",
-    "ip": "192.168.1.1",
+    "host": "192.168.1.1",
     "username": "admin",
-    "password": "cisco"
+    "password": "cisco",
+}
+
+connection = ConnectHandler(**device)
+commands = [
+    "interface GigabitEthernet0/1",
+    "ip address 192.168.2.1 255.255.255.0",
+    "no shutdown"
+]
+connection.send_config_set(commands)
+connection.send_command("write memory")
+print("Interface configurada!")
+connection.disconnect()
+            </code></pre>
+
+            <h3>Exercícios</h3>
+            <ol>
+                <li>Modifique o exemplo 1 para executar <code>show running-config</code>.</li>
+                <li>Crie um script que configura uma VLAN 10 no dispositivo.</li>
+                <li>Crie um script que coleta o output de <code>show ip interface brief</code> e salva em um arquivo <code>interfaces.txt</code>.</li>
+            </ol>
+
+            <h3>Soluções dos Exercícios</h3>
+            <ol>
+                <li><pre><code>from netmiko import ConnectHandler
+
+device = {
+    "device_type": "cisco_ios",
+    "host": "192.168.1.1",
+    "username": "admin",
+    "password": "cisco",
 }
 
 connection = ConnectHandler(**device)
 output = connection.send_command("show running-config")
-with open("running_config.txt", "w") as file:
+print(output)
+connection.disconnect()
+                </code></pre></li>
+                <li><pre><code>from netmiko import ConnectHandler
+
+device = {
+    "device_type": "cisco_ios",
+    "host": "192.168.1.1",
+    "username": "admin",
+    "password": "cisco",
+}
+
+connection = ConnectHandler(**device)
+commands = ["vlan 10", "name VLAN_10"]
+connection.send_config_set(commands)
+connection.send_command("write memory")
+print("VLAN 10 configurada!")
+connection.disconnect()
+                </code></pre></li>
+                <li><pre><code>from netmiko import ConnectHandler
+
+device = {
+    "device_type": "cisco_ios",
+    "host": "192.168.1.1",
+    "username": "admin",
+    "password": "cisco",
+}
+
+connection = ConnectHandler(**device)
+output = connection.send_command("show ip interface brief")
+with open("interfaces.txt", "w") as file:
     file.write(output)
-connection.disconnect()</code></pre>
-        <p><strong>Como Criar/Salvar/Executar:</strong></p>
-        <ol>
-            <li>Crie um arquivo <code>netmiko_config.py</code> no VS Code.</li>
-            <li>Cole o código acima.</li>
-            <li>Salve em seu diretório de scripts.</li>
-            <li>Execute: <code>python netmiko_config.py</code>.</li>
-            <li><strong>Nota:</strong> Teste em um ambiente simulado (e.g., GNS3, Cisco Packet Tracer) com um dispositivo configurado.</li>
-        </ol>
+print("Output salvo em interfaces.txt")
+connection.disconnect()
+                </code></pre></li>
+            </ol>
 
-        <h4>Referências</h4>
-        <ul>
-            <li><a href="https://pynet.twb-tech.com/netmiko.html">Netmiko Documentation</a></li>
-            <li><a href="https://developer.cisco.com/docs/netmiko">Cisco DevNet: Netmiko</a></li>
-        </ul>
+            <h3>Avaliação</h3>
+            <ol>
+                <li>O que faz <code>send_command</code>? (Resposta: Envia um comando e retorna o output.)</li>
+                <li>Como instalar o Netmiko? (Resposta: <code>pip install netmiko</code>)</li>
+                <li>Qual é a vantagem do Netmiko sobre <code>telnetlib</code>? (Resposta: Suporta SSH, é mais robusto e fácil de usar.)</li>
+            </ol>
 
-        <h4>Avaliação</h4>
-        <ol>
-            <li>Instale a biblioteca <code>netmiko</code> usando <code>pip</code>.</li>
-            <li>Crie um arquivo <code>show_version.py</code> que use <code>netmiko</code> para conectar a um dispositivo simulado (use GNS3 ou Cisco Packet Tracer) e execute <code>show version</code>.</li>
-            <li><strong>(Bônus)</strong> Crie um arquivo <code>save_interfaces.py</code> que salve a saída do comando <code>show ip int brief</code> em um arquivo <code>interfaces.txt</code>.</li>
-            <li>Salve e execute cada script.</li>
-        </ol>
-    </div>
+            <h3>Referências</h3>
+            <ul>
+                <li><a href="https://github.com/ktbyers/netmiko">Netmiko GitHub</a></li>
+                <li><a href="https://pynet.twb-tech.com/blog/automation/netmiko.html">Netmiko Tutorial</a></li>
+                <li><a href="https://realpython.com/network-automation-python-netmiko/">Netmiko for Network Automation</a></li>
+                <li><a href="https://www.networkworld.com/article/3662778/using-python-for-network-automation.html">Advanced Network Automation</a></li>
+            </ul>
+        </section>
+    </main>
 
-    <div class="module">
-        <h2>Conclusão</h2>
-        <p>Este curso fornece uma base sólida em Python com foco em automação de redes Cisco. Você aprendeu a:</p>
-        <ul>
-            <li>Configurar um ambiente de desenvolvimento.</li>
-            <li>Escrever scripts para tarefas de rede.</li>
-            <li>Usar estruturas de dados e arquivos para gerenciar configurações.</li>
-            <li>Iniciar automação com <code>netmiko</code>.</li>
-        </ul>
-        <p>Continue praticando com laboratórios em ferramentas como GNS3 ou Cisco DevNet Sandbox. Explore bibliotecas como <code>paramiko</code>, <code>napalm</code> ou <code>ansible</code> para projetos mais avançados.</p>
-        <p><strong>Nota:</strong> Sempre teste scripts em ambientes simulados para evitar impactos em redes de produção. Use credenciais seguras e siga as melhores práticas de segurança.</p>
-    </div>
+    <footer>
+        <p>Curso desenvolvido para profissionais de redes Cisco. Última atualização: 17 de maio de 2025.</p>
+    </footer>
 </body>
 </html>
