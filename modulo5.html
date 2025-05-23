@@ -1,0 +1,1214 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Módulo 5: Funções - Curso de Python para Redes Cisco</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Módulo 5: Funções</h1>
+        <p>Curso de Python para Profissionais de Redes Cisco</p>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="index.html">Página Inicial</a></li>
+            <li><a href="modulo4.html">← Módulo Anterior</a></li>
+            <li><a href="#definicao">Definição e Chamada</a></li>
+            <li><a href="#parametros">Parâmetros e Argumentos</a></li>
+            <li><a href="#retorno">Valores de Retorno</a></li>
+            <li><a href="#escopo">Escopo de Variáveis</a></li>
+            <li><a href="#lambda">Funções Lambda</a></li>
+            <li><a href="#exercicios">Exercícios</a></li>
+            <li><a href="#avaliacao">Avaliação</a></li>
+            <li><a href="#referencias">Referências</a></li>
+            <li><a href="modulo6.html">Próximo Módulo →</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section id="introducao">
+            <h2>Introdução às Funções</h2>
+            
+            <p>As funções são blocos de código reutilizáveis que realizam uma tarefa específica. Elas são um dos conceitos mais importantes na programação, pois permitem organizar o código, torná-lo mais modular, legível e fácil de manter. Em vez de repetir o mesmo código várias vezes, você pode definir uma função e chamá-la sempre que precisar executar essa tarefa.</p>
+            
+            <p>Em automação de redes, as funções são extremamente úteis para encapsular tarefas comuns, como conectar a um dispositivo, enviar comandos, analisar saídas ou gerar configurações. Ao criar funções para essas tarefas, você pode construir bibliotecas personalizadas que simplificam o desenvolvimento de scripts mais complexos.</p>
+            
+            <p>Neste módulo, aprenderemos como definir e chamar funções em Python, como passar informações para funções usando parâmetros e argumentos, como retornar valores de funções, como funciona o escopo de variáveis e o que são funções lambda.</p>
+            
+            <div class="note">
+                <h4>Importância para Profissionais de Redes:</h4>
+                <p>O uso de funções é crucial para criar scripts de automação de rede robustos e escaláveis. Funções permitem criar abstrações para tarefas complexas, como "configurar_vlan_em_switch" ou "verificar_status_bgp", tornando o código principal mais limpo e focado na lógica geral do script.</p>
+            </div>
+        </section>
+
+        <section id="definicao">
+            <h2>Definição e Chamada de Funções</h2>
+            
+            <p>Definir uma função em Python significa criar um bloco de código nomeado que pode ser executado posteriormente. Chamar uma função significa executar o código dentro dessa função.</p>
+            
+            <h3>Definindo uma Função</h3>
+            
+            <p>A sintaxe básica para definir uma função em Python usa a palavra-chave <code>def</code>:</p>
+            
+            <pre><code>def nome_da_funcao(parametros):
+    """Docstring: Explica o que a função faz (opcional, mas recomendado)"""
+    # Bloco de código da função
+    # ...
+    return valor_de_retorno  # Opcional</code></pre>
+            
+            <ul>
+                <li><code>def</code>: Palavra-chave que indica o início da definição de uma função.</li>
+                <li><code>nome_da_funcao</code>: O nome que você dará à função (segue as mesmas regras de nomenclatura de variáveis).</li>
+                <li><code>(parametros)</code>: Parênteses que podem conter os parâmetros que a função aceita (veremos mais sobre isso).</li>
+                <li><code>:</code>: Dois pontos que marcam o fim da linha de definição da função.</li>
+                <li><code>"""Docstring"""</code>: Uma string opcional que documenta a função. É uma boa prática incluí-la.</li>
+                <li>Bloco de código indentado: O corpo da função, contendo as instruções a serem executadas.</li>
+                <li><code>return</code>: Instrução opcional para retornar um valor da função.</li>
+            </ul>
+            
+            <p>Exemplo de uma função simples:</p>
+            
+            <pre><code>def saudacao():
+    """Exibe uma saudação simples."""
+    print("Olá! Bem-vindo ao mundo da automação de redes com Python!")</code></pre>
+            
+            <h3>Chamando uma Função</h3>
+            
+            <p>Para executar o código dentro de uma função, você a chama pelo nome seguido de parênteses:</p>
+            
+            <pre><code># Chamando a função saudacao
+saudacao()</code></pre>
+            
+            <p>Saída:</p>
+            
+            <pre>Olá! Bem-vindo ao mundo da automação de redes com Python!</pre>
+            
+            <h3>Funções com Parâmetros</h3>
+            
+            <p>As funções podem aceitar informações através de parâmetros, que são variáveis definidas na assinatura da função:</p>
+            
+            <pre><code>def exibir_info_dispositivo(hostname, ip_address):
+    """Exibe informações básicas de um dispositivo de rede."""
+    print(f"Informações do Dispositivo:")
+    print(f"  Hostname: {hostname}")
+    print(f"  Endereço IP: {ip_address}")
+
+# Chamando a função com argumentos
+exibir_info_dispositivo("Router-Core-01", "192.168.1.1")
+exibir_info_dispositivo("Switch-Access-01", "192.168.1.10")</code></pre>
+            
+            <p>Saída:</p>
+            
+            <pre>Informações do Dispositivo:
+  Hostname: Router-Core-01
+  Endereço IP: 192.168.1.1
+Informações do Dispositivo:
+  Hostname: Switch-Access-01
+  Endereço IP: 192.168.1.10</pre>
+            
+            <p>Os valores passados para a função durante a chamada (como "Router-Core-01" e "192.168.1.1") são chamados de <strong>argumentos</strong>.</p>
+            
+            <h3>Docstrings</h3>
+            
+            <p>A docstring (string de documentação) é uma string literal que aparece como a primeira instrução na definição de uma função. Ela é usada para documentar o propósito da função, seus parâmetros e o que ela retorna. É uma prática essencial para escrever código legível e fácil de manter.</p>
+            
+            <pre><code>def calcular_hosts_subnet(cidr_prefix):
+    """Calcula o número de hosts utilizáveis em uma sub-rede IPv4.
+
+    Args:
+        cidr_prefix (int): O prefixo CIDR da sub-rede (ex: 24 para /24).
+
+    Returns:
+        int: O número de hosts utilizáveis, ou 0 se o prefixo for inválido.
+    """
+    if not isinstance(cidr_prefix, int) or not 0 <= cidr_prefix <= 32:
+        return 0
+    
+    if cidr_prefix >= 31:
+        return 1 if cidr_prefix == 31 else 0 # /31 tem 2 IPs, /32 tem 1 IP (host)
+    
+    num_hosts = (2**(32 - cidr_prefix)) - 2
+    return num_hosts
+
+# Acessando a docstring
+print(calcular_hosts_subnet.__doc__)</code></pre>
+            
+            <p>Ferramentas de documentação e IDEs podem usar docstrings para gerar documentação automaticamente e fornecer ajuda contextual.</p>
+            
+            <h3>Aplicação em Redes: Função para Gerar Configuração de Interface</h3>
+            
+            <p>Vamos criar uma função reutilizável para gerar a configuração básica de uma interface Cisco:</p>
+            
+            <pre><code>def gerar_config_interface(interface_name, description, ip_address=None, mask=None, shutdown=False):
+    """Gera a configuração básica para uma interface Cisco IOS.
+
+    Args:
+        interface_name (str): O nome da interface (ex: "GigabitEthernet0/1").
+        description (str): A descrição da interface.
+        ip_address (str, optional): O endereço IP da interface. Defaults to None.
+        mask (str, optional): A máscara de sub-rede. Defaults to None.
+        shutdown (bool, optional): Se a interface deve estar em shutdown. Defaults to False.
+
+    Returns:
+        str: A string de configuração para a interface.
+    """
+    config = []
+    config.append(f"interface {interface_name}")
+    config.append(f" description {description}")
+    
+    if ip_address and mask:
+        config.append(f" ip address {ip_address} {mask}")
+    
+    if shutdown:
+        config.append(" shutdown")
+    else:
+        config.append(" no shutdown")
+        
+    config.append("!") # Adiciona um separador
+    
+    return "\n".join(config)
+
+# Gerando configuração para uma interface WAN
+config_wan = gerar_config_interface(
+    interface_name="GigabitEthernet0/0",
+    description="Link WAN para ISP",
+    ip_address="203.0.113.1",
+    mask="255.255.255.252"
+)
+print(config_wan)
+
+# Gerando configuração para uma interface LAN (desligada inicialmente)
+config_lan = gerar_config_interface(
+    interface_name="GigabitEthernet0/1",
+    description="Conexao para Rede LAN",
+    ip_address="192.168.1.1",
+    mask="255.255.255.0",
+    shutdown=True
+)
+print(config_lan)</code></pre>
+            
+            <p>Esta função encapsula a lógica de geração de configuração de interface, tornando o código mais organizado e reutilizável.</p>
+        </section>
+
+        <section id="parametros">
+            <h2>Parâmetros e Argumentos</h2>
+            
+            <p>Parâmetros são os nomes listados na definição da função, enquanto argumentos são os valores reais passados para a função quando ela é chamada. Python oferece várias maneiras de definir e passar argumentos para funções.</p>
+            
+            <h3>Argumentos Posicionais</h3>
+            
+            <p>Os argumentos posicionais são passados na ordem em que os parâmetros são definidos:</p>
+            
+            <pre><code>def conectar_dispositivo(ip, username, password):
+    print(f"Conectando a {ip} com usuário {username}...")
+    # Lógica de conexão aqui...
+
+# Chamando com argumentos posicionais
+conectar_dispositivo("192.168.1.1", "admin", "cisco123")</code></pre>
+            
+            <p>A ordem dos argumentos é importante. Se você inverter a ordem, os valores serão atribuídos aos parâmetros errados.</p>
+            
+            <h3>Argumentos de Palavra-Chave (Keyword Arguments)</h3>
+            
+            <p>Você pode especificar a qual parâmetro cada argumento corresponde usando o nome do parâmetro:</p>
+            
+            <pre><code># Chamando com argumentos de palavra-chave
+conectar_dispositivo(ip="192.168.1.1", username="admin", password="cisco123")
+
+# A ordem não importa com argumentos de palavra-chave
+conectar_dispositivo(password="cisco123", ip="192.168.1.1", username="admin")</code></pre>
+            
+            <p>Argumentos de palavra-chave tornam o código mais legível, especialmente para funções com muitos parâmetros.</p>
+            
+            <h3>Parâmetros com Valores Padrão</h3>
+            
+            <p>Você pode definir valores padrão para parâmetros. Se um argumento não for fornecido para esse parâmetro durante a chamada, o valor padrão será usado:</p>
+            
+            <pre><code>def configurar_interface_switchport(
+    interface,
+    vlan=1,
+    modo="access",
+    portfast=True
+):
+    """Configura uma interface de switch."""
+    print(f"Configurando interface {interface}:")
+    print(f"  Modo: {modo}")
+    print(f"  VLAN: {vlan}")
+    if portfast:
+        print("  Portfast: Habilitado")
+    else:
+        print("  Portfast: Desabilitado")
+
+# Chamando com valores padrão
+configurar_interface_switchport("GigabitEthernet0/1")
+
+# Chamando e especificando alguns parâmetros
+configurar_interface_switchport("GigabitEthernet0/2", vlan=10)
+
+# Chamando e especificando todos os parâmetros
+configurar_interface_switchport("GigabitEthernet0/24", modo="trunk", vlan=99, portfast=False)</code></pre>
+            
+            <p>Parâmetros com valores padrão devem vir após os parâmetros sem valores padrão na definição da função.</p>
+            
+            <h3>Argumentos Arbitrários (*args)</h3>
+            
+            <p>Se você não sabe quantos argumentos posicionais serão passados para a função, pode usar <code>*args</code>. Isso coleta todos os argumentos posicionais extras em uma tupla:</p>
+            
+            <pre><code>def verificar_dispositivos(*ips):
+    """Verifica a conectividade de múltiplos dispositivos."""
+    print(f"Verificando {len(ips)} dispositivos:")
+    for ip in ips:
+        print(f"  Verificando {ip}...")
+        # Lógica de verificação aqui...
+
+verificar_dispositivos("192.168.1.1", "10.0.0.1", "8.8.8.8")
+verificar_dispositivos("172.16.0.1")</code></pre>
+            
+            <h3>Argumentos de Palavra-Chave Arbitrários (**kwargs)</h3>
+            
+            <p>Se você não sabe quantos argumentos de palavra-chave serão passados, pode usar <code>**kwargs</code>. Isso coleta todos os argumentos de palavra-chave extras em um dicionário:</p>
+            
+            <pre><code>def aplicar_configuracao(device_ip, **config_params):
+    """Aplica configurações arbitrárias a um dispositivo."""
+    print(f"Aplicando configuração a {device_ip}:")
+    for key, value in config_params.items():
+        print(f"  Configurando {key} = {value}")
+        # Lógica para aplicar a configuração aqui...
+
+aplicar_configuracao("192.168.1.1", hostname="Router1", domain_name="example.com", ntp_server="10.0.0.100")
+aplicar_configuracao("192.168.1.2", enable_ssh=True, banner="Acesso Restrito")</code></pre>
+            
+            <h3>Ordem dos Parâmetros</h3>
+            
+            <p>Ao definir uma função que usa diferentes tipos de parâmetros, a ordem correta é:</p>
+            
+            <ol>
+                <li>Parâmetros posicionais obrigatórios</li>
+                <li><code>*args</code></li>
+                <li>Parâmetros de palavra-chave (com ou sem valor padrão)</li>
+                <li><code>**kwargs</code></li>
+            </ol>
+            
+            <pre><code>def funcao_completa(param1, param2, default_param="default", *args, kw_param1, kw_param2="val2", **kwargs):
+    print(f"param1: {param1}")
+    print(f"param2: {param2}")
+    print(f"default_param: {default_param}")
+    print(f"args: {args}")
+    print(f"kw_param1: {kw_param1}")
+    print(f"kw_param2: {kw_param2}")
+    print(f"kwargs: {kwargs}")
+
+funcao_completa(1, 2, "valor", 10, 20, kw_param1="obrigatório", extra_kw="extra")</code></pre>
+            
+            <h3>Aplicação em Redes: Função Flexível para Conexão</h3>
+            
+            <p>Vamos criar uma função de conexão mais flexível usando diferentes tipos de argumentos:</p>
+            
+            <pre><code>def connect_to_network_device(
+    ip_address,
+    device_type="cisco_ios",
+    username="admin",
+    password=None,
+    secret=None,
+    port=22,
+    *extra_args,
+    **connection_options
+):
+    """Estabelece uma conexão com um dispositivo de rede usando Netmiko (simulado).
+
+    Args:
+        ip_address (str): O endereço IP do dispositivo.
+        device_type (str, optional): O tipo de dispositivo (compatível com Netmiko). Defaults to "cisco_ios".
+        username (str, optional): O nome de usuário. Defaults to "admin".
+        password (str, optional): A senha de login. Defaults to None.
+        secret (str, optional): A senha de enable (se necessário). Defaults to None.
+        port (int, optional): A porta de conexão (geralmente 22 para SSH). Defaults to 22.
+        *extra_args: Argumentos posicionais extras (não usados neste exemplo).
+        **connection_options: Opções adicionais de conexão para Netmiko.
+
+    Returns:
+        object: Um objeto de conexão simulado ou None em caso de falha.
+    """
+    print(f"Tentando conectar a {ip_address} ({device_type}) na porta {port}...")
+    print(f"  Usuário: {username}")
+    
+    # Construindo dicionário de conexão para Netmiko
+    device_info = {
+        "device_type": device_type,
+        "host": ip_address,
+        "username": username,
+        "port": port,
+    }
+    
+    if password:
+        device_info["password"] = password
+    if secret:
+        device_info["secret"] = secret
+        
+    # Adicionando opções extras
+    device_info.update(connection_options)
+    
+    print("  Opções de conexão:")
+    for key, value in device_info.items():
+        # Não exibir senhas no log
+        if "password" not in key and "secret" not in key:
+            print(f"    {key}: {value}")
+            
+    # Simulação da conexão
+    print("  Simulando conexão Netmiko...")
+    if password == "cisco123":
+        print("  Conexão bem-sucedida!")
+        return {"connection_status": "success", "ip": ip_address} # Retorna um objeto simulado
+    else:
+        print("  Falha na conexão (senha inválida ou dispositivo inacessível)")
+        return None
+
+# Exemplos de chamada
+# Conexão básica
+conn1 = connect_to_network_device("192.168.1.1", password="cisco123")
+
+# Conexão com senha de enable e timeout
+conn2 = connect_to_network_device(
+    "10.0.0.1",
+    device_type="cisco_nxos",
+    username="netadmin",
+    password="cisco123",
+    secret="enable_pass",
+    conn_timeout=10  # Opção extra passada via **kwargs
+)
+
+# Conexão com falha (senha errada)
+conn3 = connect_to_network_device("192.168.1.254", password="wrongpass")</code></pre>
+            
+            <p>Esta função demonstra como usar parâmetros posicionais, valores padrão, <code>*args</code> (embora não usado ativamente aqui) e <code>**kwargs</code> para criar uma interface flexível para conectar a dispositivos de rede, permitindo passar opções adicionais conforme necessário.</p>
+        </section>
+
+        <section id="retorno">
+            <h2>Valores de Retorno</h2>
+            
+            <p>As funções podem retornar valores usando a instrução <code>return</code>. Isso permite que a função calcule ou obtenha um resultado e o envie de volta para o código que a chamou.</p>
+            
+            <h3>Retornando um Único Valor</h3>
+            
+            <pre><code>def get_device_uptime(device_output):
+    """Extrai o tempo de atividade (uptime) da saída do comando show version."""
+    # Simulação: extrai uptime de uma string
+    for line in device_output.split("\n"):
+        if "uptime is" in line:
+            # Exemplo: "Router uptime is 1 week, 2 days, 3 hours, 4 minutes"
+            return line.split("uptime is ")[1].strip()
+    return "Uptime não encontrado"
+
+# Saída simulada do comando show version
+show_version_output = """
+Cisco IOS Software, C880 Software (C880DATA-UNIVERSALK9-M), Version 15.0(1)M4, RELEASE SOFTWARE (fc1)
+...
+Router uptime is 2 weeks, 4 days, 10 hours, 32 minutes
+System returned to ROM by power-on
+System image file is "flash:c880data-universalk9-mz.150-1.M4.bin"
+..."""
+
+uptime = get_device_uptime(show_version_output)
+print(f"Tempo de atividade do dispositivo: {uptime}")
+# Saída: Tempo de atividade do dispositivo: 2 weeks, 4 days, 10 hours, 32 minutes</code></pre>
+            
+            <h3>Retornando Múltiplos Valores</h3>
+            
+            <p>Uma função pode retornar múltiplos valores separando-os por vírgula. Python automaticamente empacota esses valores em uma tupla:</p>
+            
+            <pre><code>def parse_interface_status(log_line):
+    """Analisa uma linha de log de status de interface."""
+    # Exemplo: "%LINK-3-UPDOWN: Interface GigabitEthernet0/1, changed state to down"
+    parts = log_line.split()
+    if "Interface" in parts and "changed state to" in log_line:
+        interface_index = parts.index("Interface") + 1
+        interface_name = parts[interface_index].replace(",", "")
+        
+        status_index = parts.index("to") + 1
+        status = parts[status_index]
+        
+        return interface_name, status  # Retorna uma tupla
+    return None, None
+
+log = "%LINK-3-UPDOWN: Interface GigabitEthernet0/1, changed state to down"
+interface, status = parse_interface_status(log) # Desempacotamento da tupla
+
+if interface:
+    print(f"Interface: {interface}, Novo Status: {status}")
+# Saída: Interface: GigabitEthernet0/1, Novo Status: down</code></pre>
+            
+            <h3>Retorno Implícito (None)</h3>
+            
+            <p>Se uma função não tiver uma instrução <code>return</code> explícita, ou se a instrução <code>return</code> for usada sem um valor, a função retorna implicitamente <code>None</code>.</p>
+            
+            <pre><code>def print_config(config_lines):
+    """Apenas imprime as linhas de configuração."""
+    for line in config_lines:
+        print(line)
+    # Nenhum return explícito
+
+resultado = print_config(["hostname R1", "interface Lo0", "ip address 1.1.1.1 255.255.255.255"])
+print(f"Valor retornado: {resultado}")
+# Saída:
+# hostname R1
+# interface Lo0
+# ip address 1.1.1.1 255.255.255.255
+# Valor retornado: None</code></pre>
+            
+            <h3>Aplicação em Redes: Função para Coletar Informações</h3>
+            
+            <p>Vamos criar uma função que simula a coleta de informações de um dispositivo e retorna um dicionário com os dados:</p>
+            
+            <pre><code>import random
+
+def collect_device_info(ip_address):
+    """Simula a coleta de informações de um dispositivo de rede.
+
+    Args:
+        ip_address (str): O endereço IP do dispositivo.
+
+    Returns:
+        dict: Um dicionário contendo informações do dispositivo, 
+              ou None se a coleta falhar.
+    """
+    print(f"Coletando informações de {ip_address}...")
+    
+    # Simulação de sucesso/falha
+    if random.random() < 0.1: # 10% de chance de falha
+        print("Falha ao conectar ao dispositivo.")
+        return None
+        
+    # Simulação de dados coletados
+    hostname = f"Device-{ip_address.split(".")[-1]}"
+    model = random.choice(["Cisco IOS Router", "Cisco IOS Switch", "Cisco ASA"])
+    version = f"15.{random.randint(0, 5)}({random.randint(1, 9)})M{random.randint(1, 5)}"
+    uptime_days = random.randint(1, 365)
+    cpu_usage = random.randint(5, 70)
+    
+    device_data = {
+        "hostname": hostname,
+        "ip_address": ip_address,
+        "model": model,
+        "version": version,
+        "uptime_days": uptime_days,
+        "cpu_usage_percent": cpu_usage
+    }
+    
+    print("Informações coletadas com sucesso.")
+    return device_data
+
+# Coletando informações de um dispositivo
+device_ip = "192.168.1.10"
+info = collect_device_info(device_ip)
+
+# Processando o resultado retornado
+if info:
+    print("\nInformações do Dispositivo:")
+    for key, value in info.items():
+        print(f"  {key.replace("_", " ").title()}: {value}")
+else:
+    print(f"\nNão foi possível coletar informações de {device_ip}.")</code></pre>
+            
+            <p>Esta função demonstra como retornar uma estrutura de dados (um dicionário) contendo múltiplas informações coletadas de um dispositivo, ou retornar <code>None</code> para indicar falha.</p>
+        </section>
+
+        <section id="escopo">
+            <h2>Escopo de Variáveis</h2>
+            
+            <p>O escopo de uma variável refere-se à parte do programa onde essa variável é acessível. Em Python, existem principalmente dois tipos de escopo: local e global.</p>
+            
+            <h3>Escopo Local</h3>
+            
+            <p>Variáveis definidas dentro de uma função têm escopo local. Elas só existem e podem ser acessadas dentro dessa função.</p>
+            
+            <pre><code>def minha_funcao():
+    variavel_local = "Eu sou local"
+    print(variavel_local)
+
+minha_funcao()  # Saída: Eu sou local
+
+# Tentar acessar a variável fora da função resultará em erro:
+# print(variavel_local)  # NameError: name 'variavel_local' is not defined</code></pre>
+            
+            <h3>Escopo Global</h3>
+            
+            <p>Variáveis definidas fora de qualquer função têm escopo global. Elas podem ser acessadas de qualquer lugar no programa, incluindo dentro de funções.</p>
+            
+            <pre><code>variavel_global = "Eu sou global"
+
+def outra_funcao():
+    print(f"Dentro da função: {variavel_global}")
+
+outra_funcao()  # Saída: Dentro da função: Eu sou global
+print(f"Fora da função: {variavel_global}")  # Saída: Fora da função: Eu sou global</code></pre>
+            
+            <h3>Modificando Variáveis Globais Dentro de Funções</h3>
+            
+            <p>Por padrão, você não pode modificar diretamente uma variável global dentro de uma função. Se você tentar atribuir um novo valor a uma variável com o mesmo nome de uma variável global, Python criará uma nova variável local com esse nome.</p>
+            
+            <pre><code>contador_global = 0
+
+def incrementar_contador():
+    # Isso cria uma nova variável local chamada contador_global
+    # Não modifica a global
+    contador_global = 10 
+    print(f"Dentro da função: {contador_global}")
+
+incrementar_contador()  # Saída: Dentro da função: 10
+print(f"Fora da função: {contador_global}")  # Saída: Fora da função: 0</code></pre>
+            
+            <p>Para modificar uma variável global dentro de uma função, você precisa usar a palavra-chave <code>global</code>:</p>
+            
+            <pre><code>contador_global = 0
+
+def incrementar_contador_global():
+    global contador_global  # Indica que queremos usar a variável global
+    contador_global += 1
+    print(f"Dentro da função: {contador_global}")
+
+incrementar_contador_global()
+incrementar_contador_global()
+print(f"Fora da função: {contador_global}")
+
+# Saída:
+# Dentro da função: 1
+# Dentro da função: 2
+# Fora da função: 2</code></pre>
+            
+            <div class="note">
+                <h4>Evite Usar Variáveis Globais Excessivamente:</h4>
+                <p>Embora a palavra-chave <code>global</code> permita modificar variáveis globais, seu uso excessivo pode tornar o código difícil de entender e depurar, pois o estado do programa pode ser alterado de qualquer lugar. É geralmente preferível passar dados para funções através de parâmetros e retornar resultados.</p>
+            </div>
+            
+            <h3>Escopo Aninhado (Nonlocal)</h3>
+            
+            <p>Quando você tem funções definidas dentro de outras funções, Python também suporta um escopo intermediário. A palavra-chave <code>nonlocal</code> permite modificar variáveis de um escopo externo (mas não global).</p>
+            
+            <pre><code>def funcao_externa():
+    contador = 0
+    
+    def funcao_interna():
+        nonlocal contador  # Permite modificar a variável da função externa
+        contador += 1
+        print(f"Contador interno: {contador}")
+        
+    funcao_interna()
+    funcao_interna()
+    print(f"Contador externo: {contador}")
+
+funcao_externa()
+
+# Saída:
+# Contador interno: 1
+# Contador interno: 2
+# Contador externo: 2</code></pre>
+            
+            <h3>Aplicação em Redes: Gerenciamento de Estado de Conexão</h3>
+            
+            <p>O escopo é importante ao gerenciar o estado de conexões em scripts de automação:</p>
+            
+            <pre><code># Variável global para armazenar conexões ativas (simplificado)
+active_connections = {}
+
+def connect(ip, username, password):
+    global active_connections
+    
+    if ip in active_connections:
+        print(f"Já existe uma conexão ativa para {ip}")
+        return active_connections[ip]
+        
+    print(f"Estabelecendo nova conexão para {ip}...")
+    # Simulação de conexão
+    connection_object = {"ip": ip, "status": "connected", "user": username}
+    active_connections[ip] = connection_object
+    print("Conexão estabelecida.")
+    return connection_object
+
+def disconnect(ip):
+    global active_connections
+    
+    if ip in active_connections:
+        print(f"Fechando conexão para {ip}...")
+        del active_connections[ip]
+        print("Conexão fechada.")
+    else:
+        print(f"Nenhuma conexão ativa encontrada para {ip}")
+
+def send_command(ip, command):
+    if ip not in active_connections:
+        print(f"Erro: Nenhuma conexão ativa para {ip}. Conecte primeiro.")
+        return None
+        
+    connection = active_connections[ip]
+    print(f"Enviando comando ", command, " para {ip} (usuário: {connection["user"]})")
+    # Simulação de envio de comando
+    output = f"Output do comando ", command, " no dispositivo {ip}"
+    return output
+
+# Exemplo de uso
+conn1 = connect("192.168.1.1", "admin", "cisco")
+conn2 = connect("10.0.0.1", "netadmin", "cisco")
+
+output1 = send_command("192.168.1.1", "show version")
+print(f"Saída recebida: {output1}")
+
+output2 = send_command("10.0.0.1", "show ip interface brief")
+print(f"Saída recebida: {output2}")
+
+disconnect("192.168.1.1")
+disconnect("10.0.0.1")
+
+print(f"\nConexões ativas restantes: {active_connections}")</code></pre>
+            
+            <p>Este exemplo usa uma variável global (<code>active_connections</code>) para manter o estado das conexões entre diferentes chamadas de função. Embora funcione, em aplicações maiores, seria preferível usar classes para encapsular o estado da conexão.</p>
+        </section>
+
+        <section id="lambda">
+            <h2>Funções Lambda</h2>
+            
+            <p>As funções lambda, também conhecidas como funções anônimas, são pequenas funções definidas sem um nome usando a palavra-chave <code>lambda</code>. Elas são úteis para criar funções simples rapidamente, geralmente para serem usadas como argumentos para outras funções.</p>
+            
+            <h3>Sintaxe Básica</h3>
+            
+            <pre><code># Sintaxe básica de uma função lambda
+lambda argumentos: expressão</code></pre>
+            
+            <ul>
+                <li><code>lambda</code>: Palavra-chave que define uma função anônima.</li>
+                <li><code>argumentos</code>: Um ou mais argumentos que a função aceita.</li>
+                <li><code>:</code>: Separa os argumentos da expressão.</li>
+                <li><code>expressão</code>: Uma única expressão que é avaliada e retornada pela função. Funções lambda não podem conter múltiplas instruções ou laços.</li>
+            </ul>
+            
+            <h3>Exemplos Simples</h3>
+            
+            <pre><code># Função lambda para somar dois números
+somar = lambda x, y: x + y
+print(somar(5, 3))  # Saída: 8
+
+# Função lambda para verificar se um número é par
+eh_par = lambda num: num % 2 == 0
+print(eh_par(10))  # Saída: True
+print(eh_par(7))   # Saída: False</code></pre>
+            
+            <h3>Uso com Funções de Ordem Superior</h3>
+            
+            <p>As funções lambda são frequentemente usadas com funções que aceitam outras funções como argumentos, como <code>map()</code>, <code>filter()</code> e <code>sorted()</code>.</p>
+            
+            <pre><code># Usando lambda com map() para aplicar uma função a cada item de uma lista
+ips = ["192.168.1.1", "10.0.0.1", "172.16.0.1"]
+# Extrair o último octeto de cada IP
+ultimos_octetos = list(map(lambda ip: int(ip.split(".")[-1]), ips))
+print(ultimos_octetos)  # Saída: [1, 1, 1]
+
+# Usando lambda com filter() para selecionar itens que atendem a uma condição
+interfaces = [
+    {"name": "Gi0/1", "status": "up"},
+    {"name": "Gi0/2", "status": "down"},
+    {"name": "Gi0/3", "status": "up"},
+    {"name": "Lo0", "status": "up"}
+]
+# Filtrar interfaces ativas
+interfaces_ativas = list(filter(lambda intf: intf["status"] == "up", interfaces))
+print(interfaces_ativas)
+# Saída: [{'name': 'Gi0/1', 'status': 'up'}, {'name': 'Gi0/3', 'status': 'up'}, {'name': 'Lo0', 'status': 'up'}]
+
+# Usando lambda com sorted() para ordenar com base em um critério específico
+devices = [
+    {"hostname": "R1", "ip": "10.0.0.1", "uptime": 50},
+    {"hostname": "S1", "ip": "10.0.0.2", "uptime": 120},
+    {"hostname": "S2", "ip": "10.0.0.3", "uptime": 20}
+]
+# Ordenar dispositivos por tempo de atividade (uptime)
+devices_ordenados = sorted(devices, key=lambda device: device["uptime"])
+print(devices_ordenados)
+# Saída: [{'hostname': 'S2', 'ip': '10.0.0.3', 'uptime': 20}, {'hostname': 'R1', 'ip': '10.0.0.1', 'uptime': 50}, {'hostname': 'S1', 'ip': '10.0.0.2', 'uptime': 120}]</code></pre>
+            
+            <h3>Aplicação em Redes: Processamento de Dados</h3>
+            
+            <p>As funções lambda podem ser úteis para processar rapidamente dados coletados de dispositivos de rede:</p>
+            
+            <pre><code># Lista de dicionários representando interfaces e suas estatísticas
+interface_stats = [
+    {"interface": "Gi0/1", "in_errors": 5, "out_errors": 2, "in_discards": 0},
+    {"interface": "Gi0/2", "in_errors": 0, "out_errors": 0, "in_discards": 10},
+    {"interface": "Gi0/3", "in_errors": 12, "out_errors": 1, "in_discards": 3},
+    {"interface": "Fa0/1", "in_errors": 0, "out_errors": 0, "in_discards": 0}
+]
+
+# 1. Filtrar interfaces com erros (entrada ou saída)
+interfaces_com_erros = list(filter(
+    lambda stat: stat["in_errors"] > 0 or stat["out_errors"] > 0,
+    interface_stats
+))
+print("Interfaces com erros:")
+for intf in interfaces_com_erros:
+    print(f"  {intf["interface"]} (In: {intf["in_errors"]}, Out: {intf["out_errors"]})")
+
+# 2. Calcular o total de erros por interface
+interface_stats_com_total = list(map(
+    lambda stat: {**stat, "total_errors": stat["in_errors"] + stat["out_errors"]},
+    interface_stats
+))
+print("\nEstatísticas com total de erros:")
+print(interface_stats_com_total)
+
+# 3. Ordenar interfaces pelo total de erros (decrescente)
+interfaces_ordenadas_por_erro = sorted(
+    interface_stats_com_total,
+    key=lambda stat: stat["total_errors"],
+    reverse=True
+)
+print("\nInterfaces ordenadas por total de erros:")
+for intf in interfaces_ordenadas_por_erro:
+    print(f"  {intf["interface"]}: {intf["total_errors"]} erros")</code></pre>
+            
+            <div class="note">
+                <h4>Quando Usar Funções Lambda:</h4>
+                <p>Use funções lambda para tarefas simples que podem ser expressas em uma única linha. Para lógicas mais complexas, é preferível definir uma função regular usando <code>def</code>, pois isso melhora a legibilidade e a capacidade de teste do código.</p>
+            </div>
+        </section>
+
+        <section id="exercicios">
+            <h2>Exercícios Práticos</h2>
+            
+            <div class="exercise">
+                <h4>Exercício 1: Biblioteca de Funções de Rede</h4>
+                <p>Crie um conjunto de funções reutilizáveis para tarefas comuns de rede:</p>
+                <ol>
+                    <li>Uma função que valida se uma string é um endereço IPv4 válido.</li>
+                    <li>Uma função que converte uma máscara de sub-rede CIDR (ex: /24) para notação decimal (ex: 255.255.255.0).</li>
+                    <li>Uma função que extrai o nome do host de uma configuração (ex: "hostname Router1").</li>
+                    <li>Uma função que verifica se uma porta TCP específica está aberta em um host (pode usar simulação).</li>
+                </ol>
+                <p>Certifique-se de incluir docstrings para cada função.</p>
+            </div>
+            
+            <div class="solution">
+                <h4>Solução do Exercício 1:</h4>
+                <pre><code>#!/usr/bin/env python3
+# Biblioteca de Funções de Rede
+
+import re
+import socket
+
+def is_valid_ipv4(ip_str):
+    """Valida se uma string é um endereço IPv4 válido.
+
+    Args:
+        ip_str (str): A string a ser validada.
+
+    Returns:
+        bool: True se for um IPv4 válido, False caso contrário.
+    """
+    # Padrão para IPv4
+    pattern = r"^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$"
+    if re.match(pattern, ip_str):
+        return True
+    return False
+
+def cidr_to_decimal_mask(cidr_prefix):
+    """Converte um prefixo CIDR para máscara decimal.
+
+    Args:
+        cidr_prefix (int): O prefixo CIDR (0-32).
+
+    Returns:
+        str: A máscara em notação decimal, ou None se o prefixo for inválido.
+    """
+    if not isinstance(cidr_prefix, int) or not 0 <= cidr_prefix <= 32:
+        return None
+    
+    # Calcula a máscara em formato inteiro
+    mask_int = (0xFFFFFFFF << (32 - cidr_prefix)) & 0xFFFFFFFF
+    
+    # Converte para formato decimal pontuado
+    octets = [
+        (mask_int >> 24) & 0xFF,
+        (mask_int >> 16) & 0xFF,
+        (mask_int >> 8) & 0xFF,
+        mask_int & 0xFF
+    ]
+    return ".".join(map(str, octets))
+
+def extract_hostname(config_text):
+    """Extrai o nome do host de uma configuração Cisco.
+
+    Args:
+        config_text (str): O texto da configuração.
+
+    Returns:
+        str: O nome do host encontrado, ou None se não for encontrado.
+    """
+    # Procura pela linha "hostname ..."
+    match = re.search(r"^hostname\s+(\S+)", config_text, re.MULTILINE | re.IGNORECASE)
+    if match:
+        return match.group(1)
+    return None
+
+def is_port_open(host, port, timeout=1):
+    """Verifica se uma porta TCP está aberta em um host.
+
+    Args:
+        host (str): O endereço IP ou nome do host.
+        port (int): O número da porta TCP.
+        timeout (int, optional): Timeout em segundos. Defaults to 1.
+
+    Returns:
+        bool: True se a porta estiver aberta, False caso contrário.
+    """
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    sock.settimeout(timeout)
+    try:
+        # Tenta conectar à porta
+        result = sock.connect_ex((host, port))
+        sock.close()
+        # Se o resultado for 0, a conexão foi bem-sucedida (porta aberta)
+        return result == 0
+    except (socket.timeout, socket.gaierror, OSError):
+        # Trata erros de timeout, resolução de nome ou outros erros de socket
+        sock.close()
+        return False
+
+# Testando as funções
+# Teste is_valid_ipv4
+print(f"192.168.1.1 é válido? {is_valid_ipv4("192.168.1.1")}")
+print(f"256.0.0.1 é válido? {is_valid_ipv4("256.0.0.1")}")
+print(f"10.0.0 é válido? {is_valid_ipv4("10.0.0")}")
+
+# Teste cidr_to_decimal_mask
+print(f"Máscara para /24: {cidr_to_decimal_mask(24)}")
+print(f"Máscara para /30: {cidr_to_decimal_mask(30)}")
+print(f"Máscara para /16: {cidr_to_decimal_mask(16)}")
+print(f"Máscara para /33: {cidr_to_decimal_mask(33)}")
+
+# Teste extract_hostname
+config = """
+! Comentário
+hostname MyRouter-01
+!
+interface GigabitEthernet0/0
+ ip address 10.0.0.1 255.255.255.0
+"""
+print(f"Hostname extraído: {extract_hostname(config)}")
+
+# Teste is_port_open (pode variar dependendo da sua rede)
+print(f"Porta 80 em google.com está aberta? {is_port_open("google.com", 80)}")
+print(f"Porta 22 em 192.168.1.1 está aberta? {is_port_open("192.168.1.1", 22)}")
+print(f"Porta 9999 em localhost está aberta? {is_port_open("localhost", 9999)}")</code></pre>
+            </div>
+            
+            <div class="exercise">
+                <h4>Exercício 2: Gerador de Comandos de Configuração</h4>
+                <p>Crie uma função que gere uma lista de comandos Cisco IOS para configurar uma interface com base em parâmetros fornecidos. A função deve:</p>
+                <ol>
+                    <li>Aceitar o nome da interface, descrição, endereço IP, máscara e status (up/down) como argumentos.</li>
+                    <li>Usar valores padrão para parâmetros opcionais.</li>
+                    <li>Retornar uma lista de strings, onde cada string é um comando de configuração.</li>
+                </ol>
+            </div>
+            
+            <div class="solution">
+                <h4>Solução do Exercício 2:</h4>
+                <pre><code>#!/usr/bin/env python3
+# Gerador de Comandos de Configuração de Interface
+
+def generate_interface_commands(
+    interface_name,
+    description="",
+    ip_address=None,
+    mask=None,
+    status="up",
+    is_switchport=False,
+    access_vlan=None,
+    voice_vlan=None,
+    mode="access"
+):
+    """Gera uma lista de comandos Cisco IOS para configurar uma interface.
+
+    Args:
+        interface_name (str): Nome da interface (ex: "GigabitEthernet0/1").
+        description (str, optional): Descrição da interface. Defaults to "".
+        ip_address (str, optional): Endereço IP. Defaults to None.
+        mask (str, optional): Máscara de sub-rede. Defaults to None.
+        status (str, optional): Estado desejado ("up" ou "down"). Defaults to "up".
+        is_switchport (bool, optional): Se é uma porta de switch. Defaults to False.
+        access_vlan (int, optional): VLAN de acesso. Defaults to None.
+        voice_vlan (int, optional): VLAN de voz. Defaults to None.
+        mode (str, optional): Modo switchport ("access" ou "trunk"). Defaults to "access".
+
+    Returns:
+        list: Uma lista de strings, cada uma sendo um comando de configuração.
+    """
+    commands = []
+    commands.append(f"interface {interface_name}")
+    
+    if description:
+        commands.append(f" description {description}")
+    else:
+        commands.append(" no description")
+        
+    if is_switchport:
+        commands.append(f" switchport mode {mode}")
+        if mode == "access":
+            if access_vlan:
+                commands.append(f" switchport access vlan {access_vlan}")
+            if voice_vlan:
+                commands.append(f" switchport voice vlan {voice_vlan}")
+            commands.append(" spanning-tree portfast")
+        elif mode == "trunk":
+            # Adicionar lógica para allowed vlans e native vlan se necessário
+            pass
+    else:
+        # Configuração de Layer 3
+        if ip_address and mask:
+            commands.append(f" ip address {ip_address} {mask}")
+        else:
+            commands.append(" no ip address")
+            
+    # Configurando o status
+    if status.lower() == "up":
+        commands.append(" no shutdown")
+    elif status.lower() == "down":
+        commands.append(" shutdown")
+        
+    commands.append("!") # Adiciona separador
+    
+    return commands
+
+# Exemplo 1: Interface Layer 3
+commands_l3 = generate_interface_commands(
+    interface_name="GigabitEthernet0/0",
+    description="WAN Link",
+    ip_address="203.0.113.1",
+    mask="255.255.255.252",
+    status="up"
+)
+print("Configuração Interface Layer 3:")
+for cmd in commands_l3:
+    print(cmd)
+
+# Exemplo 2: Interface de Acesso Switchport
+commands_access = generate_interface_commands(
+    interface_name="GigabitEthernet0/1",
+    description="User Port",
+    is_switchport=True,
+    access_vlan=10,
+    voice_vlan=20,
+    status="up"
+)
+print("\nConfiguração Interface Switchport Access:")
+for cmd in commands_access:
+    print(cmd)
+
+# Exemplo 3: Interface desligada
+commands_down = generate_interface_commands(
+    interface_name="GigabitEthernet0/2",
+    description="Unused Port",
+    status="down"
+)
+print("\nConfiguração Interface Desligada:")
+for cmd in commands_down:
+    print(cmd)</code></pre>
+            </div>
+            
+            <div class="exercise">
+                <h4>Exercício 3: Processador de Saída de Comando</h4>
+                <p>Crie uma função que processe a saída do comando <code>show ip interface brief</code> e retorne uma lista de dicionários, onde cada dicionário representa uma interface e contém seu nome, endereço IP, status e protocolo.</p>
+                <p>Use a seguinte saída de exemplo:</p>
+                <pre>
+Interface                  IP-Address      OK? Method Status                Protocol
+GigabitEthernet0/0         192.168.1.1     YES NVRAM  up                    up      
+GigabitEthernet0/1         10.0.0.1        YES NVRAM  up                    up      
+GigabitEthernet0/2         unassigned      YES NVRAM  administratively down down    
+Loopback0                  172.16.1.1      YES manual up                    up      
+                </pre>
+            </div>
+            
+            <div class="solution">
+                <h4>Solução do Exercício 3:</h4>
+                <pre><code>#!/usr/bin/env python3
+# Processador de Saída do Comando show ip interface brief
+
+def parse_show_ip_interface_brief(output):
+    """Processa a saída do comando show ip interface brief.
+
+    Args:
+        output (str): A string contendo a saída do comando.
+
+    Returns:
+        list: Uma lista de dicionários, cada um representando uma interface.
+              Retorna uma lista vazia se a saída for inválida.
+    """
+    interfaces = []
+    lines = output.strip().split("\n")
+    
+    # Verifica se a saída tem pelo menos a linha de cabeçalho
+    if not lines or not lines[0].startswith("Interface"):
+        return []
+        
+    # Itera sobre as linhas, pulando o cabeçalho
+    for line in lines[1:]:
+        parts = line.split()
+        
+        # Verifica se a linha tem o formato esperado (pelo menos 6 colunas)
+        if len(parts) >= 6:
+            interface_name = parts[0]
+            ip_address = parts[1]
+            status = parts[4]
+            protocol = parts[5]
+            
+            # Tratamento especial para "administratively down"
+            if status == "administratively" and len(parts) >= 7:
+                status = "administratively down"
+                protocol = parts[6]
+            
+            interfaces.append({
+                "interface": interface_name,
+                "ip_address": ip_address,
+                "status": status,
+                "protocol": protocol
+            })
+            
+    return interfaces
+
+# Saída de exemplo
+show_ip_int_brief_output = """
+Interface                  IP-Address      OK? Method Status                Protocol
+GigabitEthernet0/0         192.168.1.1     YES NVRAM  up                    up      
+GigabitEthernet0/1         10.0.0.1        YES NVRAM  up                    up      
+GigabitEthernet0/2         unassigned      YES NVRAM  administratively down down    
+Loopback0                  172.16.1.1      YES manual up                    up      
+Serial0/0/0                unassigned      YES unset  down                  down    
+Tunnel0                    169.254.1.1     YES TFTP   up                    up      
+"""
+
+# Processando a saída
+parsed_interfaces = parse_show_ip_interface_brief(show_ip_int_brief_output)
+
+# Exibindo os resultados
+print("Interfaces Processadas:")
+if parsed_interfaces:
+    for intf in parsed_interfaces:
+        print(f"- Interface: {intf["interface"]}")
+        print(f"  IP Address: {intf["ip_address"]}")
+        print(f"  Status: {intf["status"]}")
+        print(f"  Protocol: {intf["protocol"]}")
+        print("---")
+else:
+    print("Não foi possível processar a saída do comando.")
+
+# Exemplo de uso dos dados processados (filtrar interfaces ativas)
+active_interfaces = [intf for intf in parsed_interfaces if intf["status"] == "up" and intf["protocol"] == "up"]
+print("\nInterfaces Ativas (Status UP, Protocol UP):")
+if active_interfaces:
+    for intf in active_interfaces:
+        print(f"- {intf["interface"]} ({intf["ip_address"]})")
+else:
+    print("Nenhuma interface totalmente ativa encontrada.")</code></pre>
+            </div>
+        </section>
+
+        <section id="avaliacao">
+            <h2>Avaliação do Módulo</h2>
+            
+            <div class="assessment">
+                <h4>Quiz de Conhecimentos</h4>
+                <p>Responda às seguintes perguntas para testar seu conhecimento sobre os conceitos apresentados neste módulo:</p>
+                
+                <ol>
+                    <li>Qual palavra-chave é usada para definir uma função em Python?</li>
+                    <li>Qual é a diferença entre parâmetros e argumentos?</li>
+                    <li>Como você pode definir um valor padrão para um parâmetro de função?</li>
+                    <li>O que a instrução <code>return</code> faz em uma função? O que acontece se uma função não tiver <code>return</code>?</li>
+                    <li>O que significa o escopo de uma variável? Qual a diferença entre escopo local e global?</li>
+                    <li>Como você pode modificar uma variável global dentro de uma função?</li>
+                    <li>O que são funções lambda e qual sua principal característica?</li>
+                    <li>Para que servem <code>*args</code> e <code>**kwargs</code> na definição de uma função?</li>
+                    <li>O que é uma docstring e por que ela é importante?</li>
+                    <li>Como você pode retornar múltiplos valores de uma função? Em que formato eles são retornados?</li>
+                </ol>
+            </div>
+            
+            <div class="solution">
+                <h4>Respostas do Quiz:</h4>
+                <ol>
+                    <li><strong>Palavra-chave para definir função:</strong> <code>def</code>.</li>
+                    <li><strong>Parâmetros vs Argumentos:</strong> Parâmetros são os nomes listados na definição da função (as variáveis que a função espera receber). Argumentos são os valores reais passados para a função quando ela é chamada.</li>
+                    <li><strong>Valor padrão para parâmetro:</strong> Você define um valor padrão atribuindo-o ao parâmetro na definição da função. Ex: <code>def minha_funcao(param1, param2="valor_padrao"):</code>.</li>
+                    <li><strong>Instrução return:</strong> A instrução <code>return</code> é usada para enviar um valor de volta da função para o código que a chamou. Se uma função não tiver uma instrução <code>return</code> explícita ou usar <code>return</code> sem um valor, ela retorna implicitamente <code>None</code>.</li>
+                    <li><strong>Escopo de variável:</strong> O escopo define onde uma variável é acessível. Variáveis locais são definidas dentro de uma função e só são acessíveis dentro dela. Variáveis globais são definidas fora de qualquer função e são acessíveis de qualquer lugar no módulo.</li>
+                    <li><strong>Modificar variável global:</strong> Você precisa usar a palavra-chave <code>global</code> antes do nome da variável dentro da função. Ex: <code>global minha_variavel_global</code>.</li>
+                    <li><strong>Funções lambda:</strong> São pequenas funções anônimas (sem nome) definidas com a palavra-chave <code>lambda</code>. Sua principal característica é que elas só podem conter uma única expressão, cujo resultado é retornado.</li>
+                    <li><strong>*args e **kwargs:</strong> <code>*args</code> permite que uma função aceite um número arbitrário de argumentos posicionais, que são coletados em uma tupla. <code>**kwargs</code> permite que uma função aceite um número arbitrário de argumentos de palavra-chave, que são coletados em um dicionário.</li>
+                    <li><strong>Docstring:</strong> É uma string literal que aparece como a primeira instrução na definição de uma função, usada para documentar o propósito da função, seus parâmetros e o que ela retorna. É importante para a legibilidade, manutenção e para ferramentas de documentação automática.</li>
+                    <li><strong>Retornar múltiplos valores:</strong> Você pode retornar múltiplos valores separando-os por vírgula na instrução <code>return</code>. Python automaticamente os empacota e retorna como uma tupla. Ex: <code>return valor1, valor2</code>.</li>
+                </ol>
+            </div>
+            
+            <div class="assessment">
+                <h4>Projeto Prático</h4>
+                <p>Desenvolva uma biblioteca de funções Python para interagir com dispositivos Cisco (simulado). A biblioteca deve incluir funções para:</p>
+                
+                <ol>
+                    <li>Conectar a um dispositivo (simulado, retornando um objeto de conexão fictício).</li>
+                    <li>Enviar um comando para um dispositivo conectado (simulado, retornando uma saída de exemplo).</li>
+                    <li>Desconectar de um dispositivo.</li>
+                    <li>Uma função de alto nível que conecta, envia uma lista de comandos e desconecta.</li>
+                    <li>Gerenciar o estado das conexões (quais dispositivos estão conectados).</li>
+                </ol>
+                
+                <p>Use os conceitos de funções, parâmetros, valores de retorno e escopo para criar uma biblioteca modular e reutilizável. Considere o tratamento de erros básicos (ex: tentar enviar comando sem conexão).</p>
+            </div>
+        </section>
+
+        <section id="referencias">
+            <h2>Referências e Recursos Adicionais</h2>
+            
+            <div class="references">
+                <h3>Documentação Oficial</h3>
+                <ul>
+                    <li><a href="https://docs.python.org/3/tutorial/controlflow.html#defining-functions" target="_blank">Tutorial Python: Definindo Funções</a></li>
+                    <li><a href="https://docs.python.org/3/tutorial/controlflow.html#more-on-defining-functions" target="_blank">Tutorial Python: Mais sobre Definição de Funções</a></li>
+                    <li><a href="https://docs.python.org/3/reference/compound_stmts.html#function-definitions" target="_blank">Referência da Linguagem: Definição de Funções</a></li>
+                    <li><a href="https://peps.python.org/pep-0008/#function-and-variable-names" target="_blank">PEP 8: Nomes de Funções e Variáveis</a></li>
+                    <li><a href="https://peps.python.org/pep-0257/" target="_blank">PEP 257: Convenções para Docstrings</a></li>
+                </ul>
+                
+                <h3>Livros Recomendados</h3>
+                <ul>
+                    <li>Eric Matthes - "Python Crash Course" (Capítulo sobre Funções)</li>
+                    <li>Al Sweigart - "Automate the Boring Stuff with Python" (Capítulo sobre Funções)</li>
+                    <li>Mark Lutz - "Learning Python" (Partes sobre Funções e Escopo)</li>
+                </ul>
+                
+                <h3>Recursos Online</h3>
+                <ul>
+                    <li><a href="https://realpython.com/defining-your-own-python-function/" target="_blank">Real Python: Defining Your Own Python Function</a></li>
+                    <li><a href="https://www.w3schools.com/python/python_functions.asp" target="_blank">W3Schools: Python Functions</a></li>
+                    <li><a href="https://realpython.com/python-scope-legb-rule/" target="_blank">Real Python: Python Scope & the LEGB Rule</a></li>
+                    <li><a href="https://realpython.com/python-lambda/" target="_blank">Real Python: How to Use Python Lambda Functions</a></li>
+                </ul>
+                
+                <h3>Recursos Específicos para Redes</h3>
+                <ul>
+                    <li><a href="https://pynet.twb-tech.com/blog/python/functions.html" target="_blank">PyNet: Python Functions in Network Automation</a></li>
+                    <li><a href="https://developer.cisco.com/learning/modules/programming-fundamentals/python-part2/step/1" target="_blank">Cisco DevNet: Python Programming for Network Engineers - Part 2 (Functions)</a></li>
+                </ul>
+            </div>
+        </section>
+        
+        <div class="navigation-buttons">
+            <a href="modulo4.html" class="btn">← Módulo Anterior: Laços de Repetição</a>
+            <a href="modulo6.html" class="btn">Próximo Módulo: Listas e Dicionários →</a>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Curso de Python para Profissionais de Redes Cisco. Todos os direitos reservados.</p>
+    </footer>
+</body>
+</html>

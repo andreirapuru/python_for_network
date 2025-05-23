@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Módulo 9: Automação Avançada com Netmiko - Curso de Python para Redes Cisco</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Módulo 9: Automação Avançada com Netmiko</h1>
+        <p>Curso de Python para Profissionais de Redes Cisco</p>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="index.html">Página Inicial</a></li>
+            <li><a href="modulo8.html">← Módulo Anterior</a></li>
+            <li><a href="#introducao-netmiko">Introdução ao Netmiko</a></li>
+            <li><a href="#conexao">Conectando com Netmiko</a></li>
+            <li><a href="#comandos-show">Enviando Comandos Show</a></li>
+            <li><a href="#comandos-config">Enviando Comandos de Configuração</a></li>
+            <li><a href="#parsing">Parsing de Saída com TextFSM</a></li>
+            <li><a href="#erros">Tratamento de Erros</a></li>
+            <li><a href="#avancado">Recursos Avançados</a></li>
+            <li><a href="#exercicios">Exercícios</a></li>
+            <li><a href="#avaliacao">Avaliação</a></li>
+            <li><a href="#referencias">Referências</a></li>
+            <li><a href="index.html">Conclusão →</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section id="introducao-netmiko">
+            <h2>Introdução ao Netmiko</h2>
+            
+            <p>Netmiko é uma biblioteca Python multi-vendor que simplifica a interação com dispositivos de rede via SSH. Construída sobre a biblioteca Paramiko, Netmiko adiciona funcionalidades específicas para automação de redes, como:</p>
+            
+            <ul>
+                <li>Suporte a uma vasta gama de fabricantes e plataformas (Cisco IOS, IOS-XE, IOS-XR, NX-OS, ASA, Juniper JunOS, Arista EOS, HP, etc.).</li>
+                <li>Detecção automática de prompt do dispositivo.</li>
+                <li>Tratamento de paginação (comandos como <code>terminal length 0</code>).</li>
+                <li>Métodos simplificados para enviar comandos show e comandos de configuração.</li>
+                <li>Tratamento de erros mais robusto e específico para redes.</li>
+            </ul>
+            
+            <p>Netmiko é uma das bibliotecas mais populares e amplamente utilizadas para automação de redes baseada em CLI (Command-Line Interface) devido à sua facilidade de uso e suporte abrangente.</p>
+            
+            <div class="note">
+                <h4>Netmiko vs. Paramiko vs. NAPALM:</h4>
+                <p><strong>Paramiko:</strong> Biblioteca SSH de baixo nível, base para Netmiko. Requer mais código para tarefas de rede.</p>
+                <p><strong>Netmiko:</strong> Focada em simplificar a interação CLI via SSH. Ideal para enviar comandos e configurações, especialmente em ambientes com muitos dispositivos Cisco.</p>
+                <p><strong>NAPALM:</strong> Focada em abstração multi-vendor, oferecendo uma API unificada para obter dados e gerenciar configurações. Ideal para ambientes heterogêneos e validação de estado.</p>
+                <p>Muitas vezes, Netmiko é a escolha ideal para tarefas que envolvem interação direta com a CLI de dispositivos Cisco.</p>
+            </div>
+            
+            <h3>Instalação</h3>
+            
+            <p>Se ainda não instalou, use o pip:</p>
+            
+            <pre><code>pip install netmiko</code></pre>
+        </section>
+
+        <section id="conexao">
+            <h2>Conectando com Netmiko</h2>
+            
+            <p>Conectar-se a um dispositivo com Netmiko é simples. Você precisa fornecer um dicionário com os detalhes da conexão.</p>
+            
+            <h3>Estrutura do Dicionário de Conexão</h3>
+            
+            <p>O dicionário de conexão geralmente inclui:</p>
+            
+            <ul>
+                <li><code>device_type</code>: String que identifica o tipo de dispositivo (ex: <code>cisco_ios</code>, <code>cisco_xe</code>, <code>cisco_xr</code>, <code>cisco_nxos</code>, <code>cisco_asa</code>). A lista completa está na documentação do Netmiko.</li>
+                <li><code>host</code>: Endereço IP ou hostname do dispositivo.</li>
+                <li><code>username</code>: Nome de usuário para login.</li>
+                <li><code>password</code>: Senha para login.</li>
+                <li><code>secret</code>: (Opcional) Senha do modo enable (se aplicável). Netmiko tentará entrar no modo enable automaticamente se <code>secret</code> for fornecido.</li>
+                <li><code>port</code>: (Opcional) Porta SSH (padrão 22).</li>
+                <li><code>session_log</code>: (Opcional) Caminho para um arquivo onde a sessão será registrada.</li>
+            </ul>
+            
+            <h3>Exemplo de Conexão</h3>
+            
+            <pre><code>from netmiko import ConnectHandler
+import json
+
+def connect_netmiko(device_info):
+    """Estabelece uma conexão SSH usando Netmiko."""
+    try:
+        print(f"Conectando a {device_info["host"]} ({device_info["device_type"]})...")
+        # Cria o objeto de conexão
+        net_connect = ConnectHandler(**device_info)
+        print(f"Conectado com sucesso a {net_connect.base_prompt}")
+        return net_connect
+    except Exception as e:
+        print(f"Falha ao conectar a {device_info["host"]}: {e}")
+        return None
+
+# Informações do dispositivo
+router_ios = {
+    "device_type": "cisco_ios",
+    "host": "192.168.1.1",
+    "username": "admin",
+    "password": "cisco123",
+    "secret": "enable_pass",  # Senha do modo enable
+    "session_log": "router_ios_session.log"
+}
+
+switch_nxos = {
+    "device_type": "cisco_nxos",
+    "host": "192.168.1.10",
+    "username": "admin",
+    "password": "cisco123",
+    # NX-OS geralmente não usa 'secret' para enable
+}
+
+# Conectando ao roteador IOS
+net_connect_ios = connect_netmiko(router_ios)
+
+# Conectando ao switch NX-OS
+# net_connect_nxos = connect_netmiko(switch_nxos)
+
+# É importante fechar a conexão quando terminar
+if net_connect_ios:
+    print(f"\nPrompt atual: {net_connect_ios.find_prompt()}")
+    # Desconectando
+    net_connect_ios.disconnect()
+    print("Conexão com router_ios fechada.")
+
+# if net_connect_nxos:
+#     net_connect_nxos.disconnect()
+#     print("Conexão com switch_nxos fechada.")</code></pre>
+            
+            <div class="note">
+                <h4>Gerenciamento de Conexões:</h4>
+                <p>É fundamental chamar o método <code>disconnect()</code> para fechar a conexão SSH e liberar recursos. O uso de blocos <code>try...finally</code> ou gerenciadores de contexto (<code>with ConnectHandler(...) as net_connect:</code>) é recomendado para garantir que a desconexão ocorra mesmo em caso de erros.</p>
+            </div>
+        </section>
+
+        <section id="comandos-show">
+            <h2>Enviando Comandos Show</h2>
+            
+            <p>Netmiko simplifica o envio de comandos show e a coleta de suas saídas.</p>
+            
+            <h3>Método send_command()</h3>
+            
+            <p>O método <code>send_command()</code> é o principal para executar comandos que retornam dados (comandos show).</p>
+            
+            <pre><code>from netmiko import ConnectHandler
+
+# ... (função connect_netmiko e device_info definidos como antes) ...
+
+# Conectando ao dispositivo
+net_connect = connect_netmiko(router_ios)
+
+if net_connect:
+    try:
+        # Enviando um comando simples
+        print("\nEnviando 'show version'...")
+        output_version = net_connect.send_command("show version")
+        print("--- Saída Show Version (parcial) ---")
+        print("\n".join(output_version.splitlines()[:10])) # Mostra as primeiras 10 linhas
+        print("...")
+        
+        # Enviando um comando que pode exigir modo privilegiado
+        # Netmiko entra no modo enable automaticamente se 'secret' foi fornecido
+        print("\nEnviando 'show running-config'...")
+        # use_textfsm=True será explicado na próxima seção
+        output_run_config = net_connect.send_command("show running-config", expect_string=r"#")
+        print("--- Saída Show Running-Config (parcial) ---")
+        print("\n".join(output_run_config.splitlines()[:15]))
+        print("...")
+        
+        # Enviando comando com opções
+        print("\nEnviando 'show ip interface brief'...")
+        output_ip_int = net_connect.send_command(
+            "show ip interface brief", 
+            delay_factor=2, # Aumenta o tempo de espera (útil para comandos lentos)
+            strip_prompt=True, # Remove o prompt da saída
+            strip_command=True # Remove o comando da saída
+        )
+        print("--- Saída Show IP Interface Brief ---")
+        print(output_ip_int)
+        
+    except Exception as e:
+        print(f"Erro ao enviar comando: {e}")
+    finally:
+        # Garantindo a desconexão
+        net_connect.disconnect()
+        print("\nConexão fechada.")</code></pre>
+            
+            <h3>Parâmetros Comuns de send_command()</h3>
+            
+            <ul>
+                <li><code>command_string</code>: O comando a ser executado.</li>
+                <li><code>expect_string</code>: (Opcional) Uma expressão regular que indica o prompt esperado após o comando. Útil para garantir que o comando foi concluído. Netmiko geralmente detecta isso automaticamente.</li>
+                <li><code>delay_factor</code>: (Opcional) Multiplicador para os tempos de espera internos. Aumente se os comandos demorarem mais para retornar.</li>
+                <li><code>max_loops</code>: (Opcional) Número máximo de vezes para verificar a saída antes de desistir.</li>
+                <li><code>strip_prompt</code>: (Opcional) Remove o prompt do final da saída (padrão: True).</li>
+                <li><code>strip_command</code>: (Opcional) Remove o comando enviado do início da saída (padrão: True).</li>
+                <li><code>use_textfsm</code>: (Opcional) Usa TextFSM para parsear a saída em dados estruturados (padrão: False). Veremos isso em detalhes.</li>
+                <li><code>use_genie</code>: (Opcional) Usa Cisco Genie (anteriormente pyATS) para parsear a saída (padrão: False). Requer instalação separada.</li>
+            </ul>
+        </section>
+
+        <section id="comandos-config">
+            <h2>Enviando Comandos de Configuração</h2>
+            
+            <p>Netmiko também facilita o envio de comandos de configuração.</p>
+            
+            <h3>Método send_config_set()</h3>
+            
+            <p>O método <code>send_config_set()</code> é usado para enviar um ou mais comandos de configuração. Ele entra automaticamente no modo de configuração, envia os comandos e sai.</p>
+            
+            <pre><code>from netmiko import ConnectHandler
+
+# ... (função connect_netmiko e device_info definidos como antes) ...
+
+# Conectando ao dispositivo
+net_connect = connect_netmiko(router_ios)
+
+if net_connect:
+    try:
+        # Lista de comandos de configuração
+        config_commands = [
+            "interface Loopback99",
+            "description Configurada via Netmiko",
+            "ip address 99.99.99.99 255.255.255.255",
+            "no shutdown"
+        ]
+        
+        print("\nEnviando comandos de configuração...")
+        # Enviando os comandos
+        output_config = net_connect.send_config_set(config_commands)
+        
+        print("--- Saída da Configuração ---")
+        print(output_config)
+        
+        # Verificando se a interface foi criada (opcional)
+        print("\nVerificando a configuração...")
+        output_verify = net_connect.send_command("show ip interface brief | include Loopback99")
+        print(output_verify)
+        
+        # Salvando a configuração
+        print("\nSalvando a configuração...")
+        output_save = net_connect.save_config()
+        print(output_save)
+        
+    except Exception as e:
+        print(f"Erro ao enviar configuração: {e}")
+    finally:
+        # Garantindo a desconexão
+        net_connect.disconnect()
+        print("\nConexão fechada.")</code></pre>
+            
+            <h3>Método send_config_from_file()</h3>
+            
+            <p>Você também pode enviar comandos de configuração a partir de um arquivo.</p>
+            
+            <pre><code># Criando um arquivo de configuração
+config_file_content = """
+! Configurações adicionais
+logging host 10.10.10.10
+snmp-server community MyCommunity RO
+ntp server 192.168.100.100
+"""
+config_filename = "extra_config.txt"
+with open(config_filename, "w") as f:
+    f.write(config_file_content)
+
+# Conectando e enviando do arquivo
+net_connect = connect_netmiko(router_ios)
+if net_connect:
+    try:
+        print(f"\nEnviando configuração do arquivo {config_filename}...")
+        output_file_config = net_connect.send_config_from_file(config_filename)
+        print("--- Saída da Configuração (do arquivo) ---")
+        print(output_file_config)
+        
+        # Salvando novamente
+        output_save = net_connect.save_config()
+        print(output_save)
+        
+    except Exception as e:
+        print(f"Erro ao enviar configuração do arquivo: {e}")
+    finally:
+        net_connect.disconnect()
+        print("\nConexão fechada.")</code></pre>
+            
+            <h3>Parâmetros Comuns de send_config_set()</h3>
+            
+            <ul>
+                <li><code>config_commands</code>: Uma lista de strings, cada uma sendo um comando de configuração.</li>
+                <li><code>exit_config_mode</code>: (Opcional) Se deve sair do modo de configuração após enviar os comandos (padrão: True).</li>
+                <li><code>delay_factor</code>: (Opcional) Multiplicador de delay.</li>
+                <li><code>max_loops</code>: (Opcional) Número máximo de loops.</li>
+                <li><code>strip_prompt</code>: (Opcional) Remove o prompt da saída (padrão: False).</li>
+                <li><code>strip_command</code>: (Opcional) Remove o comando da saída (padrão: False).</li>
+                <li><code>config_mode_command</code>: (Opcional) Comando para entrar no modo de configuração (padrão: <code>configure terminal</code>).</li>
+            </ul>
+            
+            <h3>Método save_config()</h3>
+            
+            <p>O método <code>save_config()</code> envia o comando apropriado para salvar a configuração no dispositivo (ex: <code>write memory</code> para Cisco IOS, <code>copy running-config startup-config</code> para NX-OS). Ele retorna a saída do comando de salvamento.</p>
+        </section>
+
+        <section id="parsing">
+            <h2>Parsing de Saída com TextFSM</h2>
+            
+            <p>Uma das maiores dificuldades na automação baseada em CLI é extrair informações úteis da saída de texto não estruturada dos comandos. Netmiko integra-se com a biblioteca <strong>TextFSM</strong> (desenvolvida pelo Google) para resolver isso.</p>
+            
+            <p>TextFSM usa arquivos de template (modelos) que definem como extrair dados estruturados (tabelas) de saídas de texto específicas. A comunidade, especialmente através do projeto <strong>ntc-templates</strong>, mantém uma vasta coleção de templates para comandos comuns em diversos dispositivos.</p>
+            
+            <h3>Usando TextFSM com Netmiko</h3>
+            
+            <p>Para usar TextFSM com Netmiko, você precisa:</p>
+            <ol>
+                <li>Instalar TextFSM: <code>pip install textfsm</code></li>
+                <li>Instalar ou ter acesso aos templates ntc-templates. A maneira mais fácil é instalar a biblioteca <code>ntc_templates</code>: <code>pip install ntc_templates</code>. Netmiko tentará encontrar esses templates automaticamente.</li>
+                <li>Definir a variável de ambiente <code>NET_TEXTFSM</code> para o diretório onde os templates estão localizados (se não usar a biblioteca <code>ntc_templates</code>) OU garantir que a biblioteca <code>ntc_templates</code> esteja instalada.</li>
+                <li>Usar o argumento <code>use_textfsm=True</code> no método <code>send_command()</code>.</li>
+            </ol>
+            
+            <pre><code>from netmiko import ConnectHandler
+import os
+import pprint # Para imprimir dicionários/listas de forma legível
+
+# Certifique-se de que ntc_templates está instalado: pip install ntc_templates
+
+# ... (função connect_netmiko e device_info definidos como antes) ...
+
+# Conectando ao dispositivo
+net_connect = connect_netmiko(router_ios)
+
+if net_connect:
+    try:
+        # Exemplo 1: show ip interface brief
+        print("\nExecutando 'show ip interface brief' com TextFSM...")
+        # Netmiko procurará um template como cisco_ios_show_ip_interface_brief.textfsm
+        parsed_output_ip_int = net_connect.send_command("show ip interface brief", use_textfsm=True)
+        
+        print("--- Saída Parseada (Lista de Dicionários) ---")
+        pprint.pprint(parsed_output_ip_int)
+        
+        # Acessando dados específicos
+        if parsed_output_ip_int:
+            print("\nDetalhes da primeira interface UP:")
+            for interface_info in parsed_output_ip_int:
+                if interface_info["status"] == "up":
+                    print(f"  Interface: {interface_info["intf"]}")
+                    print(f"  IP: {interface_info["ipaddr"]}")
+                    print(f"  Protocolo: {interface_info["proto"]}")
+                    break
+        
+        # Exemplo 2: show version
+        print("\nExecutando 'show version' com TextFSM...")
+        parsed_output_version = net_connect.send_command("show version", use_textfsm=True)
+        
+        print("--- Saída Parseada (Dicionário) ---")
+        pprint.pprint(parsed_output_version)
+        
+        # Acessando dados específicos
+        if parsed_output_version:
+            print(f"\nVersão do IOS: {parsed_output_version[0]["version"]}")
+            print(f"Hostname: {parsed_output_version[0]["hostname"]}")
+            print(f"Uptime: {parsed_output_version[0]["uptime"]}")
+            
+        # Exemplo 3: Comando sem template
+        print("\nExecutando 'show clock' com TextFSM (sem template esperado)...")
+        try:
+            # Netmiko retornará a string bruta se não encontrar um template
+            output_clock = net_connect.send_command("show clock", use_textfsm=True)
+            print("--- Saída (String Bruta) ---")
+            print(output_clock)
+            print(f"Tipo da saída: {type(output_clock)}")
+        except Exception as e:
+            print(f"Erro (esperado se template não existir): {e}")
+            
+    except Exception as e:
+        print(f"Erro durante a execução: {e}")
+    finally:
+        net_connect.disconnect()
+        print("\nConexão fechada.")</code></pre>
+            
+            <div class="note">
+                <h4>Estrutura da Saída Parseada:</h4>
+                <p>A saída parseada com TextFSM geralmente é uma <strong>lista de dicionários</strong>, onde cada dicionário representa uma linha da tabela na saída do comando. As chaves do dicionário correspondem aos cabeçalhos definidos no template TextFSM. Para alguns comandos (como <code>show version</code>), a saída pode ser uma lista contendo um único dicionário.</p>
+                <p>Se Netmiko não encontrar um template correspondente para o comando e plataforma, ele retornará a saída como uma string bruta, como se <code>use_textfsm=False</code> tivesse sido usado.</p>
+            </div>
+            
+            <h3>Benefícios do Parsing</h3>
+            
+            <ul>
+                <li>Transforma texto em dados estruturados (listas, dicionários).</li>
+                <li>Facilita a extração de informações específicas.</li>
+                <li>Permite validações e comparações baseadas em dados.</li>
+                <li>Torna os scripts mais robustos e menos dependentes de formatação exata da CLI.</li>
+            </ul>
+        </section>
+
+        <section id="erros">
+            <h2>Tratamento de Erros</h2>
+            
+            <p>Ao trabalhar com automação de redes, é crucial implementar um bom tratamento de erros. Netmiko levanta exceções específicas que podem ajudar a diagnosticar problemas.</p>
+            
+            <h3>Exceções Comuns do Netmiko</h3>
+            
+            <ul>
+                <li><code>NetmikoTimeoutException</code>: Ocorre quando a conexão ou a execução de um comando excede o tempo limite esperado. Pode indicar problemas de rede, dispositivo lento ou prompt inesperado.</li>
+                <li><code>NetmikoAuthenticationException</code>: Falha na autenticação (username/password/secret incorretos).</li>
+                <li><code>ReadTimeout</code>: Ocorre quando a leitura da saída do socket SSH excede o timeout.</li>
+                <li><code>ConfigInvalidException</code>: (Menos comum) Indica um problema ao entrar no modo de configuração.</li>
+            </ul>
+            
+            <h3>Exemplo de Tratamento de Erros</h3>
+            
+            <pre><code>from netmiko import ConnectHandler
+from netmiko.exceptions import NetmikoTimeoutException, NetmikoAuthenticationException
+import socket # Para capturar erros de conexão TCP
+
+def connect_and_run_command(device_info, command):
+    """Conecta, executa um comando e trata erros comuns."""
+    net_connect = None
+    try:
+        print(f"\nTentando conectar a {device_info["host"]}...")
+        net_connect = ConnectHandler(**device_info)
+        print("Conectado com sucesso.")
+        
+        print(f"Executando comando: {command}")
+        output = net_connect.send_command(command)
+        print("Comando executado com sucesso.")
+        return output
+        
+    except NetmikoAuthenticationException:
+        print(f"ERRO: Falha na autenticação para {device_info["host"]}.")
+        return None
+    except NetmikoTimeoutException:
+        print(f"ERRO: Timeout ao conectar ou executar comando em {device_info["host"]}.")
+        return None
+    except socket.error as e: # Erros de conexão TCP (ex: host não alcançável)
+        print(f"ERRO: Erro de conexão TCP para {device_info["host"]}: {e}")
+        return None
+    except Exception as e: # Captura outras exceções gerais
+        print(f"ERRO: Ocorreu um erro inesperado com {device_info["host"]}: {e}")
+        return None
+    finally:
+        # Garante que a conexão seja fechada se foi estabelecida
+        if net_connect:
+            net_connect.disconnect()
+            print(f"Conexão com {device_info["host"]} fechada.")
+
+# Dispositivo com credenciais erradas
+router_bad_auth = {
+    "device_type": "cisco_ios",
+    "host": "192.168.1.1",
+    "username": "wrong_user",
+    "password": "wrong_pass",
+}
+
+# Dispositivo inacessível
+router_unreachable = {
+    "device_type": "cisco_ios",
+    "host": "10.255.255.1", # IP provavelmente inexistente
+    "username": "admin",
+    "password": "cisco123",
+}
+
+# Testando com erro de autenticação
+print("--- Teste com Autenticação Inválida ---")
+connect_and_run_command(router_bad_auth, "show version")
+
+# Testando com host inacessível
+print("\n--- Teste com Host Inacessível ---")
+connect_and_run_command(router_unreachable, "show version")
+
+# Testando com dispositivo válido (assumindo que router_ios está correto)
+print("\n--- Teste com Dispositivo Válido ---")
+output_valid = connect_and_run_command(router_ios, "show ip arp")
+if output_valid:
+    print("--- Saída Show IP ARP ---")
+    print(output_valid)
+</code></pre>
+            
+            <h3>Boas Práticas de Tratamento de Erros</h3>
+            
+            <ul>
+                <li>Use blocos <code>try...except...finally</code> para garantir a limpeza (desconexão).</li>
+                <li>Capture exceções específicas (<code>NetmikoAuthenticationException</code>, <code>NetmikoTimeoutException</code>) antes de exceções genéricas (<code>Exception</code>).</li>
+                <li>Forneça mensagens de erro claras e informativas.</li>
+                <li>Considere registrar erros em arquivos de log para análise posterior.</li>
+                <li>Pense em lógicas de retentativa para erros transitórios (como timeouts curtos), mas com cuidado para não criar loops infinitos.</li>
+            </ul>
+        </section>
+
+        <section id="avancado">
+            <h2>Recursos Avançados</h2>
+            
+            <p>Netmiko oferece outros recursos úteis para cenários mais complexos.</p>
+            
+            <h3>Transferência de Arquivos (SCP)</h3>
+            
+            <p>Netmiko pode usar SCP (Secure Copy Protocol) para transferir arquivos de e para dispositivos de rede, se o SCP estiver habilitado no dispositivo.</p>
+            
+            <pre><code>from netmiko import ConnectHandler, file_transfer
+
+# ... (conexão estabelecida como net_connect) ...
+
+if net_connect:
+    try:
+        # Verificando se SCP está habilitado (exemplo para IOS)
+        scp_check = net_connect.send_command("show running-config | include ip scp server enable")
+        if "ip scp server enable" not in scp_check:
+            print("AVISO: SCP pode não estar habilitado no dispositivo.")
+            # Poderia tentar habilitar aqui com send_config_set
+        
+        # Transferindo um arquivo PARA o dispositivo
+        source_file = "extra_config.txt" # Arquivo local criado anteriormente
+        dest_file = "extra_config_uploaded.txt" # Nome no dispositivo
+        print(f"\nTransferindo {source_file} para {dest_file} no dispositivo...")
+        transfer_status = file_transfer(
+            net_connect,
+            source_file=source_file,
+            dest_file=dest_file,
+            file_system="flash:", # Sistema de arquivos destino (varia por OS)
+            direction="put",
+            overwrite_file=True
+        )
+        print(f"Status da transferência (upload): {transfer_status}")
+        if transfer_status["file_exists"]:
+             print(f"Arquivo {dest_file} existe no dispositivo.")
+
+        # Transferindo um arquivo DO dispositivo
+        source_file_remote = "startup-config" # Arquivo no dispositivo
+        dest_file_local = f"{net_connect.base_prompt}_startup_config_downloaded.cfg"
+        print(f"\nTransferindo {source_file_remote} do dispositivo para {dest_file_local}...")
+        transfer_status_get = file_transfer(
+            net_connect,
+            source_file=source_file_remote,
+            dest_file=dest_file_local,
+            file_system="nvram:", # Sistema de arquivos origem
+            direction="get"
+        )
+        print(f"Status da transferência (download): {transfer_status_get}")
+        if transfer_status_get["file_exists"]:
+             print(f"Arquivo {dest_file_local} baixado com sucesso.")
+             
+    except Exception as e:
+        print(f"Erro durante transferência de arquivo: {e}")
+    finally:
+        net_connect.disconnect()
+        print("\nConexão fechada.")</code></pre>
+            
+            <h3>Execução Paralela</h3>
+            
+            <p>Para automatizar tarefas em muitos dispositivos, a execução sequencial (um após o outro) pode ser muito lenta. Bibliotecas como <code>concurrent.futures</code> (integrada no Python) ou <code>multiprocessing</code> podem ser usadas com Netmiko para executar tarefas em paralelo.</p>
+            
+            <p><em>Nota: A implementação detalhada de execução paralela está além do escopo deste módulo introdutório, mas é um conceito importante para automação em escala. Frameworks como Nornir são projetados especificamente para facilitar a automação paralela.</em></p>
+            
+            <h3>Outros Recursos</h3>
+            
+            <ul>
+                <li><strong>SSH com Chaves:</strong> Netmiko suporta autenticação baseada em chaves SSH (<code>use_keys=True</code>, <code>key_file=...</code>).</li>
+                <li><strong>Proxy SSH:</strong> Conexão através de um servidor intermediário (jump host) usando <code>ssh_config_file</code> ou bibliotecas como <code>paramiko-proxy</code>.</li>
+                <li><strong>Integração com Ansible:</strong> Netmiko pode ser usado dentro de módulos Ansible customizados.</li>
+            </ul>
+        </section>
+
+        <section id="exercicios">
+            <h2>Exercícios Práticos</h2>
+            
+            <div class="exercise">
+                <h4>Exercício 1: Coletor de Informações de Vizinhança</h4>
+                <p>Crie um script Python que use Netmiko para se conectar a um dispositivo Cisco e colete informações sobre seus vizinhos CDP e LLDP. Use TextFSM para parsear a saída.</p>
+                <ol>
+                    <li>Conecte-se ao dispositivo usando Netmiko.</li>
+                    <li>Execute <code>show cdp neighbors detail</code> e <code>show lldp neighbors detail</code>.</li>
+                    <li>Use <code>use_textfsm=True</code> para obter a saída parseada.</li>
+                    <li>Imprima as informações dos vizinhos de forma organizada (Nome do Vizinho, IP, Plataforma, Interface Local, Porta Remota).</li>
+                    <li>Trate o caso de comandos não suportados ou sem saída.</li>
+                </ol>
+            </div>
+            
+            <div class="solution">
+                <h4>Solução do Exercício 1:</h4>
+                <pre><code>#!/usr/bin/env python3
+# Coletor de Vizinhança CDP/LLDP
+
+from netmiko import ConnectHandler
+from netmiko.exceptions import NetmikoTimeoutException, NetmikoAuthenticationException
+import argparse
+import sys
+import pprint
+
+def get_args():
+    """Processa os argumentos da linha de comando."""
+    parser = argparse.ArgumentParser(description=\'Coletor de vizinhança CDP/LLDP com Netmiko.\')
+    parser.add_argument("-d", "--device_type", default="cisco_ios", help="Tipo de dispositivo Netmiko (padrão: cisco_ios)")
+    parser.add_argument("-H", "--hostname", required=True, help="Hostname ou IP do dispositivo")
+    parser.add_argument("-u", "--username", required=True, help="Nome de usuário")
+    parser.add_argument("-p", "--password", required=True, help="Senha")
+    parser.add_argument("-s", "--secret", default="", help="Senha do modo enable (opcional)")
+    return parser.parse_args()
+
+def get_neighbors(device_info):
+    """Coleta e imprime informações de vizinhos CDP e LLDP."""
+    neighbors = {"cdp": [], "lldp": []}
+    net_connect = None
+    
+    try:
+        print(f"Conectando a {device_info["host"]}...")
+        net_connect = ConnectHandler(**device_info)
+        print("Conectado.")
+        
+        # Coletando CDP Neighbors
+        try:
+            print("Coletando CDP neighbors detail...")
+            cdp_output = net_connect.send_command("show cdp neighbors detail", use_textfsm=True)
+            if isinstance(cdp_output, list):
+                neighbors["cdp"] = cdp_output
+                print(f"Encontrados {len(cdp_output)} vizinhos CDP.")
+            else:
+                print("Não foi possível parsear a saída CDP ou comando não suportado.")
+        except Exception as e:
+            print(f"Erro ao coletar CDP: {e}")
+            
+        # Coletando LLDP Neighbors
+        try:
+            print("Coletando LLDP neighbors detail...")
+            lldp_output = net_connect.send_command("show lldp neighbors detail", use_textfsm=True)
+            if isinstance(lldp_output, list):
+                neighbors["lldp"] = lldp_output
+                print(f"Encontrados {len(lldp_output)} vizinhos LLDP.")
+            else:
+                print("Não foi possível parsear a saída LLDP ou comando não suportado.")
+        except Exception as e:
+            print(f"Erro ao coletar LLDP: {e}")
+            
+        return neighbors
+        
+    except (NetmikoTimeoutException, NetmikoAuthenticationException) as e:
+        print(f"ERRO de Conexão/Autenticação: {e}")
+        return None
+    except Exception as e:
+        print(f"ERRO Inesperado: {e}")
+        return None
+    finally:
+        if net_connect:
+            net_connect.disconnect()
+            print("Conexão fechada.")
+
+def print_neighbor_summary(neighbors):
+    """Imprime um resumo das informações dos vizinhos."""
+    if not neighbors:
+        return
+        
+    print("\n--- Resumo dos Vizinhos ---")
+    
+    # Imprimindo Vizinhos CDP
+    if neighbors.get("cdp"):
+        print("\nVizinhos CDP:")
+        for neighbor in neighbors["cdp"]:
+            dest_host = neighbor.get("destination_host", "N/A")
+            mgmt_ip = neighbor.get("management_ip", "N/A")
+            platform = neighbor.get("platform", "N/A")
+            local_intf = neighbor.get("local_port", "N/A")
+            remote_intf = neighbor.get("remote_port", "N/A")
+            print(f"  - Host: {dest_host}")
+            print(f"    IP: {mgmt_ip}, Plataforma: {platform}")
+            print(f"    Interface Local: {local_intf}, Porta Remota: {remote_intf}")
+    else:
+        print("\nNenhum vizinho CDP encontrado ou parseado.")
+        
+    # Imprimindo Vizinhos LLDP
+    if neighbors.get("lldp"):
+        print("\nVizinhos LLDP:")
+        # O template LLDP pode ter uma estrutura ligeiramente diferente
+        # Ajuste conforme a saída real do template ntc-templates
+        for neighbor in neighbors["lldp"]:
+            dest_host = neighbor.get("neighbor", "N/A") # Pode variar
+            # LLDP detail pode não ter IP direto, pode estar em neighbor_mgmt_ip
+            mgmt_ip = neighbor.get("neighbor_mgmt_ip", "N/A") 
+            platform = neighbor.get("neighbor_sys_desc", "N/A") # Descrição pode conter plataforma
+            local_intf = neighbor.get("local_intf", "N/A")
+            remote_intf = neighbor.get("remote_port_id", "N/A")
+            print(f"  - Host: {dest_host}")
+            print(f"    IP: {mgmt_ip}, Plataforma: {platform[:50]}...") # Limita tamanho da descrição
+            print(f"    Interface Local: {local_intf}, Porta Remota: {remote_intf}")
+    else:
+        print("\nNenhum vizinho LLDP encontrado ou parseado.")
+
+def main():
+    args = get_args()
+    device_info = {
+        "device_type": args.device_type,
+        "host": args.hostname,
+        "username": args.username,
+        "password": args.password,
+        "secret": args.secret if args.secret else None,
+    }
+    
+    neighbor_data = get_neighbors(device_info)
+    
+    if neighbor_data:
+        print_neighbor_summary(neighbor_data)
+
+if __name__ == "__main__":
+    main()</code></pre>
+            </div>
+            
+            <div class="exercise">
+                <h4>Exercício 2: Aplicador de Configuração Padronizada</h4>
+                <p>Crie um script que aplique um conjunto padrão de configurações (ex: NTP, SNMP, logging) a um dispositivo Cisco usando Netmiko.</p>
+                <ol>
+                    <li>Defina uma lista de comandos de configuração padrão.</li>
+                    <li>Conecte-se ao dispositivo usando Netmiko.</li>
+                    <li>Use <code>send_config_set()</code> para aplicar os comandos.</li>
+                    <li>Verifique se alguns dos comandos foram aplicados (opcional, usando <code>send_command</code>).</li>
+                    <li>Salve a configuração usando <code>save_config()</code>.</li>
+                    <li>Inclua tratamento de erros.</li>
+                </ol>
+            </div>
+            
+            <div class="solution">
+                <h4>Solução do Exercício 2:</h4>
+                <pre><code>#!/usr/bin/env python3
+# Aplicador de Configuração Padrão
+
+from netmiko import ConnectHandler
+from netmiko.exceptions import NetmikoTimeoutException, NetmikoAuthenticationException
+import argparse
+import sys
+
+def get_args():
+    """Processa os argumentos da linha de comando."""
+    parser = argparse.ArgumentParser(description=\'Aplicador de configuração padrão com Netmiko.\')
+    parser.add_argument("-d", "--device_type", default="cisco_ios", help="Tipo de dispositivo Netmiko (padrão: cisco_ios)")
+    parser.add_argument("-H", "--hostname", required=True, help="Hostname ou IP do dispositivo")
+    parser.add_argument("-u", "--username", required=True, help="Nome de usuário")
+    parser.add_argument("-p", "--password", required=True, help="Senha")
+    parser.add_argument("-s", "--secret", default="", help="Senha do modo enable (opcional)")
+    return parser.parse_args()
+
+def apply_standard_config(device_info, standard_commands):
+    """Aplica uma lista de comandos de configuração padrão."""
+    net_connect = None
+    success = False
+    try:
+        print(f"Conectando a {device_info["host"]}...")
+        net_connect = ConnectHandler(**device_info)
+        print("Conectado.")
+        
+        print("Aplicando configuração padrão...")
+        config_output = net_connect.send_config_set(standard_commands)
+        print("--- Saída da Aplicação ---")
+        print(config_output)
+        
+        # Verificação simples (exemplo: verificar servidor NTP)
+        print("\nVerificando configuração NTP...")
+        ntp_check = net_connect.send_command("show run | include ntp server")
+        if "ntp server 10.1.1.1" in ntp_check:
+            print("Verificação NTP OK.")
+        else:
+            print("AVISO: Verificação NTP falhou ou comando não encontrado.")
+            
+        print("\nSalvando configuração...")
+        save_output = net_connect.save_config()
+        print(save_output)
+        
+        if "complete" in save_output.lower() or "ok" in save_output.lower() or "[ok]" in save_output.lower():
+             success = True
+             print("Configuração padrão aplicada e salva com sucesso.")
+        else:
+             print("AVISO: Comando save pode não ter sido bem-sucedido.")
+             
+    except (NetmikoTimeoutException, NetmikoAuthenticationException) as e:
+        print(f"ERRO de Conexão/Autenticação: {e}")
+    except Exception as e:
+        print(f"ERRO Inesperado: {e}")
+    finally:
+        if net_connect:
+            net_connect.disconnect()
+            print("Conexão fechada.")
+    return success
+
+def main():
+    args = get_args()
+    device_info = {
+        "device_type": args.device_type,
+        "host": args.hostname,
+        "username": args.username,
+        "password": args.password,
+        "secret": args.secret if args.secret else None,
+    }
+    
+    # Comandos padrão a serem aplicados
+    standard_commands = [
+        "ntp server 10.1.1.1 prefer",
+        "ntp server 10.1.1.2",
+        "logging host 10.2.2.2 transport udp port 514",
+        "logging trap warnings",
+        "snmp-server community StandardRO RO",
+        "snmp-server community StandardRW RW",
+        "snmp-server location DataCenter-A",
+        "snmp-server contact NetworkTeam",
+        "service timestamps debug datetime msec localtime show-timezone",
+        "service timestamps log datetime msec localtime show-timezone",
+        "ip domain-name mycompany.local",
+        "ip name-server 8.8.8.8 8.8.4.4"
+    ]
+    
+    apply_standard_config(device_info, standard_commands)
+
+if __name__ == "__main__":
+    main()</code></pre>
+            </div>
+        </section>
+
+        <section id="avaliacao">
+            <h2>Avaliação do Módulo</h2>
+            
+            <div class="assessment">
+                <h4>Quiz de Conhecimentos</h4>
+                <p>Responda às seguintes perguntas para testar seu conhecimento sobre os conceitos apresentados neste módulo:</p>
+                
+                <ol>
+                    <li>Qual é a principal vantagem do Netmiko sobre o Paramiko para automação de redes?</li>
+                    <li>Qual chave no dicionário de conexão do Netmiko especifica o tipo de dispositivo (ex: Cisco IOS)?</li>
+                    <li>Qual método do Netmiko é usado para enviar comandos show?</li>
+                    <li>Qual método do Netmiko é usado para enviar comandos de configuração?</li>
+                    <li>O que o argumento <code>secret</code> no dicionário de conexão do Netmiko permite?</li>
+                    <li>Qual biblioteca e técnica o Netmiko usa para parsear saídas de CLI em dados estruturados?</li>
+                    <li>Qual argumento deve ser passado para <code>send_command()</code> para habilitar o parsing automático?</li>
+                    <li>Qual é o formato típico da saída retornada por <code>send_command()</code> quando <code>use_textfsm=True</code> e um template é encontrado?</li>
+                    <li>Cite duas exceções específicas que podem ser levantadas pelo Netmiko.</li>
+                    <li>Qual método do Netmiko é usado para salvar a configuração no dispositivo?</li>
+                </ol>
+            </div>
+            
+            <div class="solution">
+                <h4>Respostas do Quiz:</h4>
+                <ol>
+                    <li><strong>Vantagem do Netmiko sobre Paramiko:</strong> Netmiko simplifica a interação com a CLI, tratando automaticamente detecção de prompt, paginação, entrada no modo enable e oferecendo métodos específicos para comandos show e config, além de suporte multi-vendor mais direto.</li>
+                    <li><strong>Chave para tipo de dispositivo:</strong> <code>device_type</code> (ex: <code>"device_type": "cisco_ios"</code>).</li>
+                    <li><strong>Método para comandos show:</strong> <code>send_command()</code>.</li>
+                    <li><strong>Método para comandos de configuração:</strong> <code>send_config_set()</code> ou <code>send_config_from_file()</code>.</li>
+                    <li><strong>Argumento <code>secret</code>:</strong> Permite que o Netmiko tente entrar automaticamente no modo privilegiado (enable) após a conexão.</li>
+                    <li><strong>Biblioteca e técnica de parsing:</strong> Usa a biblioteca TextFSM e arquivos de template (como os do ntc-templates).</li>
+                    <li><strong>Argumento para habilitar parsing:</strong> <code>use_textfsm=True</code>.</li>
+                    <li><strong>Formato da saída parseada:</strong> Geralmente uma lista de dicionários.</li>
+                    <li><strong>Exceções Netmiko:</strong> <code>NetmikoTimeoutException</code>, <code>NetmikoAuthenticationException</code>.</li>
+                    <li><strong>Método para salvar configuração:</strong> <code>save_config()</code>.</li>
+                </ol>
+            </div>
+            
+            <div class="assessment">
+                <h4>Projeto Prático Final</h4>
+                <p>Desenvolva um script Python abrangente que realize uma auditoria básica em uma lista de dispositivos Cisco. O script deve:</p>
+                
+                <ol>
+                    <li>Ler a lista de dispositivos (IP, tipo, credenciais) de um arquivo CSV.</li>
+                    <li>Para cada dispositivo:
+                        <ul>
+                            <li>Conectar usando Netmiko.</li>
+                            <li>Coletar: versão do IOS, hostname, uptime, lista de interfaces IP, status das interfaces, vizinhos CDP/LLDP.</li>
+                            <li>Usar TextFSM sempre que possível para obter dados estruturados.</li>
+                            <li>Verificar se a configuração em execução difere da configuração salva (<code>show archive config differences</code> ou similar).</li>
+                            <li>Verificar se existem interfaces em estado "err-disabled".</li>
+                        </ul>
+                    </li>
+                    <li>Gerar um relatório resumido (pode ser texto ou JSON) indicando:
+                        <ul>
+                            <li>Dispositivos auditados com sucesso.</li>
+                            <li>Dispositivos com falha na conexão/auditoria.</li>
+                            <li>Dispositivos com configurações não salvas.</li>
+                            <li>Dispositivos com interfaces em "err-disabled".</li>
+                        </ul>
+                    </li>
+                    <li>Implementar execução paralela (usando <code>concurrent.futures</code>) para acelerar a auditoria em múltiplos dispositivos.</li>
+                    <li>Incluir tratamento de erros robusto e logging básico.</li>
+                </ol>
+            </div>
+        </section>
+
+        <section id="referencias">
+            <h2>Referências e Recursos Adicionais</h2>
+            
+            <div class="references">
+                <h3>Documentação Oficial</h3>
+                <ul>
+                    <li><a href="https://github.com/ktbyers/netmiko" target="_blank">Repositório Netmiko (Documentação no README e Wiki)</a></li>
+                    <li><a href="https://pynet.twb-tech.com/blog/automation/netmiko.html" target="_blank">PyNet Blog: Introduction to Netmiko</a></li>
+                    <li><a href="https://github.com/networktocode/ntc-templates" target="_blank">Repositório ntc-templates (Templates TextFSM)</a></li>
+                    <li><a href="https://github.com/google/textfsm/wiki" target="_blank">TextFSM Wiki</a></li>
+                </ul>
+                
+                <h3>Livros Recomendados</h3>
+                <ul>
+                    <li>Kirk Byers - "Python for Network Engineers" (Foca bastante em Netmiko)</li>
+                    <li>Eric Chou - "Mastering Python Networking" (Capítulos sobre Netmiko e Parsing)</li>
+                    <li>Jason Edelman, Scott S. Lowe, Matt Oswalt - "Network Programmability and Automation"</li>
+                </ul>
+                
+                <h3>Recursos Online e Tutoriais</h3>
+                <ul>
+                    <li><a href="https://www.youtube.com/watch?v=QSTgp3u71kQ&list=PLhfrWIlLOoKPn7T9WaAR0Ds53XTBq5NfJ" target="_blank">David Bombal: Python for Network Engineers (Playlist no YouTube)</a></li>
+                    <li><a href="https://networktocode.com/blog/" target="_blank">Network to Code Blog</a></li>
+                    <li><a href="https://codingnetworker.com/netmiko/" target="_blank">Coding Networker: Netmiko Tutorials</a></li>
+                    <li><a href="https://realpython.com/python-concurrency/" target="_blank">Real Python: Speed Up Your Python Program With Concurrency (para execução paralela)</a></li>
+                </ul>
+                
+                <h3>Cursos e Treinamentos</h3>
+                <ul>
+                    <li><a href="https://pynet.twb-tech.com/" target="_blank">PyNet: Python for Network Engineers (Curso de Kirk Byers)</a></li>
+                    <li><a href="https://www.udemy.com/course/python-network-programming-for-network-engineers-netmiko/" target="_blank">Udemy: Python Network Programming for Network Engineers (Netmiko)</a></li>
+                    <li><a href="https://developer.cisco.com/learning/tracks/devnet-associates" target="_blank">Cisco DevNet Associate Certification Track</a></li>
+                </ul>
+            </div>
+        </section>
+        
+        <div class="navigation-buttons">
+            <a href="modulo8.html" class="btn">← Módulo Anterior: Introdução à Automação</a>
+            <a href="index.html" class="btn">Conclusão e Próximos Passos →</a>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Curso de Python para Profissionais de Redes Cisco. Todos os direitos reservados.</p>
+    </footer>
+</body>
+</html>

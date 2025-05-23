@@ -1,0 +1,1831 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Módulo 6: Listas e Dicionários - Curso de Python para Redes Cisco</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Módulo 6: Listas e Dicionários</h1>
+        <p>Curso de Python para Profissionais de Redes Cisco</p>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="index.html">Página Inicial</a></li>
+            <li><a href="modulo5.html">← Módulo Anterior</a></li>
+            <li><a href="#listas">Listas</a></li>
+            <li><a href="#dicionarios">Dicionários</a></li>
+            <li><a href="#tuplas">Tuplas</a></li>
+            <li><a href="#conjuntos">Conjuntos</a></li>
+            <li><a href="#exercicios">Exercícios</a></li>
+            <li><a href="#avaliacao">Avaliação</a></li>
+            <li><a href="#referencias">Referências</a></li>
+            <li><a href="modulo7.html">Próximo Módulo →</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section id="introducao">
+            <h2>Introdução às Estruturas de Dados</h2>
+            
+            <p>As estruturas de dados são componentes fundamentais em qualquer linguagem de programação, permitindo armazenar, organizar e manipular dados de forma eficiente. Python oferece várias estruturas de dados integradas, sendo as mais importantes as listas, dicionários, tuplas e conjuntos.</p>
+            
+            <p>Para profissionais de redes Cisco, dominar essas estruturas é essencial para criar scripts de automação eficientes. Você precisará armazenar e manipular informações como listas de dispositivos, configurações, endereços IP, interfaces e muito mais. As estruturas de dados corretas tornarão seu código mais organizado, legível e eficiente.</p>
+            
+            <p>Neste módulo, exploraremos em detalhes as principais estruturas de dados em Python, com foco em aplicações práticas para automação de redes Cisco.</p>
+            
+            <div class="note">
+                <h4>Importância para Profissionais de Redes:</h4>
+                <p>As estruturas de dados são fundamentais para organizar informações de rede. Por exemplo, você pode usar listas para armazenar múltiplos dispositivos, dicionários para mapear dispositivos a suas configurações, tuplas para coordenadas imutáveis como endereços IP/máscara, e conjuntos para operações como encontrar a interseção entre duas listas de VLANs.</p>
+            </div>
+        </section>
+
+        <section id="listas">
+            <h2>Listas</h2>
+            
+            <p>As listas são uma das estruturas de dados mais versáteis e frequentemente utilizadas em Python. Uma lista é uma coleção ordenada e mutável de itens, que podem ser de diferentes tipos.</p>
+            
+            <h3>Criando Listas</h3>
+            
+            <pre><code># Lista vazia
+devices = []
+
+# Lista com elementos
+routers = ["R1", "R2", "R3", "R4"]
+
+# Lista com diferentes tipos de dados
+router_info = ["R1", "10.0.0.1", 24, True]
+
+# Lista aninhada (lista de listas)
+network_segments = [
+    ["192.168.1.0", "255.255.255.0", "LAN"],
+    ["10.0.0.0", "255.255.0.0", "WAN"],
+    ["172.16.0.0", "255.240.0.0", "DMZ"]
+]</code></pre>
+            
+            <h3>Acessando Elementos</h3>
+            
+            <p>Os elementos de uma lista são acessados por índice, começando em 0 para o primeiro elemento:</p>
+            
+            <pre><code># Acessando elementos por índice
+print(routers[0])  # Saída: R1
+print(routers[2])  # Saída: R3
+
+# Índices negativos contam a partir do final
+print(routers[-1])  # Saída: R4 (último elemento)
+print(routers[-2])  # Saída: R3 (penúltimo elemento)
+
+# Acessando elementos em listas aninhadas
+print(network_segments[0][0])  # Saída: 192.168.1.0
+print(network_segments[1][2])  # Saída: WAN</code></pre>
+            
+            <h3>Fatiamento de Listas</h3>
+            
+            <p>O fatiamento (slicing) permite extrair uma parte de uma lista:</p>
+            
+            <pre><code># Sintaxe: lista[início:fim:passo]
+# Observação: O índice "fim" não é incluído no resultado
+
+# Primeiros dois elementos
+print(routers[0:2])  # Saída: ['R1', 'R2']
+
+# Equivalente ao anterior
+print(routers[:2])  # Saída: ['R1', 'R2']
+
+# Do terceiro elemento até o final
+print(routers[2:])  # Saída: ['R3', 'R4']
+
+# Todos os elementos (cria uma cópia da lista)
+print(routers[:])  # Saída: ['R1', 'R2', 'R3', 'R4']
+
+# Elementos alternados (passo 2)
+print(routers[::2])  # Saída: ['R1', 'R3']
+
+# Invertendo a lista
+print(routers[::-1])  # Saída: ['R4', 'R3', 'R2', 'R1']</code></pre>
+            
+            <h3>Métodos Comuns de Listas</h3>
+            
+            <p>Python oferece vários métodos para manipular listas:</p>
+            
+            <pre><code># Adicionando elementos
+switches = ["S1", "S2"]
+switches.append("S3")  # Adiciona ao final
+print(switches)  # Saída: ['S1', 'S2', 'S3']
+
+switches.insert(1, "S4")  # Insere na posição 1
+print(switches)  # Saída: ['S1', 'S4', 'S2', 'S3']
+
+# Estendendo uma lista com outra
+more_switches = ["S5", "S6"]
+switches.extend(more_switches)
+print(switches)  # Saída: ['S1', 'S4', 'S2', 'S3', 'S5', 'S6']
+
+# Removendo elementos
+switches.remove("S4")  # Remove pelo valor
+print(switches)  # Saída: ['S1', 'S2', 'S3', 'S5', 'S6']
+
+removed_switch = switches.pop(2)  # Remove pelo índice e retorna o valor
+print(removed_switch)  # Saída: S3
+print(switches)  # Saída: ['S1', 'S2', 'S5', 'S6']
+
+# Encontrando elementos
+index = switches.index("S5")
+print(index)  # Saída: 2
+
+# Contando ocorrências
+devices = ["R1", "S1", "R2", "S2", "R1"]
+count = devices.count("R1")
+print(count)  # Saída: 2
+
+# Ordenando listas
+switches.sort()
+print(switches)  # Saída: ['S1', 'S2', 'S5', 'S6']
+
+# Ordenando em ordem reversa
+switches.sort(reverse=True)
+print(switches)  # Saída: ['S6', 'S5', 'S2', 'S1']
+
+# Revertendo a ordem (sem ordenar)
+switches.reverse()
+print(switches)  # Saída: ['S1', 'S2', 'S5', 'S6']
+
+# Copiando listas
+switches_copy = switches.copy()
+# ou
+switches_copy = switches[:]</code></pre>
+            
+            <h3>Operações Comuns com Listas</h3>
+            
+            <pre><code># Verificando se um elemento existe na lista
+if "S1" in switches:
+    print("S1 está na lista")
+
+# Comprimento da lista
+num_switches = len(switches)
+print(num_switches)  # Saída: 4
+
+# Concatenando listas
+all_devices = routers + switches
+print(all_devices)  # Saída: ['R1', 'R2', 'R3', 'R4', 'S1', 'S2', 'S5', 'S6']
+
+# Repetindo listas
+repeated = ["VLAN"] * 3
+print(repeated)  # Saída: ['VLAN', 'VLAN', 'VLAN']
+
+# Limpando uma lista
+switches.clear()
+print(switches)  # Saída: []</code></pre>
+            
+            <h3>Compreensão de Listas (List Comprehension)</h3>
+            
+            <p>A compreensão de listas é uma forma concisa de criar novas listas baseadas em listas existentes:</p>
+            
+            <pre><code># Criando uma lista de números
+numbers = [1, 2, 3, 4, 5]
+
+# Usando compreensão de lista para criar uma nova lista com o quadrado de cada número
+squares = [num**2 for num in numbers]
+print(squares)  # Saída: [1, 4, 9, 16, 25]
+
+# Compreensão de lista com condição
+even_squares = [num**2 for num in numbers if num % 2 == 0]
+print(even_squares)  # Saída: [4, 16]
+
+# Exemplo com redes: extraindo o último octeto de uma lista de IPs
+ips = ["192.168.1.1", "10.0.0.1", "172.16.0.1"]
+last_octets = [ip.split(".")[-1] for ip in ips]
+print(last_octets)  # Saída: ['1', '1', '1']
+
+# Convertendo para inteiros
+last_octets_int = [int(ip.split(".")[-1]) for ip in ips]
+print(last_octets_int)  # Saída: [1, 1, 1]</code></pre>
+            
+            <h3>Aplicação em Redes: Gerenciando Dispositivos</h3>
+            
+            <p>Vamos ver um exemplo prático de como usar listas para gerenciar dispositivos de rede:</p>
+            
+            <pre><code># Lista de dispositivos de rede
+network_devices = [
+    ["R1", "192.168.1.1", "Router", "IOS 15.4"],
+    ["S1", "192.168.1.2", "Switch", "IOS 15.2"],
+    ["S2", "192.168.1.3", "Switch", "IOS 15.2"],
+    ["AP1", "192.168.1.4", "Access Point", "IOS 8.5"],
+    ["FW1", "192.168.1.5", "Firewall", "ASA 9.2"]
+]
+
+# Função para exibir informações dos dispositivos
+def display_devices(devices):
+    print(f"{'Nome':<6} {'IP':<15} {'Tipo':<15} {'Sistema':<10}")
+    print("-" * 46)
+    for device in devices:
+        print(f"{device[0]:<6} {device[1]:<15} {device[2]:<15} {device[3]:<10}")
+
+# Exibindo todos os dispositivos
+print("Todos os dispositivos:")
+display_devices(network_devices)
+
+# Filtrando apenas switches
+switches_only = [device for device in network_devices if device[2] == "Switch"]
+print("\nApenas Switches:")
+display_devices(switches_only)
+
+# Extraindo apenas os IPs
+device_ips = [device[1] for device in network_devices]
+print("\nLista de IPs:")
+for ip in device_ips:
+    print(ip)
+
+# Adicionando um novo dispositivo
+new_device = ["R2", "192.168.1.6", "Router", "IOS 16.0"]
+network_devices.append(new_device)
+
+# Atualizando informações de um dispositivo
+for device in network_devices:
+    if device[0] == "S1":
+        device[3] = "IOS 16.1"  # Atualizando o sistema
+
+print("\nLista atualizada:")
+display_devices(network_devices)
+
+# Removendo um dispositivo
+for i, device in enumerate(network_devices):
+    if device[0] == "AP1":
+        del network_devices[i]
+        break
+
+print("\nLista após remoção do AP1:")
+display_devices(network_devices)</code></pre>
+            
+            <p>Este exemplo demonstra como usar listas para armazenar informações de dispositivos de rede e realizar operações comuns como adicionar, atualizar, remover e filtrar dispositivos.</p>
+        </section>
+
+        <section id="dicionarios">
+            <h2>Dicionários</h2>
+            
+            <p>Os dicionários são estruturas de dados que armazenam pares de chave-valor, permitindo acesso rápido aos valores através de suas chaves. Diferentemente das listas, que são indexadas por números inteiros, os dicionários são indexados por chaves, que podem ser de qualquer tipo imutável (como strings, números ou tuplas).</p>
+            
+            <h3>Criando Dicionários</h3>
+            
+            <pre><code># Dicionário vazio
+router = {}
+
+# Dicionário com pares chave-valor
+router = {
+    "hostname": "R1",
+    "ip": "192.168.1.1",
+    "model": "Cisco 2901",
+    "ios": "15.4",
+    "interfaces": 4
+}
+
+# Criando um dicionário com o construtor dict()
+switch = dict(hostname="S1", ip="192.168.1.2", model="Cisco 3750", ios="15.2", ports=48)
+
+# Dicionário aninhado
+network = {
+    "R1": {
+        "ip": "192.168.1.1",
+        "model": "Cisco 2901",
+        "interfaces": ["Gi0/0", "Gi0/1"]
+    },
+    "S1": {
+        "ip": "192.168.1.2",
+        "model": "Cisco 3750",
+        "interfaces": ["Gi1/0/1", "Gi1/0/2", "Gi1/0/3"]
+    }
+}</code></pre>
+            
+            <h3>Acessando Valores</h3>
+            
+            <pre><code># Acessando valores por chave
+print(router["hostname"])  # Saída: R1
+print(router["ip"])  # Saída: 192.168.1.1
+
+# Usando o método get() (mais seguro, pois não gera erro se a chave não existir)
+print(router.get("model"))  # Saída: Cisco 2901
+print(router.get("location", "Unknown"))  # Saída: Unknown (valor padrão se a chave não existir)
+
+# Acessando valores em dicionários aninhados
+print(network["R1"]["ip"])  # Saída: 192.168.1.1
+print(network["S1"]["interfaces"][0])  # Saída: Gi1/0/1</code></pre>
+            
+            <h3>Modificando Dicionários</h3>
+            
+            <pre><code># Adicionando novos pares chave-valor
+router["location"] = "Data Center"
+print(router)
+
+# Modificando valores existentes
+router["ios"] = "16.0"
+print(router["ios"])  # Saída: 16.0
+
+# Adicionando múltiplos pares chave-valor com update()
+router.update({"rack": "Rack-01", "serial": "ABC123XYZ"})
+print(router)
+
+# Removendo pares chave-valor
+removed_value = router.pop("serial")  # Remove e retorna o valor
+print(removed_value)  # Saída: ABC123XYZ
+print(router)
+
+# Removendo o último par inserido
+last_item = router.popitem()  # Retorna uma tupla (chave, valor)
+print(last_item)  # Saída: ('rack', 'Rack-01')
+
+# Removendo com del
+del router["location"]
+print(router)
+
+# Limpando o dicionário
+router.clear()
+print(router)  # Saída: {}</code></pre>
+            
+            <h3>Métodos Comuns de Dicionários</h3>
+            
+            <pre><code># Recriando o dicionário para os exemplos
+router = {
+    "hostname": "R1",
+    "ip": "192.168.1.1",
+    "model": "Cisco 2901",
+    "ios": "15.4",
+    "interfaces": 4
+}
+
+# Obtendo todas as chaves
+keys = router.keys()
+print(list(keys))  # Saída: ['hostname', 'ip', 'model', 'ios', 'interfaces']
+
+# Obtendo todos os valores
+values = router.values()
+print(list(values))  # Saída: ['R1', '192.168.1.1', 'Cisco 2901', '15.4', 4]
+
+# Obtendo todos os pares chave-valor como tuplas
+items = router.items()
+print(list(items))  # Saída: [('hostname', 'R1'), ('ip', '192.168.1.1'), ...]
+
+# Verificando se uma chave existe
+if "model" in router:
+    print(f"Modelo: {router['model']}")
+
+# Copiando um dicionário
+router_copy = router.copy()
+
+# Criando um dicionário com chaves padrão
+devices = ["R1", "S1", "AP1"]
+device_status = dict.fromkeys(devices, "online")
+print(device_status)  # Saída: {'R1': 'online', 'S1': 'online', 'AP1': 'online'}</code></pre>
+            
+            <h3>Compreensão de Dicionários</h3>
+            
+            <p>Assim como as listas, os dicionários também suportam compreensões:</p>
+            
+            <pre><code># Criando um dicionário a partir de duas listas
+devices = ["R1", "S1", "AP1", "FW1"]
+ips = ["192.168.1.1", "192.168.1.2", "192.168.1.3", "192.168.1.4"]
+
+# Usando compreensão de dicionário
+device_ips = {devices[i]: ips[i] for i in range(len(devices))}
+print(device_ips)  # Saída: {'R1': '192.168.1.1', 'S1': '192.168.1.2', ...}
+
+# Compreensão de dicionário com condição
+device_types = {"R1": "Router", "S1": "Switch", "AP1": "Access Point", "FW1": "Firewall"}
+routers_only = {name: type for name, type in device_types.items() if type == "Router"}
+print(routers_only)  # Saída: {'R1': 'Router'}</code></pre>
+            
+            <h3>Aplicação em Redes: Inventário de Dispositivos</h3>
+            
+            <p>Vamos ver um exemplo prático de como usar dicionários para gerenciar um inventário de dispositivos de rede:</p>
+            
+            <pre><code># Inventário de dispositivos usando dicionários
+network_inventory = {
+    "R1": {
+        "device_type": "router",
+        "ip": "192.168.1.1",
+        "model": "Cisco 2901",
+        "ios": "15.4",
+        "interfaces": {
+            "GigabitEthernet0/0": {
+                "ip": "192.168.1.1",
+                "mask": "255.255.255.0",
+                "status": "up"
+            },
+            "GigabitEthernet0/1": {
+                "ip": "10.0.0.1",
+                "mask": "255.255.255.252",
+                "status": "up"
+            }
+        }
+    },
+    "S1": {
+        "device_type": "switch",
+        "ip": "192.168.1.2",
+        "model": "Cisco 3750",
+        "ios": "15.2",
+        "vlans": [1, 10, 20, 30],
+        "interfaces": {
+            "GigabitEthernet1/0/1": {
+                "mode": "access",
+                "vlan": 10,
+                "status": "up"
+            },
+            "GigabitEthernet1/0/2": {
+                "mode": "trunk",
+                "native_vlan": 1,
+                "allowed_vlans": [1, 10, 20, 30],
+                "status": "up"
+            }
+        }
+    }
+}
+
+# Função para exibir informações básicas de um dispositivo
+def display_device_info(device_name, inventory):
+    if device_name not in inventory:
+        print(f"Dispositivo {device_name} não encontrado no inventário.")
+        return
+    
+    device = inventory[device_name]
+    print(f"Informações do Dispositivo: {device_name}")
+    print(f"  Tipo: {device['device_type'].capitalize()}")
+    print(f"  IP: {device['ip']}")
+    print(f"  Modelo: {device['model']}")
+    print(f"  IOS: {device['ios']}")
+    
+    # Exibindo interfaces
+    print("  Interfaces:")
+    for intf_name, intf_info in device['interfaces'].items():
+        print(f"    {intf_name}:")
+        for key, value in intf_info.items():
+            print(f"      {key}: {value}")
+
+# Exibindo informações de um dispositivo
+display_device_info("R1", network_inventory)
+print("\n" + "-" * 50 + "\n")
+display_device_info("S1", network_inventory)
+
+# Adicionando um novo dispositivo ao inventário
+network_inventory["AP1"] = {
+    "device_type": "access_point",
+    "ip": "192.168.1.3",
+    "model": "Cisco Aironet 3800",
+    "ios": "8.5",
+    "interfaces": {
+        "GigabitEthernet0": {
+            "ip": "192.168.1.3",
+            "mask": "255.255.255.0",
+            "status": "up"
+        },
+        "Dot11Radio0": {
+            "ssid": "Company-WiFi",
+            "channel": 6,
+            "status": "up"
+        }
+    }
+}
+
+# Atualizando informações de um dispositivo
+network_inventory["R1"]["ios"] = "16.0"
+network_inventory["R1"]["interfaces"]["GigabitEthernet0/2"] = {
+    "ip": "172.16.0.1",
+    "mask": "255.255.0.0",
+    "status": "down"
+}
+
+# Função para encontrar todos os dispositivos com um determinado status de interface
+def find_devices_with_interface_status(inventory, status):
+    result = {}
+    for device_name, device_info in inventory.items():
+        interfaces_with_status = []
+        for intf_name, intf_info in device_info['interfaces'].items():
+            if intf_info.get('status') == status:
+                interfaces_with_status.append(intf_name)
+        
+        if interfaces_with_status:
+            result[device_name] = interfaces_with_status
+    
+    return result
+
+# Encontrando dispositivos com interfaces down
+down_interfaces = find_devices_with_interface_status(network_inventory, "down")
+print("\nDispositivos com interfaces down:")
+for device, interfaces in down_interfaces.items():
+    print(f"  {device}: {', '.join(interfaces)}")
+
+# Função para gerar um relatório de inventário
+def generate_inventory_report(inventory):
+    device_count = len(inventory)
+    device_types = {}
+    ios_versions = {}
+    total_interfaces = 0
+    
+    for device_name, device_info in inventory.items():
+        # Contando tipos de dispositivos
+        device_type = device_info['device_type']
+        device_types[device_type] = device_types.get(device_type, 0) + 1
+        
+        # Contando versões de IOS
+        ios = device_info['ios']
+        ios_versions[ios] = ios_versions.get(ios, 0) + 1
+        
+        # Contando interfaces
+        total_interfaces += len(device_info['interfaces'])
+    
+    # Gerando o relatório
+    print("\nRelatório de Inventário:")
+    print(f"  Total de dispositivos: {device_count}")
+    print("  Tipos de dispositivos:")
+    for type_name, count in device_types.items():
+        print(f"    {type_name.capitalize()}: {count}")
+    
+    print("  Versões de IOS:")
+    for ios, count in ios_versions.items():
+        print(f"    {ios}: {count}")
+    
+    print(f"  Total de interfaces: {total_interfaces}")
+
+# Gerando o relatório de inventário
+generate_inventory_report(network_inventory)</code></pre>
+            
+            <p>Este exemplo demonstra como usar dicionários aninhados para representar um inventário de rede detalhado, com informações sobre dispositivos, interfaces e configurações. Os dicionários são ideais para este tipo de estrutura hierárquica de dados.</p>
+        </section>
+
+        <section id="tuplas">
+            <h2>Tuplas</h2>
+            
+            <p>As tuplas são semelhantes às listas, mas são imutáveis, ou seja, não podem ser modificadas após a criação. Elas são usadas para armazenar coleções de itens que não devem ser alterados.</p>
+            
+            <h3>Criando Tuplas</h3>
+            
+            <pre><code># Tupla vazia
+empty_tuple = ()
+
+# Tupla com um único elemento (observe a vírgula obrigatória)
+single_item = ("R1",)  # Sem a vírgula, seria interpretado como uma string entre parênteses
+
+# Tupla com múltiplos elementos
+router = ("R1", "192.168.1.1", "Cisco 2901")
+
+# Tupla sem parênteses (também funciona)
+switch = "S1", "192.168.1.2", "Cisco 3750"
+
+# Tupla a partir de uma lista
+devices_list = ["R1", "S1", "AP1"]
+devices_tuple = tuple(devices_list)</code></pre>
+            
+            <h3>Acessando Elementos</h3>
+            
+            <pre><code># Acessando elementos por índice (similar às listas)
+print(router[0])  # Saída: R1
+print(router[2])  # Saída: Cisco 2901
+
+# Índices negativos
+print(router[-1])  # Saída: Cisco 2901
+
+# Fatiamento
+print(router[0:2])  # Saída: ('R1', '192.168.1.1')</code></pre>
+            
+            <h3>Operações com Tuplas</h3>
+            
+            <pre><code># Verificando se um elemento existe
+if "R1" in router:
+    print("R1 está na tupla")
+
+# Comprimento da tupla
+print(len(router))  # Saída: 3
+
+# Concatenando tuplas
+all_devices = router + switch
+print(all_devices)  # Saída: ('R1', '192.168.1.1', 'Cisco 2901', 'S1', '192.168.1.2', 'Cisco 3750')
+
+# Repetindo tuplas
+repeated = ("VLAN",) * 3
+print(repeated)  # Saída: ('VLAN', 'VLAN', 'VLAN')
+
+# Métodos de tuplas
+count = all_devices.count("R1")
+print(count)  # Saída: 1
+
+index = all_devices.index("S1")
+print(index)  # Saída: 3</code></pre>
+            
+            <h3>Desempacotamento de Tuplas</h3>
+            
+            <p>Uma característica útil das tuplas é a possibilidade de desempacotar seus valores em variáveis separadas:</p>
+            
+            <pre><code># Desempacotamento básico
+hostname, ip, model = router
+print(hostname)  # Saída: R1
+print(ip)        # Saída: 192.168.1.1
+print(model)     # Saída: Cisco 2901
+
+# Desempacotamento com *
+first, *rest = all_devices
+print(first)  # Saída: R1
+print(rest)   # Saída: ['192.168.1.1', 'Cisco 2901', 'S1', '192.168.1.2', 'Cisco 3750']
+
+*beginning, last = all_devices
+print(beginning)  # Saída: ['R1', '192.168.1.1', 'Cisco 2901', 'S1', '192.168.1.2']
+print(last)       # Saída: Cisco 3750
+
+first, *middle, last = all_devices
+print(first)   # Saída: R1
+print(middle)  # Saída: ['192.168.1.1', 'Cisco 2901', 'S1', '192.168.1.2']
+print(last)    # Saída: Cisco 3750</code></pre>
+            
+            <h3>Quando Usar Tuplas</h3>
+            
+            <p>As tuplas são mais adequadas que as listas nas seguintes situações:</p>
+            
+            <ul>
+                <li>Quando você precisa de uma sequência imutável (que não pode ser alterada)</li>
+                <li>Para representar coleções de dados heterogêneos (diferentes tipos)</li>
+                <li>Como chaves em dicionários (listas não podem ser usadas como chaves)</li>
+                <li>Para retornar múltiplos valores de uma função</li>
+            </ul>
+            
+            <h3>Aplicação em Redes: Representando Endereços IP</h3>
+            
+            <p>Vamos ver um exemplo de como usar tuplas para representar e manipular endereços IP:</p>
+            
+            <pre><code># Função para converter um endereço IP em uma tupla de inteiros
+def ip_to_tuple(ip_address):
+    """Converte um endereço IP em uma tupla de inteiros."""
+    return tuple(int(octet) for octet in ip_address.split("."))
+
+# Função para converter uma tupla de volta para um endereço IP
+def tuple_to_ip(ip_tuple):
+    """Converte uma tupla de inteiros em um endereço IP."""
+    return ".".join(str(octet) for octet in ip_tuple)
+
+# Função para verificar se um IP está em uma sub-rede
+def is_ip_in_network(ip, network, mask):
+    """Verifica se um IP está em uma determinada sub-rede."""
+    ip_tuple = ip_to_tuple(ip)
+    network_tuple = ip_to_tuple(network)
+    mask_tuple = ip_to_tuple(mask)
+    
+    # Aplicando a máscara ao IP e à rede
+    ip_network = tuple(ip_tuple[i] & mask_tuple[i] for i in range(4))
+    network_masked = tuple(network_tuple[i] & mask_tuple[i] for i in range(4))
+    
+    return ip_network == network_masked
+
+# Exemplos de uso
+ip1 = "192.168.1.10"
+ip2 = "10.0.0.1"
+network = "192.168.1.0"
+mask = "255.255.255.0"
+
+# Convertendo para tuplas
+ip1_tuple = ip_to_tuple(ip1)
+ip2_tuple = ip_to_tuple(ip2)
+print(f"IP1 como tupla: {ip1_tuple}")  # Saída: (192, 168, 1, 10)
+print(f"IP2 como tupla: {ip2_tuple}")  # Saída: (10, 0, 0, 1)
+
+# Verificando se os IPs estão na sub-rede
+print(f"{ip1} está na rede {network}/{mask}? {is_ip_in_network(ip1, network, mask)}")
+print(f"{ip2} está na rede {network}/{mask}? {is_ip_in_network(ip2, network, mask)}")
+
+# Lista de tuplas representando sub-redes (rede, máscara, nome)
+subnets = [
+    ("192.168.1.0", "255.255.255.0", "LAN"),
+    ("10.0.0.0", "255.255.0.0", "WAN"),
+    ("172.16.0.0", "255.240.0.0", "DMZ")
+]
+
+# Função para encontrar a sub-rede de um IP
+def find_subnet(ip, subnet_list):
+    """Encontra a sub-rede a que um IP pertence."""
+    for network, mask, name in subnet_list:
+        if is_ip_in_network(ip, network, mask):
+            return name
+    return "Unknown"
+
+# Testando a função
+test_ips = ["192.168.1.100", "10.1.5.7", "172.20.30.40", "8.8.8.8"]
+for ip in test_ips:
+    subnet_name = find_subnet(ip, subnets)
+    print(f"IP {ip} pertence à sub-rede: {subnet_name}")</code></pre>
+            
+            <p>Este exemplo demonstra como usar tuplas para representar endereços IP e sub-redes, aproveitando sua imutabilidade e capacidade de representar dados heterogêneos (rede, máscara, nome).</p>
+        </section>
+
+        <section id="conjuntos">
+            <h2>Conjuntos</h2>
+            
+            <p>Os conjuntos (sets) são coleções não ordenadas de elementos únicos. Eles são úteis para operações matemáticas de conjuntos, como união, interseção e diferença, e para eliminar duplicatas de uma coleção.</p>
+            
+            <h3>Criando Conjuntos</h3>
+            
+            <pre><code># Conjunto vazio
+empty_set = set()  # Não use {} pois isso cria um dicionário vazio
+
+# Conjunto com elementos
+vlans = {10, 20, 30, 40}
+
+# Conjunto a partir de uma lista (remove duplicatas)
+vlan_list = [10, 20, 30, 20, 40, 10, 50]
+unique_vlans = set(vlan_list)
+print(unique_vlans)  # Saída: {10, 20, 30, 40, 50}</code></pre>
+            
+            <h3>Operações com Conjuntos</h3>
+            
+            <pre><code># Adicionando elementos
+vlans.add(60)
+print(vlans)  # Saída: {10, 20, 30, 40, 60}
+
+# Adicionando múltiplos elementos
+vlans.update([70, 80, 90])
+print(vlans)  # Saída: {10, 20, 30, 40, 60, 70, 80, 90}
+
+# Removendo elementos
+vlans.remove(60)  # Gera erro se o elemento não existir
+print(vlans)  # Saída: {10, 20, 30, 40, 70, 80, 90}
+
+vlans.discard(100)  # Não gera erro se o elemento não existir
+print(vlans)  # Saída: {10, 20, 30, 40, 70, 80, 90}
+
+# Removendo e retornando um elemento arbitrário
+popped = vlans.pop()
+print(popped)  # Saída: um elemento qualquer do conjunto
+print(vlans)  # Saída: conjunto sem o elemento removido
+
+# Limpando o conjunto
+vlans.clear()
+print(vlans)  # Saída: set()</code></pre>
+            
+            <h3>Operações Matemáticas de Conjuntos</h3>
+            
+            <pre><code># Criando conjuntos para os exemplos
+vlan_set1 = {10, 20, 30, 40}
+vlan_set2 = {30, 40, 50, 60}
+
+# União (elementos que estão em qualquer um dos conjuntos)
+union = vlan_set1 | vlan_set2  # ou vlan_set1.union(vlan_set2)
+print(union)  # Saída: {10, 20, 30, 40, 50, 60}
+
+# Interseção (elementos que estão em ambos os conjuntos)
+intersection = vlan_set1 & vlan_set2  # ou vlan_set1.intersection(vlan_set2)
+print(intersection)  # Saída: {30, 40}
+
+# Diferença (elementos que estão no primeiro conjunto, mas não no segundo)
+difference = vlan_set1 - vlan_set2  # ou vlan_set1.difference(vlan_set2)
+print(difference)  # Saída: {10, 20}
+
+# Diferença simétrica (elementos que estão em um conjunto ou no outro, mas não em ambos)
+symmetric_difference = vlan_set1 ^ vlan_set2  # ou vlan_set1.symmetric_difference(vlan_set2)
+print(symmetric_difference)  # Saída: {10, 20, 50, 60}</code></pre>
+            
+            <h3>Verificações com Conjuntos</h3>
+            
+            <pre><code># Verificando se um elemento está no conjunto
+if 30 in vlan_set1:
+    print("VLAN 30 está no conjunto 1")
+
+# Verificando se um conjunto é subconjunto de outro
+is_subset = {10, 20}.issubset(vlan_set1)
+print(is_subset)  # Saída: True
+
+# Verificando se um conjunto é superconjunto de outro
+is_superset = vlan_set1.issuperset({10, 20})
+print(is_superset)  # Saída: True
+
+# Verificando se dois conjuntos são disjuntos (não têm elementos em comum)
+are_disjoint = vlan_set1.isdisjoint({100, 200})
+print(are_disjoint)  # Saída: True</code></pre>
+            
+            <h3>Compreensão de Conjuntos</h3>
+            
+            <p>Assim como listas e dicionários, os conjuntos também suportam compreensões:</p>
+            
+            <pre><code># Criando um conjunto usando compreensão
+ports = [80, 443, 22, 23, 443, 80, 25]
+unique_ports = {port for port in ports}
+print(unique_ports)  # Saída: {80, 443, 22, 23, 25}
+
+# Compreensão de conjunto com condição
+even_ports = {port for port in ports if port % 2 == 0}
+print(even_ports)  # Saída: {80, 22}</code></pre>
+            
+            <h3>Aplicação em Redes: Comparando Configurações</h3>
+            
+            <p>Vamos ver um exemplo de como usar conjuntos para comparar configurações de dispositivos de rede:</p>
+            
+            <pre><code># Função para extrair VLANs de uma configuração
+def extract_vlans(config_text):
+    """Extrai os IDs de VLAN de uma configuração de switch."""
+    vlans = set()
+    for line in config_text.split("\n"):
+        # Procura por linhas como "vlan 10" ou "switchport trunk allowed vlan 10,20,30"
+        if line.strip().startswith("vlan "):
+            try:
+                vlan_id = int(line.strip().split()[1])
+                vlans.add(vlan_id)
+            except (IndexError, ValueError):
+                continue
+        elif "allowed vlan" in line:
+            # Extrai VLANs de uma lista como "10,20,30"
+            try:
+                vlan_part = line.split("allowed vlan")[1].strip()
+                for part in vlan_part.split(","):
+                    if "-" in part:  # Intervalo como "10-20"
+                        start, end = map(int, part.split("-"))
+                        vlans.update(range(start, end + 1))
+                    else:
+                        vlans.add(int(part))
+            except (IndexError, ValueError):
+                continue
+    return vlans
+
+# Configurações de exemplo
+switch1_config = """
+vlan 10
+ name DATA
+vlan 20
+ name VOICE
+vlan 30
+ name MANAGEMENT
+!
+interface GigabitEthernet0/1
+ switchport mode trunk
+ switchport trunk allowed vlan 10,20,30
+!
+interface GigabitEthernet0/2
+ switchport mode access
+ switchport access vlan 10
+"""
+
+switch2_config = """
+vlan 10
+ name DATA
+vlan 20
+ name VOICE
+vlan 40
+ name GUEST
+!
+interface GigabitEthernet0/1
+ switchport mode trunk
+ switchport trunk allowed vlan 10,20,40
+!
+interface GigabitEthernet0/2
+ switchport mode access
+ switchport access vlan 10
+"""
+
+# Extraindo VLANs de cada configuração
+switch1_vlans = extract_vlans(switch1_config)
+switch2_vlans = extract_vlans(switch2_config)
+
+print(f"VLANs no Switch 1: {switch1_vlans}")
+print(f"VLANs no Switch 2: {switch2_vlans}")
+
+# Comparando as configurações de VLAN
+common_vlans = switch1_vlans & switch2_vlans
+print(f"VLANs em comum: {common_vlans}")
+
+switch1_only = switch1_vlans - switch2_vlans
+print(f"VLANs apenas no Switch 1: {switch1_only}")
+
+switch2_only = switch2_vlans - switch1_vlans
+print(f"VLANs apenas no Switch 2: {switch2_only}")
+
+all_vlans = switch1_vlans | switch2_vlans
+print(f"Todas as VLANs na rede: {all_vlans}")
+
+# Verificando se as configurações são compatíveis
+if switch1_vlans.issubset(switch2_vlans):
+    print("Todas as VLANs do Switch 1 estão presentes no Switch 2")
+elif switch2_vlans.issubset(switch1_vlans):
+    print("Todas as VLANs do Switch 2 estão presentes no Switch 1")
+else:
+    print("Os switches têm configurações de VLAN diferentes")
+
+# Função para gerar comandos para sincronizar VLANs
+def generate_vlan_sync_commands(source_vlans, target_vlans, target_name):
+    """Gera comandos para sincronizar VLANs entre switches."""
+    commands = []
+    
+    # VLANs para adicionar (estão na fonte mas não no alvo)
+    vlans_to_add = source_vlans - target_vlans
+    if vlans_to_add:
+        commands.append(f"# Comandos para adicionar VLANs ao {target_name}")
+        for vlan in sorted(vlans_to_add):
+            commands.append(f"vlan {vlan}")
+            commands.append(" name AUTO-SYNC")
+        commands.append("!")
+    
+    # VLANs para remover (estão no alvo mas não na fonte)
+    vlans_to_remove = target_vlans - source_vlans
+    if vlans_to_remove:
+        commands.append(f"# Comandos para remover VLANs do {target_name}")
+        for vlan in sorted(vlans_to_remove):
+            commands.append(f"no vlan {vlan}")
+        commands.append("!")
+    
+    return commands
+
+# Gerando comandos para sincronizar Switch 2 com Switch 1
+sync_commands = generate_vlan_sync_commands(switch1_vlans, switch2_vlans, "Switch 2")
+if sync_commands:
+    print("\nComandos para sincronizar Switch 2 com Switch 1:")
+    for cmd in sync_commands:
+        print(cmd)
+else:
+    print("\nNenhum comando necessário para sincronização.")</code></pre>
+            
+            <p>Este exemplo demonstra como usar conjuntos para comparar configurações de VLAN entre switches e gerar comandos para sincronizá-los. Os conjuntos são ideais para este tipo de operação, pois permitem identificar facilmente elementos comuns, diferentes e únicos entre duas coleções.</p>
+        </section>
+
+        <section id="exercicios">
+            <h2>Exercícios Práticos</h2>
+            
+            <div class="exercise">
+                <h4>Exercício 1: Gerenciador de Dispositivos</h4>
+                <p>Crie um programa Python que gerencie uma lista de dispositivos de rede. O programa deve:</p>
+                <ol>
+                    <li>Permitir adicionar dispositivos (nome, IP, tipo, localização)</li>
+                    <li>Permitir remover dispositivos por nome ou IP</li>
+                    <li>Permitir buscar dispositivos por tipo ou localização</li>
+                    <li>Exibir todos os dispositivos</li>
+                    <li>Salvar e carregar a lista de dispositivos (simulado)</li>
+                </ol>
+                <p>Use listas e dicionários para implementar esta funcionalidade.</p>
+            </div>
+            
+            <div class="solution">
+                <h4>Solução do Exercício 1:</h4>
+                <pre><code>#!/usr/bin/env python3
+# Gerenciador de Dispositivos de Rede
+
+def display_menu():
+    """Exibe o menu principal do programa."""
+    print("\n===== Gerenciador de Dispositivos de Rede =====")
+    print("1. Adicionar dispositivo")
+    print("2. Remover dispositivo")
+    print("3. Buscar dispositivos")
+    print("4. Exibir todos os dispositivos")
+    print("5. Salvar dispositivos")
+    print("6. Carregar dispositivos")
+    print("0. Sair")
+    print("==============================================")
+    return input("Escolha uma opção: ")
+
+def add_device(devices):
+    """Adiciona um novo dispositivo à lista."""
+    print("\n----- Adicionar Dispositivo -----")
+    name = input("Nome do dispositivo: ")
+    
+    # Verificando se o dispositivo já existe
+    for device in devices:
+        if device["name"].lower() == name.lower():
+            print(f"Erro: Dispositivo com nome '{name}' já existe!")
+            return
+    
+    ip = input("Endereço IP: ")
+    
+    # Verificando se o IP já está em uso
+    for device in devices:
+        if device["ip"] == ip:
+            print(f"Erro: IP '{ip}' já está em uso pelo dispositivo '{device['name']}'!")
+            return
+    
+    device_type = input("Tipo (router, switch, firewall, etc.): ")
+    location = input("Localização: ")
+    
+    # Criando o dicionário do dispositivo
+    new_device = {
+        "name": name,
+        "ip": ip,
+        "type": device_type.lower(),
+        "location": location
+    }
+    
+    # Adicionando à lista
+    devices.append(new_device)
+    print(f"Dispositivo '{name}' adicionado com sucesso!")
+
+def remove_device(devices):
+    """Remove um dispositivo da lista por nome ou IP."""
+    if not devices:
+        print("Não há dispositivos para remover.")
+        return
+    
+    print("\n----- Remover Dispositivo -----")
+    print("1. Remover por nome")
+    print("2. Remover por IP")
+    choice = input("Escolha uma opção: ")
+    
+    if choice == "1":
+        name = input("Nome do dispositivo a remover: ")
+        for i, device in enumerate(devices):
+            if device["name"].lower() == name.lower():
+                removed = devices.pop(i)
+                print(f"Dispositivo '{removed['name']}' removido com sucesso!")
+                return
+        print(f"Erro: Dispositivo com nome '{name}' não encontrado!")
+    
+    elif choice == "2":
+        ip = input("IP do dispositivo a remover: ")
+        for i, device in enumerate(devices):
+            if device["ip"] == ip:
+                removed = devices.pop(i)
+                print(f"Dispositivo '{removed['name']}' (IP: {ip}) removido com sucesso!")
+                return
+        print(f"Erro: Dispositivo com IP '{ip}' não encontrado!")
+    
+    else:
+        print("Opção inválida!")
+
+def search_devices(devices):
+    """Busca dispositivos por tipo ou localização."""
+    if not devices:
+        print("Não há dispositivos para buscar.")
+        return
+    
+    print("\n----- Buscar Dispositivos -----")
+    print("1. Buscar por tipo")
+    print("2. Buscar por localização")
+    choice = input("Escolha uma opção: ")
+    
+    results = []
+    
+    if choice == "1":
+        device_type = input("Tipo de dispositivo a buscar: ").lower()
+        results = [device for device in devices if device["type"].lower() == device_type]
+    
+    elif choice == "2":
+        location = input("Localização a buscar: ").lower()
+        results = [device for device in devices if location.lower() in device["location"].lower()]
+    
+    else:
+        print("Opção inválida!")
+        return
+    
+    if results:
+        print(f"\nResultados da busca ({len(results)} dispositivos encontrados):")
+        display_devices(results)
+    else:
+        print("Nenhum dispositivo encontrado com os critérios especificados.")
+
+def display_devices(devices_list):
+    """Exibe uma lista de dispositivos formatada."""
+    if not devices_list:
+        print("Não há dispositivos para exibir.")
+        return
+    
+    print(f"\n{'Nome':<15} {'IP':<15} {'Tipo':<15} {'Localização':<20}")
+    print("-" * 65)
+    
+    for device in devices_list:
+        print(f"{device['name']:<15} {device['ip']:<15} {device['type']:<15} {device['location']:<20}")
+
+def save_devices(devices):
+    """Simula o salvamento da lista de dispositivos em um arquivo."""
+    if not devices:
+        print("Não há dispositivos para salvar.")
+        return
+    
+    filename = input("Nome do arquivo para salvar (ex: devices.txt): ")
+    print(f"Simulando salvamento de {len(devices)} dispositivos em '{filename}'...")
+    print("Dispositivos salvos com sucesso!")
+    
+    # Em um programa real, você usaria algo como:
+    # import json
+    # with open(filename, 'w') as f:
+    #     json.dump(devices, f, indent=4)
+
+def load_devices():
+    """Simula o carregamento da lista de dispositivos de um arquivo."""
+    filename = input("Nome do arquivo para carregar (ex: devices.txt): ")
+    print(f"Simulando carregamento de dispositivos de '{filename}'...")
+    
+    # Em um programa real, você usaria algo como:
+    # import json
+    # try:
+    #     with open(filename, 'r') as f:
+    #         return json.load(f)
+    # except FileNotFoundError:
+    #     print(f"Erro: Arquivo '{filename}' não encontrado!")
+    #     return []
+    
+    # Para este exercício, retornamos alguns dispositivos de exemplo
+    print("Dispositivos carregados com sucesso!")
+    return [
+        {"name": "Router1", "ip": "192.168.1.1", "type": "router", "location": "Data Center"},
+        {"name": "Switch1", "ip": "192.168.1.2", "type": "switch", "location": "Data Center"},
+        {"name": "Firewall1", "ip": "192.168.1.254", "type": "firewall", "location": "Edge"},
+        {"name": "AP1", "ip": "192.168.2.1", "type": "access point", "location": "Office Floor 1"}
+    ]
+
+def main():
+    """Função principal do programa."""
+    devices = []
+    
+    while True:
+        choice = display_menu()
+        
+        if choice == "1":
+            add_device(devices)
+        
+        elif choice == "2":
+            remove_device(devices)
+        
+        elif choice == "3":
+            search_devices(devices)
+        
+        elif choice == "4":
+            print("\n----- Todos os Dispositivos -----")
+            display_devices(devices)
+        
+        elif choice == "5":
+            save_devices(devices)
+        
+        elif choice == "6":
+            devices = load_devices()
+        
+        elif choice == "0":
+            print("\nSaindo do programa. Até logo!")
+            break
+        
+        else:
+            print("Opção inválida! Por favor, tente novamente.")
+
+if __name__ == "__main__":
+    main()</code></pre>
+            </div>
+            
+            <div class="exercise">
+                <h4>Exercício 2: Analisador de Configuração</h4>
+                <p>Crie um programa Python que analise uma configuração de roteador Cisco e extraia informações importantes. O programa deve:</p>
+                <ol>
+                    <li>Extrair o hostname do roteador</li>
+                    <li>Identificar todas as interfaces e seus endereços IP</li>
+                    <li>Listar todas as rotas estáticas configuradas</li>
+                    <li>Identificar as ACLs configuradas</li>
+                </ol>
+                <p>Use dicionários para armazenar as informações extraídas e apresente um relatório formatado.</p>
+            </div>
+            
+            <div class="solution">
+                <h4>Solução do Exercício 2:</h4>
+                <pre><code>#!/usr/bin/env python3
+# Analisador de Configuração de Roteador Cisco
+
+import re
+
+def extract_hostname(config):
+    """Extrai o hostname do roteador da configuração."""
+    hostname_match = re.search(r"^hostname\s+(.+)$", config, re.MULTILINE)
+    if hostname_match:
+        return hostname_match.group(1)
+    return "Unknown"
+
+def extract_interfaces(config):
+    """Extrai informações sobre interfaces da configuração."""
+    interfaces = {}
+    
+    # Encontra blocos de configuração de interface
+    interface_blocks = re.finditer(r"^interface\s+(.+?)$\s+(.+?)(?=^!|^interface|\Z)", 
+                                  config, re.MULTILINE | re.DOTALL)
+    
+    for match in interface_blocks:
+        interface_name = match.group(1)
+        interface_config = match.group(2)
+        
+        # Inicializa o dicionário para esta interface
+        interfaces[interface_name] = {
+            "ip_address": None,
+            "subnet_mask": None,
+            "description": None,
+            "status": "up"  # Assume up a menos que encontre "shutdown"
+        }
+        
+        # Extrai endereço IP e máscara
+        ip_match = re.search(r"ip address\s+(\S+)\s+(\S+)", interface_config)
+        if ip_match:
+            interfaces[interface_name]["ip_address"] = ip_match.group(1)
+            interfaces[interface_name]["subnet_mask"] = ip_match.group(2)
+        
+        # Extrai descrição
+        desc_match = re.search(r"description\s+(.+)$", interface_config, re.MULTILINE)
+        if desc_match:
+            interfaces[interface_name]["description"] = desc_match.group(1)
+        
+        # Verifica se a interface está em shutdown
+        if re.search(r"^\s*shutdown\s*$", interface_config, re.MULTILINE):
+            interfaces[interface_name]["status"] = "down"
+    
+    return interfaces
+
+def extract_static_routes(config):
+    """Extrai rotas estáticas da configuração."""
+    static_routes = []
+    
+    # Procura por linhas de rota estática
+    route_matches = re.finditer(r"^ip route\s+(\S+)\s+(\S+)\s+(\S+)(?:\s+(\d+))?", 
+                               config, re.MULTILINE)
+    
+    for match in route_matches:
+        network = match.group(1)
+        mask = match.group(2)
+        next_hop = match.group(3)
+        distance = match.group(4) if match.group(4) else "1"  # Distância administrativa padrão
+        
+        static_routes.append({
+            "network": network,
+            "mask": mask,
+            "next_hop": next_hop,
+            "distance": distance
+        })
+    
+    return static_routes
+
+def extract_acls(config):
+    """Extrai ACLs da configuração."""
+    acls = {}
+    
+    # Procura por ACLs padrão e estendidas
+    acl_matches = re.finditer(r"^(ip access-list\s+\S+\s+\S+|access-list\s+\d+\s+\S+)\s+(.+)$", 
+                             config, re.MULTILINE)
+    
+    for match in acl_matches:
+        acl_header = match.group(1)
+        acl_rule = match.group(2)
+        
+        # Determina o nome/número da ACL
+        if "ip access-list" in acl_header:
+            parts = acl_header.split()
+            acl_type = parts[2]  # standard ou extended
+            acl_name = parts[3]
+        else:
+            parts = acl_header.split()
+            acl_number = parts[1]
+            acl_type = "standard" if int(acl_number) < 100 else "extended"
+            acl_name = acl_number
+        
+        # Inicializa a entrada da ACL se não existir
+        if acl_name not in acls:
+            acls[acl_name] = {
+                "type": acl_type,
+                "rules": []
+            }
+        
+        # Adiciona a regra
+        acls[acl_name]["rules"].append(acl_rule)
+    
+    return acls
+
+def analyze_config(config_text):
+    """Analisa a configuração completa e retorna um dicionário com as informações extraídas."""
+    analysis = {
+        "hostname": extract_hostname(config_text),
+        "interfaces": extract_interfaces(config_text),
+        "static_routes": extract_static_routes(config_text),
+        "acls": extract_acls(config_text)
+    }
+    
+    return analysis
+
+def generate_report(analysis):
+    """Gera um relatório formatado com base na análise da configuração."""
+    report = []
+    
+    # Cabeçalho
+    report.append("=" * 60)
+    report.append(f"RELATÓRIO DE CONFIGURAÇÃO: {analysis['hostname']}")
+    report.append("=" * 60)
+    
+    # Interfaces
+    report.append("\nINTERFACES:")
+    report.append("-" * 60)
+    
+    if analysis['interfaces']:
+        for name, details in analysis['interfaces'].items():
+            report.append(f"Interface: {name}")
+            if details['description']:
+                report.append(f"  Descrição: {details['description']}")
+            if details['ip_address']:
+                report.append(f"  Endereço IP: {details['ip_address']}")
+                report.append(f"  Máscara: {details['subnet_mask']}")
+            else:
+                report.append("  Sem endereço IP configurado")
+            report.append(f"  Status: {details['status']}")
+            report.append("")
+    else:
+        report.append("Nenhuma interface encontrada.")
+    
+    # Rotas Estáticas
+    report.append("\nROTAS ESTÁTICAS:")
+    report.append("-" * 60)
+    
+    if analysis['static_routes']:
+        for route in analysis['static_routes']:
+            report.append(f"Rede: {route['network']}/{route['mask']}")
+            report.append(f"  Next Hop: {route['next_hop']}")
+            report.append(f"  Distância Administrativa: {route['distance']}")
+            report.append("")
+    else:
+        report.append("Nenhuma rota estática encontrada.")
+    
+    # ACLs
+    report.append("\nACLs:")
+    report.append("-" * 60)
+    
+    if analysis['acls']:
+        for name, details in analysis['acls'].items():
+            report.append(f"ACL: {name} ({details['type']})")
+            report.append("  Regras:")
+            for rule in details['rules']:
+                report.append(f"    - {rule}")
+            report.append("")
+    else:
+        report.append("Nenhuma ACL encontrada.")
+    
+    # Resumo
+    report.append("\nRESUMO:")
+    report.append("-" * 60)
+    report.append(f"Hostname: {analysis['hostname']}")
+    report.append(f"Total de interfaces: {len(analysis['interfaces'])}")
+    report.append(f"Total de rotas estáticas: {len(analysis['static_routes'])}")
+    report.append(f"Total de ACLs: {len(analysis['acls'])}")
+    
+    return "\n".join(report)
+
+# Configuração de exemplo para teste
+sample_config = """
+! Last configuration change at 12:10:03 UTC Mon Jan 10 2023
+!
+version 15.4
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname ROUTER-CORE-01
+!
+boot-start-marker
+boot-end-marker
+!
+!
+enable secret 5 $1$XYZ$abcdefghijklmnopqrstuvwxyz
+!
+no aaa new-model
+!
+!
+!
+!
+!
+!
+ip domain name example.com
+ip cef
+no ipv6 cef
+!
+!
+!
+!
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface GigabitEthernet0/0
+ description WAN Link to ISP
+ ip address 203.0.113.2 255.255.255.252
+ duplex auto
+ speed auto
+!
+interface GigabitEthernet0/1
+ description LAN Connection
+ ip address 192.168.1.1 255.255.255.0
+ duplex auto
+ speed auto
+!
+interface GigabitEthernet0/2
+ description DMZ Network
+ ip address 172.16.1.1 255.255.255.0
+ duplex auto
+ speed auto
+!
+interface GigabitEthernet0/3
+ description Unused Interface
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+!
+ip forward-protocol nd
+!
+!
+no ip http server
+no ip http secure-server
+!
+ip route 0.0.0.0 0.0.0.0 203.0.113.1
+ip route 10.0.0.0 255.255.0.0 192.168.1.254 150
+ip route 172.17.0.0 255.255.0.0 172.16.1.2
+!
+!
+ip access-list extended ALLOW_WEB
+ permit tcp any any eq www
+ permit tcp any any eq 443
+ deny ip any any
+!
+access-list 10 permit 192.168.1.0 0.0.0.255
+access-list 10 deny any
+!
+!
+!
+control-plane
+!
+!
+line con 0
+ logging synchronous
+line aux 0
+line vty 0 4
+ login
+ transport input ssh
+!
+!
+end
+"""
+
+# Analisando a configuração
+analysis_result = analyze_config(sample_config)
+
+# Gerando e exibindo o relatório
+report = generate_report(analysis_result)
+print(report)</code></pre>
+            </div>
+            
+            <div class="exercise">
+                <h4>Exercício 3: Comparador de Inventário</h4>
+                <p>Crie um programa Python que compare dois inventários de rede e identifique as diferenças. O programa deve:</p>
+                <ol>
+                    <li>Carregar dois inventários (simulados como dicionários)</li>
+                    <li>Identificar dispositivos presentes em ambos os inventários</li>
+                    <li>Identificar dispositivos exclusivos de cada inventário</li>
+                    <li>Para dispositivos comuns, identificar diferenças nas configurações</li>
+                    <li>Gerar um relatório de diferenças</li>
+                </ol>
+                <p>Use conjuntos e dicionários para implementar esta funcionalidade.</p>
+            </div>
+            
+            <div class="solution">
+                <h4>Solução do Exercício 3:</h4>
+                <pre><code>#!/usr/bin/env python3
+# Comparador de Inventários de Rede
+
+def load_inventory(inventory_name):
+    """
+    Simula o carregamento de um inventário de rede.
+    Em um cenário real, isso poderia carregar dados de um arquivo JSON ou CSV.
+    """
+    if inventory_name == "inventory1":
+        return {
+            "R1": {
+                "model": "Cisco 2901",
+                "ios": "15.4",
+                "ip": "192.168.1.1",
+                "interfaces": ["Gi0/0", "Gi0/1", "Gi0/2"],
+                "modules": ["WIC-2T", "HWIC-4ESW"]
+            },
+            "R2": {
+                "model": "Cisco 2911",
+                "ios": "15.4",
+                "ip": "192.168.1.2",
+                "interfaces": ["Gi0/0", "Gi0/1", "Gi0/2"],
+                "modules": ["WIC-2T", "HWIC-4ESW"]
+            },
+            "S1": {
+                "model": "Cisco 3750",
+                "ios": "15.2",
+                "ip": "192.168.1.10",
+                "interfaces": ["Gi1/0/1", "Gi1/0/2", "Gi1/0/3", "Gi1/0/4"],
+                "vlans": [1, 10, 20, 30]
+            },
+            "AP1": {
+                "model": "Cisco Aironet 3800",
+                "ios": "8.5",
+                "ip": "192.168.1.20",
+                "ssids": ["Corporate", "Guest"]
+            }
+        }
+    elif inventory_name == "inventory2":
+        return {
+            "R1": {
+                "model": "Cisco 2901",
+                "ios": "16.0",  # Versão de IOS atualizada
+                "ip": "192.168.1.1",
+                "interfaces": ["Gi0/0", "Gi0/1", "Gi0/2"],
+                "modules": ["WIC-2T", "HWIC-4ESW"]
+            },
+            "R3": {  # Novo roteador
+                "model": "Cisco 4321",
+                "ios": "16.5",
+                "ip": "192.168.1.3",
+                "interfaces": ["Gi0/0/0", "Gi0/0/1", "Gi0/0/2"],
+                "modules": ["NIM-2T"]
+            },
+            "S1": {
+                "model": "Cisco 3750",
+                "ios": "15.2",
+                "ip": "192.168.1.10",
+                "interfaces": ["Gi1/0/1", "Gi1/0/2", "Gi1/0/3", "Gi1/0/4"],
+                "vlans": [1, 10, 20, 30, 40]  # VLAN 40 adicionada
+            },
+            "AP1": {
+                "model": "Cisco Aironet 3800",
+                "ios": "8.5",
+                "ip": "192.168.1.21",  # IP alterado
+                "ssids": ["Corporate", "Guest"]
+            }
+        }
+    else:
+        return {}
+
+def compare_inventories(inventory1, inventory2):
+    """
+    Compara dois inventários e retorna as diferenças.
+    """
+    # Obtendo conjuntos de dispositivos em cada inventário
+    devices1 = set(inventory1.keys())
+    devices2 = set(inventory2.keys())
+    
+    # Dispositivos em ambos os inventários
+    common_devices = devices1 & devices2
+    
+    # Dispositivos exclusivos de cada inventário
+    only_in_inventory1 = devices1 - devices2
+    only_in_inventory2 = devices2 - devices1
+    
+    # Analisando diferenças nos dispositivos comuns
+    differences = {}
+    
+    for device in common_devices:
+        device_diff = {}
+        
+        # Comparando cada atributo do dispositivo
+        all_keys = set(inventory1[device].keys()) | set(inventory2[device].keys())
+        
+        for key in all_keys:
+            # Se a chave existe apenas em um inventário
+            if key not in inventory1[device]:
+                device_diff[key] = {
+                    "status": "added",
+                    "value": inventory2[device][key]
+                }
+            elif key not in inventory2[device]:
+                device_diff[key] = {
+                    "status": "removed",
+                    "value": inventory1[device][key]
+                }
+            # Se a chave existe em ambos, mas com valores diferentes
+            elif inventory1[device][key] != inventory2[device][key]:
+                # Tratamento especial para listas (como interfaces, VLANs)
+                if isinstance(inventory1[device][key], list) and isinstance(inventory2[device][key], list):
+                    list1 = set(inventory1[device][key])
+                    list2 = set(inventory2[device][key])
+                    
+                    added = list2 - list1
+                    removed = list1 - list2
+                    
+                    if added or removed:
+                        device_diff[key] = {
+                            "status": "modified",
+                            "added": list(added),
+                            "removed": list(removed),
+                            "old_value": inventory1[device][key],
+                            "new_value": inventory2[device][key]
+                        }
+                else:
+                    device_diff[key] = {
+                        "status": "modified",
+                        "old_value": inventory1[device][key],
+                        "new_value": inventory2[device][key]
+                    }
+        
+        # Se houver diferenças, adiciona ao dicionário de diferenças
+        if device_diff:
+            differences[device] = device_diff
+    
+    # Montando o resultado da comparação
+    comparison = {
+        "common_devices": list(common_devices),
+        "only_in_inventory1": list(only_in_inventory1),
+        "only_in_inventory2": list(only_in_inventory2),
+        "differences": differences
+    }
+    
+    return comparison
+
+def generate_difference_report(comparison, inventory1, inventory2):
+    """
+    Gera um relatório formatado das diferenças entre os inventários.
+    """
+    report = []
+    
+    # Cabeçalho
+    report.append("=" * 70)
+    report.append("RELATÓRIO DE COMPARAÇÃO DE INVENTÁRIOS")
+    report.append("=" * 70)
+    
+    # Resumo
+    report.append("\nRESUMO:")
+    report.append(f"- Dispositivos em ambos os inventários: {len(comparison['common_devices'])}")
+    report.append(f"- Dispositivos apenas no Inventário 1: {len(comparison['only_in_inventory1'])}")
+    report.append(f"- Dispositivos apenas no Inventário 2: {len(comparison['only_in_inventory2'])}")
+    report.append(f"- Dispositivos com diferenças: {len(comparison['differences'])}")
+    
+    # Dispositivos apenas no Inventário 1
+    if comparison['only_in_inventory1']:
+        report.append("\nDISPOSITIVOS APENAS NO INVENTÁRIO 1:")
+        for device in sorted(comparison['only_in_inventory1']):
+            report.append(f"- {device} ({inventory1[device]['model']})")
+    
+    # Dispositivos apenas no Inventário 2
+    if comparison['only_in_inventory2']:
+        report.append("\nDISPOSITIVOS APENAS NO INVENTÁRIO 2:")
+        for device in sorted(comparison['only_in_inventory2']):
+            report.append(f"- {device} ({inventory2[device]['model']})")
+    
+    # Diferenças em dispositivos comuns
+    if comparison['differences']:
+        report.append("\nDIFERENÇAS EM DISPOSITIVOS COMUNS:")
+        
+        for device, diffs in sorted(comparison['differences'].items()):
+            report.append(f"\n{device} ({inventory1[device]['model']}):")
+            
+            for attr, diff_info in sorted(diffs.items()):
+                status = diff_info['status']
+                
+                if status == "added":
+                    report.append(f"  + {attr}: {diff_info['value']} (adicionado)")
+                
+                elif status == "removed":
+                    report.append(f"  - {attr}: {diff_info['value']} (removido)")
+                
+                elif status == "modified":
+                    if "added" in diff_info and "removed" in diff_info:
+                        # Para listas (como interfaces, VLANs)
+                        report.append(f"  * {attr} (modificado):")
+                        
+                        if diff_info['added']:
+                            added_str = ", ".join(str(x) for x in sorted(diff_info['added']))
+                            report.append(f"    + Adicionado: {added_str}")
+                        
+                        if diff_info['removed']:
+                            removed_str = ", ".join(str(x) for x in sorted(diff_info['removed']))
+                            report.append(f"    - Removido: {removed_str}")
+                    else:
+                        # Para valores simples
+                        report.append(f"  * {attr}: {diff_info['old_value']} -> {diff_info['new_value']}")
+    
+    # Dispositivos sem alterações
+    unchanged_devices = set(comparison['common_devices']) - set(comparison['differences'].keys())
+    if unchanged_devices:
+        report.append("\nDISPOSITIVOS SEM ALTERAÇÕES:")
+        for device in sorted(unchanged_devices):
+            report.append(f"- {device} ({inventory1[device]['model']})")
+    
+    return "\n".join(report)
+
+def main():
+    # Carregando os inventários
+    print("Carregando inventários...")
+    inventory1 = load_inventory("inventory1")
+    inventory2 = load_inventory("inventory2")
+    
+    # Comparando os inventários
+    print("Comparando inventários...")
+    comparison = compare_inventories(inventory1, inventory2)
+    
+    # Gerando o relatório
+    print("Gerando relatório de diferenças...")
+    report = generate_difference_report(comparison, inventory1, inventory2)
+    
+    # Exibindo o relatório
+    print("\n" + report)
+    
+    # Em um cenário real, você poderia salvar o relatório em um arquivo
+    # with open("inventory_comparison_report.txt", "w") as f:
+    #     f.write(report)
+
+if __name__ == "__main__":
+    main()</code></pre>
+            </div>
+        </section>
+
+        <section id="avaliacao">
+            <h2>Avaliação do Módulo</h2>
+            
+            <div class="assessment">
+                <h4>Quiz de Conhecimentos</h4>
+                <p>Responda às seguintes perguntas para testar seu conhecimento sobre os conceitos apresentados neste módulo:</p>
+                
+                <ol>
+                    <li>Qual é a principal diferença entre listas e tuplas em Python?</li>
+                    <li>Como você adiciona um elemento ao final de uma lista?</li>
+                    <li>Como você acessa o último elemento de uma lista ou tupla?</li>
+                    <li>O que é uma compreensão de lista e qual é sua vantagem?</li>
+                    <li>Qual é a principal característica dos dicionários em Python?</li>
+                    <li>Como você verifica se uma chave existe em um dicionário?</li>
+                    <li>Qual é a diferença entre os métodos <code>remove()</code> e <code>pop()</code> em listas?</li>
+                    <li>O que acontece se você tentar acessar uma chave que não existe em um dicionário? Como evitar esse erro?</li>
+                    <li>Qual é a principal característica dos conjuntos (sets) em Python?</li>
+                    <li>Quais são as operações matemáticas de conjuntos disponíveis em Python?</li>
+                </ol>
+            </div>
+            
+            <div class="solution">
+                <h4>Respostas do Quiz:</h4>
+                <ol>
+                    <li><strong>Diferença entre listas e tuplas:</strong> A principal diferença é que listas são mutáveis (podem ser modificadas após a criação), enquanto tuplas são imutáveis (não podem ser modificadas após a criação).</li>
+                    <li><strong>Adicionar elemento ao final de uma lista:</strong> Você pode usar o método <code>append()</code>. Por exemplo: <code>minha_lista.append(novo_elemento)</code>.</li>
+                    <li><strong>Acessar o último elemento:</strong> Você pode usar o índice -1. Por exemplo: <code>minha_lista[-1]</code> ou <code>minha_tupla[-1]</code>.</li>
+                    <li><strong>Compreensão de lista:</strong> É uma forma concisa de criar listas baseadas em listas existentes. Sua vantagem é a sintaxe mais compacta e legível, além de geralmente ser mais eficiente que um loop <code>for</code> tradicional.</li>
+                    <li><strong>Característica dos dicionários:</strong> Dicionários armazenam pares de chave-valor, permitindo acesso rápido aos valores através de suas chaves, em vez de índices numéricos.</li>
+                    <li><strong>Verificar se uma chave existe:</strong> Você pode usar o operador <code>in</code>. Por exemplo: <code>if chave in meu_dicionario:</code>.</li>
+                    <li><strong>Diferença entre remove() e pop():</strong> <code>remove()</code> remove um elemento pelo seu valor e não retorna nada, enquanto <code>pop()</code> remove um elemento pelo seu índice e retorna o valor removido.</li>
+                    <li><strong>Acessar chave inexistente:</strong> Ocorre um <code>KeyError</code>. Para evitar isso, você pode usar o método <code>get()</code>, que retorna <code>None</code> ou um valor padrão especificado se a chave não existir.</li>
+                    <li><strong>Característica dos conjuntos:</strong> Conjuntos armazenam elementos únicos (sem duplicatas) e não são ordenados.</li>
+                    <li><strong>Operações de conjuntos:</strong> Python suporta união (<code>|</code> ou <code>union()</code>), interseção (<code>&</code> ou <code>intersection()</code>), diferença (<code>-</code> ou <code>difference()</code>) e diferença simétrica (<code>^</code> ou <code>symmetric_difference()</code>).</li>
+                </ol>
+            </div>
+            
+            <div class="assessment">
+                <h4>Projeto Prático</h4>
+                <p>Desenvolva um sistema de gerenciamento de configuração para dispositivos de rede. O sistema deve:</p>
+                
+                <ol>
+                    <li>Manter um inventário de dispositivos (nome, IP, tipo, localização, etc.)</li>
+                    <li>Armazenar configurações para cada dispositivo</li>
+                    <li>Permitir comparar configurações entre dispositivos ou versões</li>
+                    <li>Gerar relatórios de inventário e configuração</li>
+                    <li>Simular a aplicação de configurações a dispositivos</li>
+                </ol>
+                
+                <p>Use listas, dicionários, tuplas e conjuntos conforme apropriado para implementar as diferentes funcionalidades do sistema. Organize o código em funções para facilitar a manutenção e reutilização.</p>
+            </div>
+        </section>
+
+        <section id="referencias">
+            <h2>Referências e Recursos Adicionais</h2>
+            
+            <div class="references">
+                <h3>Documentação Oficial</h3>
+                <ul>
+                    <li><a href="https://docs.python.org/3/tutorial/datastructures.html" target="_blank">Tutorial Python: Estruturas de Dados</a></li>
+                    <li><a href="https://docs.python.org/3/library/stdtypes.html#sequence-types-list-tuple-range" target="_blank">Documentação Python: Tipos de Sequência (list, tuple, range)</a></li>
+                    <li><a href="https://docs.python.org/3/library/stdtypes.html#mapping-types-dict" target="_blank">Documentação Python: Tipos de Mapeamento (dict)</a></li>
+                    <li><a href="https://docs.python.org/3/library/stdtypes.html#set-types-set-frozenset" target="_blank">Documentação Python: Tipos de Conjunto (set, frozenset)</a></li>
+                </ul>
+                
+                <h3>Livros Recomendados</h3>
+                <ul>
+                    <li>Eric Matthes - "Python Crash Course" (Capítulos sobre Listas, Dicionários e Tuplas)</li>
+                    <li>Al Sweigart - "Automate the Boring Stuff with Python" (Capítulos sobre Listas e Dicionários)</li>
+                    <li>Luciano Ramalho - "Fluent Python" (Capítulos sobre Estruturas de Dados)</li>
+                </ul>
+                
+                <h3>Recursos Online</h3>
+                <ul>
+                    <li><a href="https://realpython.com/python-lists-tuples/" target="_blank">Real Python: Lists and Tuples in Python</a></li>
+                    <li><a href="https://realpython.com/python-dicts/" target="_blank">Real Python: Dictionaries in Python</a></li>
+                    <li><a href="https://realpython.com/python-sets/" target="_blank">Real Python: Sets in Python</a></li>
+                    <li><a href="https://www.w3schools.com/python/python_lists.asp" target="_blank">W3Schools: Python Lists</a></li>
+                </ul>
+                
+                <h3>Recursos Específicos para Redes</h3>
+                <ul>
+                    <li><a href="https://pynet.twb-tech.com/blog/python/data-structures.html" target="_blank">PyNet: Python Data Structures for Network Engineers</a></li>
+                    <li><a href="https://github.com/ktbyers/netmiko/tree/develop/examples" target="_blank">Exemplos do Netmiko no GitHub</a></li>
+                    <li><a href="https://developer.cisco.com/learning/modules/programming-fundamentals/python-part2/step/1" target="_blank">Cisco DevNet: Python Programming for Network Engineers - Part 2 (Data Structures)</a></li>
+                </ul>
+            </div>
+        </section>
+        
+        <div class="navigation-buttons">
+            <a href="modulo5.html" class="btn">← Módulo Anterior: Funções</a>
+            <a href="modulo7.html" class="btn">Próximo Módulo: Manipulação de Arquivos →</a>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Curso de Python para Profissionais de Redes Cisco. Todos os direitos reservados.</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Módulo 7: Manipulação de Arquivos - Curso de Python para Redes Cisco</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Módulo 7: Manipulação de Arquivos</h1>
+        <p>Curso de Python para Profissionais de Redes Cisco</p>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="index.html">Página Inicial</a></li>
+            <li><a href="modulo6.html">← Módulo Anterior</a></li>
+            <li><a href="#abrir-fechar">Abrir e Fechar Arquivos</a></li>
+            <li><a href="#ler">Ler Arquivos</a></li>
+            <li><a href="#escrever">Escrever em Arquivos</a></li>
+            <li><a href="#with">Gerenciador de Contexto (with)</a></li>
+            <li><a href="#formatos">Trabalhando com Formatos (CSV, JSON)</a></li>
+            <li><a href="#exercicios">Exercícios</a></li>
+            <li><a href="#avaliacao">Avaliação</a></li>
+            <li><a href="#referencias">Referências</a></li>
+            <li><a href="modulo8.html">Próximo Módulo →</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section id="introducao">
+            <h2>Introdução à Manipulação de Arquivos</h2>
+            
+            <p>A manipulação de arquivos é uma tarefa fundamental em programação, permitindo que seus scripts leiam dados de arquivos existentes e escrevam resultados em novos arquivos. Em automação de redes, isso é crucial para diversas tarefas, como:</p>
+            
+            <ul>
+                <li>Ler listas de dispositivos de um arquivo de inventário.</li>
+                <li>Carregar templates de configuração.</li>
+                <li>Salvar saídas de comandos de dispositivos.</li>
+                <li>Gerar relatórios de status ou configuração.</li>
+                <li>Processar arquivos de log.</li>
+                <li>Trabalhar com dados estruturados em formatos como CSV ou JSON.</li>
+            </ul>
+            
+            <p>Neste módulo, aprenderemos como abrir, ler, escrever e fechar arquivos em Python. Veremos diferentes modos de abertura de arquivos e como usar o gerenciador de contexto <code>with</code> para garantir que os arquivos sejam fechados corretamente. Também abordaremos como trabalhar com formatos de arquivo comuns como CSV e JSON.</p>
+            
+            <div class="note">
+                <h4>Importância para Profissionais de Redes:</h4>
+                <p>A capacidade de ler e escrever arquivos permite que seus scripts de automação interajam com o mundo exterior. Você pode carregar listas de IPs de um arquivo de texto, ler configurações de um arquivo CSV, salvar o output de um `show run` em um arquivo de log, ou gerar um relatório de inventário em formato JSON. Isso torna seus scripts mais flexíveis e integráveis com outras ferramentas e processos.</p>
+            </div>
+        </section>
+
+        <section id="abrir-fechar">
+            <h2>Abrir e Fechar Arquivos</h2>
+            
+            <p>O primeiro passo para trabalhar com um arquivo é abri-lo. Python fornece a função integrada <code>open()</code> para isso. Após terminar de usar o arquivo, é essencial fechá-lo usando o método <code>close()</code> para liberar os recursos do sistema.</p>
+            
+            <h3>A Função open()</h3>
+            
+            <p>A sintaxe básica da função <code>open()</code> é:</p>
+            
+            <pre><code>arquivo = open(caminho_do_arquivo, modo, encoding=None)</code></pre>
+            
+            <ul>
+                <li><code>caminho_do_arquivo</code>: Uma string contendo o nome e, opcionalmente, o caminho para o arquivo.</li>
+                <li><code>modo</code>: Uma string que especifica como o arquivo será aberto (leitura, escrita, etc.). Este é um parâmetro crucial.</li>
+                <li><code>encoding</code>: (Opcional, mas recomendado) Especifica a codificação de caracteres a ser usada (ex: "utf-8", "latin-1"). Usar a codificação correta é vital para evitar erros ao ler ou escrever caracteres especiais. "utf-8" é uma escolha comum e versátil.</li>
+            </ul>
+            
+            <h3>Modos de Abertura de Arquivo</h3>
+            
+            <p>Os modos mais comuns são:</p>
+            
+            <ul>
+                <li><code>'r'</code>: Leitura (padrão). Gera um erro se o arquivo não existir.</li>
+                <li><code>'w'</code>: Escrita. Cria um novo arquivo se ele não existir. <strong>Sobrescreve o conteúdo</strong> se o arquivo já existir.</li>
+                <li><code>'a'</code>: Anexar (append). Escreve no final do arquivo se ele existir. Cria um novo arquivo se ele não existir.</li>
+                <li><code>'x'</code>: Criação exclusiva. Cria um novo arquivo, mas gera um erro se o arquivo já existir.</li>
+                <li><code>'b'</code>: Modo binário (usado para arquivos não-texto, como imagens ou executáveis). Pode ser combinado com outros modos (ex: <code>'rb'</code>, <code>'wb'</code>).</li>
+                <li><code>'t'</code>: Modo texto (padrão). Pode ser combinado com outros modos (ex: <code>'rt'</code>, <code>'wt'</code>).</li>
+                <li><code>'+'</code>: Atualização (leitura e escrita). Pode ser combinado com outros modos (ex: <code>'r+'</code>, <code>'w+'</code>, <code>'a+'</code>).</li>
+            </ul>
+            
+            <h3>Exemplo: Abrindo e Fechando</h3>
+            
+            <pre><code># Abrindo um arquivo para leitura
+try:
+    # Tenta abrir um arquivo chamado "config.txt" para leitura
+    # Usando encoding="utf-8" para compatibilidade
+    arquivo_leitura = open("config.txt", "r", encoding="utf-8")
+    print("Arquivo config.txt aberto para leitura.")
+    
+    # ... (operações de leitura aqui) ...
+    
+    # Fechando o arquivo explicitamente
+    arquivo_leitura.close()
+    print("Arquivo config.txt fechado.")
+
+except FileNotFoundError:
+    print("Erro: O arquivo config.txt não foi encontrado.")
+except Exception as e:
+    print(f"Ocorreu um erro inesperado: {e}")
+
+# Abrindo um arquivo para escrita (sobrescreve se existir)
+try:
+    arquivo_escrita = open("output.log", "w", encoding="utf-8")
+    print("\nArquivo output.log aberto para escrita.")
+    
+    # ... (operações de escrita aqui) ...
+    
+    arquivo_escrita.close()
+    print("Arquivo output.log fechado.")
+except Exception as e:
+    print(f"Ocorreu um erro ao abrir/escrever no arquivo: {e}")</code></pre>
+            
+            <div class="note">
+                <h4>Importância de Fechar Arquivos:</h4>
+                <p>É crucial fechar os arquivos após o uso. Não fechar arquivos pode levar a problemas como perda de dados (dados podem não ser escritos completamente no disco até que o arquivo seja fechado), consumo excessivo de recursos do sistema (cada arquivo aberto consome um descritor de arquivo) e bloqueio de arquivos para outros processos. Veremos uma maneira mais segura e automática de lidar com isso usando o gerenciador de contexto <code>with</code>.</p>
+            </div>
+        </section>
+
+        <section id="ler">
+            <h2>Ler Arquivos</h2>
+            
+            <p>Depois de abrir um arquivo no modo de leitura (<code>'r'</code> ou <code>'rt'</code>), você pode usar vários métodos para ler seu conteúdo.</p>
+            
+            <h3>Método read()</h3>
+            
+            <p>O método <code>read(tamanho)</code> lê uma quantidade especificada de bytes (ou caracteres, no modo texto) do arquivo. Se o tamanho não for especificado ou for negativo, ele lê o arquivo inteiro.</p>
+            
+            <pre><code># Criando um arquivo de exemplo
+with open("ips.txt", "w", encoding="utf-8") as f:
+    f.write("192.168.1.1\n")
+    f.write("10.0.0.1\n")
+    f.write("172.16.0.1\n")
+
+# Lendo o arquivo inteiro
+try:
+    arquivo = open("ips.txt", "r", encoding="utf-8")
+    conteudo_completo = arquivo.read()
+    print("Conteúdo completo do arquivo:")
+    print(conteudo_completo)
+    arquivo.close()
+except FileNotFoundError:
+    print("Erro: Arquivo ips.txt não encontrado.")
+
+# Lendo uma quantidade específica de caracteres
+try:
+    arquivo = open("ips.txt", "r", encoding="utf-8")
+    primeiros_10_chars = arquivo.read(10)
+    print("\nPrimeiros 10 caracteres:")
+    print(primeiros_10_chars)
+    arquivo.close()
+except FileNotFoundError:
+    print("Erro: Arquivo ips.txt não encontrado.")</code></pre>
+            
+            <h3>Método readline()</h3>
+            
+            <p>O método <code>readline()</code> lê uma única linha do arquivo, incluindo o caractere de nova linha (<code>\n</code>) no final. Retorna uma string vazia quando o final do arquivo é atingido.</p>
+            
+            <pre><code># Lendo linha por linha
+try:
+    arquivo = open("ips.txt", "r", encoding="utf-8")
+    print("\nLendo linha por linha:")
+    linha1 = arquivo.readline()
+    print(f"Linha 1: {linha1.strip()}") # strip() remove espaços em branco e \n
+    linha2 = arquivo.readline()
+    print(f"Linha 2: {linha2.strip()}")
+
+    linha3 = arquivo.readline()
+    print(f"Linha 3: {linha3.strip()}")
+
+    linha4 = arquivo.readline() # Final do arquivo
+    print(f"Linha 4 (vazia?): {linha4 == \"\"}")
+    
+    arquivo.close()
+except FileNotFoundError:
+    print("Erro: Arquivo ips.txt não encontrado.")</code></pre>
+            
+            <h3>Método readlines()</h3>
+            
+            <p>O método <code>readlines()</code> lê todas as linhas restantes do arquivo e as retorna como uma lista de strings, onde cada string representa uma linha e inclui o caractere de nova linha.</p>
+            
+            <pre><code># Lendo todas as linhas para uma lista
+try:
+    arquivo = open("ips.txt", "r", encoding="utf-8")
+    todas_as_linhas = arquivo.readlines()
+    print("\nTodas as linhas (como lista):")
+    print(todas_as_linhas)
+    
+    # Processando a lista de linhas
+    print("IPs processados:")
+    for linha in todas_as_linhas:
+        print(f"  - {linha.strip()}")
+        
+    arquivo.close()
+except FileNotFoundError:
+    print("Erro: Arquivo ips.txt não encontrado.")</code></pre>
+            
+            <div class="note">
+                <h4>Cuidado com readlines() e read():</h4>
+                <p>Os métodos <code>read()</code> (sem argumento) e <code>readlines()</code> carregam todo o conteúdo do arquivo na memória. Isso pode ser problemático para arquivos muito grandes. Para arquivos grandes, é mais eficiente ler linha por linha usando um laço <code>for</code>.</p>
+            </div>
+            
+            <h3>Iterando sobre o Arquivo</h3>
+            
+            <p>A maneira mais idiomática e eficiente em termos de memória para ler um arquivo linha por linha em Python é iterar diretamente sobre o objeto arquivo usando um laço <code>for</code>:</p>
+            
+            <pre><code># Iterando sobre o arquivo (método preferido para ler linha por linha)
+try:
+    arquivo = open("ips.txt", "r", encoding="utf-8")
+    print("\nIterando sobre o arquivo:")
+    for linha in arquivo:
+        print(f"  Processando: {linha.strip()}")
+    arquivo.close()
+except FileNotFoundError:
+    print("Erro: Arquivo ips.txt não encontrado.")</code></pre>
+            
+            <h3>Aplicação em Redes: Lendo Lista de Dispositivos</h3>
+            
+            <p>Vamos ler uma lista de IPs de dispositivos de um arquivo:</p>
+            
+            <pre><code># Criando um arquivo de inventário simples
+inventory_content = """
+# Arquivo de inventário de dispositivos
+# Formato: hostname,ip_address
+
+Router1,192.168.1.1
+Switch1,192.168.1.2
+Firewall,192.168.1.254
+#Router2,10.0.0.1 # Dispositivo comentado
+AccessPoint,192.168.1.100
+"""
+with open("inventory.txt", "w", encoding="utf-8") as f:
+    f.write(inventory_content)
+
+def load_devices_from_file(filename):
+    """Lê dispositivos de um arquivo de inventário.
+    Ignora linhas vazias e linhas que começam com #.
+    """
+    devices = []
+    try:
+        file = open(filename, "r", encoding="utf-8")
+        print(f"Lendo dispositivos de ", filename, "...")
+        for line_num, line in enumerate(file, 1):
+            line = line.strip() # Remove espaços em branco e \n
+            # Ignora linhas vazias ou comentários
+            if not line or line.startswith("#"):
+                continue
+            
+            # Divide a linha em hostname e IP
+            parts = line.split(",")
+            if len(parts) == 2:
+                hostname = parts[0].strip()
+                ip_address = parts[1].strip()
+                devices.append({"hostname": hostname, "ip": ip_address})
+                print(f"  Linha {line_num}: Adicionado {hostname} ({ip_address})")
+            else:
+                print(f"  Aviso: Linha {line_num} ignorada (formato inválido): {line}")
+        
+        file.close()
+    except FileNotFoundError:
+        print(f"Erro: Arquivo ", filename, " não encontrado.")
+    except Exception as e:
+        print(f"Erro ao ler o arquivo: {e}")
+        if "file" in locals() and not file.closed:
+            file.close()
+            
+    return devices
+
+# Carregando os dispositivos
+active_devices = load_devices_from_file("inventory.txt")
+
+# Exibindo os dispositivos carregados
+print("\nDispositivos carregados:")
+if active_devices:
+    for device in active_devices:
+        print(f"- Hostname: {device["hostname"]}, IP: {device["ip"]}")
+else:
+    print("Nenhum dispositivo carregado.")</code></pre>
+            
+            <p>Este exemplo mostra como ler um arquivo linha por linha, processar cada linha (ignorando comentários e linhas vazias), extrair informações e armazená-las em uma estrutura de dados (lista de dicionários).</p>
+        </section>
+
+        <section id="escrever">
+            <h2>Escrever em Arquivos</h2>
+            
+            <p>Para escrever em arquivos, você precisa abri-los nos modos <code>'w'</code> (escrita, sobrescreve), <code>'a'</code> (anexar) ou <code>'x'</code> (criação exclusiva).</p>
+            
+            <h3>Método write()</h3>
+            
+            <p>O método <code>write(string)</code> escreve a string fornecida no arquivo. Ele não adiciona automaticamente um caractere de nova linha (<code>\n</code>); você precisa incluí-lo explicitamente se quiser que cada escrita comece em uma nova linha.</p>
+            
+            <pre><code># Escrevendo em um novo arquivo (ou sobrescrevendo)
+try:
+    arquivo = open("config_gerada.txt", "w", encoding="utf-8")
+    print("Abrindo config_gerada.txt para escrita...")
+    
+    arquivo.write("hostname Router-Gerado\n")
+    arquivo.write("!\n")
+    arquivo.write("interface Loopback0\n")
+    arquivo.write(" ip address 1.1.1.1 255.255.255.255\n")
+    arquivo.write("!\n")
+    
+    print("Configuração escrita no arquivo.")
+    arquivo.close()
+except Exception as e:
+    print(f"Erro ao escrever no arquivo: {e}")
+
+# Anexando a um arquivo existente
+try:
+    arquivo = open("config_gerada.txt", "a", encoding="utf-8")
+    print("\nAbrindo config_gerada.txt para anexar...")
+    
+    arquivo.write("interface GigabitEthernet0/0\n")
+    arquivo.write(" description Link WAN\n")
+    arquivo.write(" ip address 10.0.0.1 255.255.255.252\n")
+    arquivo.write("!\n")
+    
+    print("Configuração adicional anexada.")
+    arquivo.close()
+except Exception as e:
+    print(f"Erro ao anexar ao arquivo: {e}")</code></pre>
+            
+            <h3>Método writelines()</h3>
+            
+            <p>O método <code>writelines(lista_de_strings)</code> escreve os itens de uma sequência (como uma lista) no arquivo. Assim como <code>write()</code>, ele não adiciona novas linhas automaticamente; as strings na lista devem conter os caracteres <code>\n</code> se necessário.</p>
+            
+            <pre><code># Lista de comandos de configuração
+comandos_acl = [
+    "ip access-list extended ACL_WEB\n",
+    " permit tcp any any eq 80\n",
+    " permit tcp any any eq 443\n",
+    " deny ip any any log\n",
+    "!\n"
+]
+
+# Escrevendo uma lista de linhas
+try:
+    arquivo = open("config_gerada.txt", "a", encoding="utf-8") # Anexando
+    print("\nAnexando ACL ao arquivo...")
+    
+    arquivo.writelines(comandos_acl)
+    
+    print("ACL anexada com sucesso.")
+    arquivo.close()
+except Exception as e:
+    print(f"Erro ao escrever lista no arquivo: {e}")</code></pre>
+            
+            <h3>Aplicação em Redes: Salvando Saída de Comando</h3>
+            
+            <p>Vamos simular a coleta da saída de um comando e salvá-la em um arquivo:</p>
+            
+            <pre><code>import datetime
+
+def save_command_output(device_name, command, output):
+    """Salva a saída de um comando em um arquivo de log.
+    O nome do arquivo inclui o nome do dispositivo e um timestamp.
+    """
+    now = datetime.datetime.now()
+    timestamp = now.strftime("%Y%m%d_%H%M%S")
+    filename = f"{device_name}_{command.replace(" ", "_")}_{timestamp}.log"
+    
+    try:
+        file = open(filename, "w", encoding="utf-8")
+        print(f"Salvando saída em ", filename, "...")
+        
+        # Escrevendo cabeçalho
+        file.write(f"# Dispositivo: {device_name}\n")
+        file.write(f"# Comando: {command}\n")
+        file.write(f"# Data/Hora: {now.strftime("%Y-%m-%d %H:%M:%S")}\n")
+        file.write("-" * 50 + "\n\n")
+        
+        # Escrevendo a saída do comando
+        file.write(output)
+        
+        file.close()
+        print("Saída salva com sucesso.")
+        return filename
+    except Exception as e:
+        print(f"Erro ao salvar a saída: {e}")
+        if "file" in locals() and not file.closed:
+            file.close()
+        return None
+
+# Saída simulada do comando "show version"
+show_version_output = """
+Cisco IOS Software, C880 Software (C880DATA-UNIVERSALK9-M), Version 15.0(1)M4
+Technical Support: http://www.cisco.com/techsupport
+Copyright (c) 1986-2010 by Cisco Systems, Inc.
+Compiled Fri 29-Oct-10 00:02 by prod_rel_team
+
+ROM: System Bootstrap, Version 12.4(22r)YB5, RELEASE SOFTWARE (fc1)
+
+Router uptime is 1 week, 2 days, 3 hours, 4 minutes
+System returned to ROM by power-on
+System image file is "flash:c880data-universalk9-mz.150-1.M4.bin"
+
+...
+(restante da saída)
+..."""
+
+# Salvando a saída
+saved_file = save_command_output("Router1", "show version", show_version_output)
+if saved_file:
+    print(f"Verifique o arquivo: {saved_file}")</code></pre>
+            
+            <p>Este exemplo demonstra como criar um nome de arquivo dinâmico, abrir o arquivo para escrita, adicionar um cabeçalho informativo e, em seguida, escrever a saída do comando. Isso é útil para manter registros históricos das configurações e estados dos dispositivos.</p>
+        </section>
+
+        <section id="with">
+            <h2>Gerenciador de Contexto (with)</h2>
+            
+            <p>Como mencionado anteriormente, é crucial fechar os arquivos após o uso. No entanto, esquecer de chamar <code>close()</code> ou encontrar um erro antes que <code>close()</code> seja chamado pode deixar arquivos abertos.</p>
+            
+            <p>Python oferece uma maneira mais segura e conveniente de lidar com arquivos usando a instrução <code>with</code>, conhecida como gerenciador de contexto. Quando você usa <code>with</code> para abrir um arquivo, Python garante que o arquivo seja fechado automaticamente no final do bloco <code>with</code>, mesmo que ocorram erros.</p>
+            
+            <h3>Sintaxe do with</h3>
+            
+            <pre><code>with open(caminho_do_arquivo, modo, encoding="utf-8") as nome_variavel:
+    # Bloco de código para trabalhar com o arquivo
+    # Use nome_variavel para acessar o objeto arquivo
+    # Ex: conteudo = nome_variavel.read()
+    # Ex: nome_variavel.write("dados")
+    pass
+
+# Neste ponto, fora do bloco with, o arquivo já está fechado automaticamente.</code></pre>
+            
+            <h3>Exemplo: Lendo com with</h3>
+            
+            <pre><code># Lendo um arquivo usando with (método recomendado)
+def read_ips_with_context(filename):
+    ips = []
+    try:
+        with open(filename, "r", encoding="utf-8") as file:
+            print(f"Arquivo {filename} aberto com with.")
+            for line in file:
+                ips.append(line.strip())
+        # O arquivo é fechado automaticamente aqui
+        print(f"Arquivo {filename} fechado automaticamente.")
+    except FileNotFoundError:
+        print(f"Erro: Arquivo {filename} não encontrado.")
+    except Exception as e:
+        print(f"Erro ao ler o arquivo: {e}")
+    return ips
+
+# Usando a função
+ips_lidos = read_ips_with_context("ips.txt")
+print("\nIPs lidos com with:")
+print(ips_lidos)</code></pre>
+            
+            <h3>Exemplo: Escrevendo com with</h3>
+            
+            <pre><code># Escrevendo em um arquivo usando with
+def write_config_with_context(filename, config_lines):
+    try:
+        with open(filename, "w", encoding="utf-8") as file:
+            print(f"\nArquivo {filename} aberto para escrita com with.")
+            for line in config_lines:
+                file.write(line + "\n") # Adiciona nova linha
+        # O arquivo é fechado automaticamente aqui
+        print(f"Arquivo {filename} fechado automaticamente.")
+        print("Configuração salva com sucesso.")
+        return True
+    except Exception as e:
+        print(f"Erro ao escrever no arquivo: {e}")
+        return False
+
+# Configuração a ser salva
+config_para_salvar = [
+    "hostname Switch-Core",
+    "!",
+    "vlan 100",
+    " name Servers",
+    "!",
+    "interface Vlan100",
+    " ip address 10.1.100.1 255.255.255.0"
+]
+
+# Salvando a configuração
+write_config_with_context("switch_core_config.txt", config_para_salvar)</code></pre>
+            
+            <div class="note">
+                <h4>Sempre Use with:</h4>
+                <p>É fortemente recomendado usar a instrução <code>with</code> sempre que trabalhar com arquivos em Python. Ela torna o código mais limpo, mais seguro e menos propenso a erros relacionados a arquivos não fechados.</p>
+            </div>
+            
+            <h3>Aplicação em Redes: Processando Arquivo de Log</h3>
+            
+            <p>Vamos usar <code>with</code> para ler um arquivo de log e extrair mensagens de erro:</p>
+            
+            <pre><code># Criando um arquivo de log de exemplo
+log_content = """
+May 21 10:00:01 Router1 %SYS-5-CONFIG_I: Configured from console by admin
+May 21 10:05:15 Router1 %LINK-3-UPDOWN: Interface GigabitEthernet0/1, changed state to down
+May 21 10:05:18 Router1 %LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/1, changed state to down
+May 21 10:10:22 Router1 %SYS-3-CPUHOG: Task ran for 2132 msec (21/10), process = ARP Input
+May 21 10:15:45 Router1 %LINK-3-UPDOWN: Interface GigabitEthernet0/1, changed state to up
+May 21 10:15:47 Router1 %LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/1, changed state to up
+May 21 10:20:05 Router1 %SYS-2-MALLOCFAIL: Memory allocation of 1024 bytes failed
+"""
+with open("router.log", "w", encoding="utf-8") as f:
+    f.write(log_content)
+
+def extract_error_messages(log_filename):
+    """Lê um arquivo de log e extrai mensagens com severidade <= 3."""
+    error_messages = []
+    try:
+        with open(log_filename, "r", encoding="utf-8") as log_file:
+            print(f"\nAnalisando {log_filename}...")
+            for line in log_file:
+                # Tentando extrair a severidade (ex: %LINK-3-UPDOWN)
+                severity_match = re.search(r"%\w+-(\d)-\w+:", line)
+                if severity_match:
+                    severity = int(severity_match.group(1))
+                    if severity <= 3:
+                        error_messages.append(line.strip())
+                        print(f"  Erro encontrado (Severidade {severity}): {line.strip()}")
+        print("Análise concluída.")
+    except FileNotFoundError:
+        print(f"Erro: Arquivo {log_filename} não encontrado.")
+    except Exception as e:
+        print(f"Erro ao processar o log: {e}")
+    return error_messages
+
+# Extraindo mensagens de erro
+errors = extract_error_messages("router.log")
+
+# Exibindo os erros encontrados
+print("\nMensagens de erro extraídas:")
+if errors:
+    for error in errors:
+        print(f"- {error}")
+else:
+    print("Nenhuma mensagem de erro (severidade <= 3) encontrada.")</code></pre>
+            
+            <p>Este exemplo demonstra a segurança e a clareza do uso de <code>with</code> para garantir que o arquivo de log seja fechado corretamente, mesmo durante o processamento linha por linha.</p>
+        </section>
+
+        <section id="formatos">
+            <h2>Trabalhando com Formatos Comuns (CSV, JSON)</h2>
+            
+            <p>Em automação de redes, é comum trabalhar com dados estruturados em formatos como CSV (Comma-Separated Values) e JSON (JavaScript Object Notation). Python possui módulos integrados para facilitar a leitura e escrita desses formatos.</p>
+            
+            <h3>Trabalhando com CSV</h3>
+            
+            <p>O módulo <code>csv</code> permite ler e escrever arquivos CSV.</p>
+            
+            <pre><code>import csv
+
+# Dados de exemplo para escrever em CSV
+devices_data = [
+    ["hostname", "ip_address", "model", "location"],
+    ["Router1", "192.168.1.1", "Cisco 2901", "Data Center"],
+    ["Switch1", "192.168.1.2", "Cisco 3750", "Data Center"],
+    ["Firewall1", "192.168.1.254", "ASA 5506", "Edge"]
+]
+
+# Escrevendo em um arquivo CSV
+csv_filename = "inventory.csv"
+try:
+    with open(csv_filename, "w", newline="", encoding="utf-8") as csvfile:
+        # newline="" é importante para evitar linhas em branco extras
+        writer = csv.writer(csvfile)
+        print(f"Escrevendo dados em {csv_filename}...")
+        writer.writerows(devices_data)
+    print("Arquivo CSV escrito com sucesso.")
+except Exception as e:
+    print(f"Erro ao escrever CSV: {e}")
+
+# Lendo de um arquivo CSV
+read_devices = []
+try:
+    with open(csv_filename, "r", newline="", encoding="utf-8") as csvfile:
+        reader = csv.reader(csvfile)
+        print(f"\nLendo dados de {csv_filename}...")
+        header = next(reader) # Lê a linha de cabeçalho
+        print(f"Cabeçalho: {header}")
+        for row in reader:
+            # Cria um dicionário para cada linha
+            device_dict = dict(zip(header, row))
+            read_devices.append(device_dict)
+            print(f"  Lido: {row}")
+    print("Arquivo CSV lido com sucesso.")
+except FileNotFoundError:
+    print(f"Erro: Arquivo {csv_filename} não encontrado.")
+except Exception as e:
+    print(f"Erro ao ler CSV: {e}")
+
+# Exibindo os dados lidos
+print("\nDados lidos do CSV (como dicionários):")
+for device in read_devices:
+    print(device)</code></pre>
+            
+            <h3>Trabalhando com JSON</h3>
+            
+            <p>O módulo <code>json</code> permite codificar estruturas de dados Python em strings JSON e decodificar strings JSON de volta para estruturas de dados Python.</p>
+            
+            <pre><code>import json
+
+# Dados de exemplo (lista de dicionários)
+inventory_data = [
+    {"hostname": "R1", "ip": "192.168.1.1", "type": "router"},
+    {"hostname": "S1", "ip": "192.168.1.2", "type": "switch"},
+    {"hostname": "AP1", "ip": "192.168.1.3", "type": "access_point"}
+]
+
+# Escrevendo em um arquivo JSON
+json_filename = "inventory.json"
+try:
+    with open(json_filename, "w", encoding="utf-8") as jsonfile:
+        print(f"\nEscrevendo dados em {json_filename}...")
+        # json.dump escreve o objeto Python no arquivo como JSON
+        # indent=4 formata o JSON para melhor legibilidade
+        json.dump(inventory_data, jsonfile, indent=4)
+    print("Arquivo JSON escrito com sucesso.")
+except Exception as e:
+    print(f"Erro ao escrever JSON: {e}")
+
+# Lendo de um arquivo JSON
+loaded_inventory = []
+try:
+    with open(json_filename, "r", encoding="utf-8") as jsonfile:
+        print(f"\nLendo dados de {json_filename}...")
+        # json.load lê o JSON do arquivo e o converte para um objeto Python
+        loaded_inventory = json.load(jsonfile)
+    print("Arquivo JSON lido com sucesso.")
+except FileNotFoundError:
+    print(f"Erro: Arquivo {json_filename} não encontrado.")
+except json.JSONDecodeError as e:
+    print(f"Erro ao decodificar JSON: {e}")
+except Exception as e:
+    print(f"Erro ao ler JSON: {e}")
+
+# Exibindo os dados carregados
+print("\nDados carregados do JSON:")
+if isinstance(loaded_inventory, list):
+    for item in loaded_inventory:
+        print(item)
+else:
+    print(loaded_inventory)</code></pre>
+            
+            <div class="note">
+                <h4>JSON vs CSV:</h4>
+                <p><strong>CSV</strong> é simples e bom para dados tabulares (planilhas). É fácil de ler e escrever por humanos e softwares de planilha. No entanto, não suporta nativamente estruturas de dados aninhadas ou tipos de dados complexos.</p>
+                <p><strong>JSON</strong> é mais flexível e pode representar estruturas de dados complexas, incluindo listas e dicionários aninhados. É amplamente utilizado em APIs web e arquivos de configuração. É menos legível para humanos que CSV simples, mas mais poderoso para representar dados estruturados.</p>
+                <p>A escolha entre CSV e JSON depende dos requisitos específicos da sua aplicação e dos sistemas com os quais você precisa interagir.</p>
+            </div>
+        </section>
+
+        <section id="exercicios">
+            <h2>Exercícios Práticos</h2>
+            
+            <div class="exercise">
+                <h4>Exercício 1: Contador de Linhas de Configuração</h4>
+                <p>Crie um script Python que leia um arquivo de configuração Cisco e conte o número total de linhas, o número de linhas de comentário (começando com !) e o número de linhas de configuração não vazias.</p>
+            </div>
+            
+            <div class="solution">
+                <h4>Solução do Exercício 1:</h4>
+                <pre><code>#!/usr/bin/env python3
+# Contador de Linhas de Configuração
+
+import re
+
+def count_config_lines(filename):
+    """Conta diferentes tipos de linhas em um arquivo de configuração."""
+    total_lines = 0
+    comment_lines = 0
+    config_lines = 0
+    empty_lines = 0
+    
+    try:
+        with open(filename, "r", encoding="utf-8") as file:
+            for line in file:
+                total_lines += 1
+                line_stripped = line.strip()
+                
+                if not line_stripped:
+                    empty_lines += 1
+                elif line_stripped.startswith("!"):
+                    comment_lines += 1
+                else:
+                    config_lines += 1
+                    
+    except FileNotFoundError:
+        print(f"Erro: Arquivo ", filename, " não encontrado.")
+        return None
+    except Exception as e:
+        print(f"Erro ao ler o arquivo: {e}")
+        return None
+        
+    return {
+        "total": total_lines,
+        "comments": comment_lines,
+        "config": config_lines,
+        "empty": empty_lines
+    }
+
+# Criando um arquivo de configuração de exemplo
+config_content = """
+! Arquivo de configuração exemplo
+version 15.4
+!
+hostname MyRouter
+!
+interface GigabitEthernet0/0
+ description WAN Link
+ ip address 10.0.0.1 255.255.255.252
+!
+! Seção de ACLs
+ip access-list standard MY_ACL
+ permit 192.168.1.0 0.0.0.255
+
+
+! Fim da configuração
+"""
+config_filename = "sample_config.txt"
+with open(config_filename, "w", encoding="utf-8") as f:
+    f.write(config_content)
+
+# Contando as linhas
+counts = count_config_lines(config_filename)
+
+# Exibindo os resultados
+if counts:
+    print(f"\nAnálise do arquivo: {config_filename}")
+    print(f"- Total de linhas: {counts["total"]}")
+    print(f"- Linhas de comentário (!): {counts["comments"]}")
+    print(f"- Linhas de configuração: {counts["config"]}")
+    print(f"- Linhas vazias: {counts["empty"]}")</code></pre>
+            </div>
+            
+            <div class="exercise">
+                <h4>Exercício 2: Gerador de Inventário CSV</h4>
+                <p>Crie um script que leia uma lista de dicionários representando dispositivos de rede e gere um arquivo CSV com essas informações.</p>
+            </div>
+            
+            <div class="solution">
+                <h4>Solução do Exercício 2:</h4>
+                <pre><code>#!/usr/bin/env python3
+# Gerador de Inventário CSV
+
+import csv
+
+def generate_inventory_csv(devices, filename):
+    """Gera um arquivo CSV a partir de uma lista de dicionários de dispositivos."""
+    if not devices:
+        print("Lista de dispositivos vazia. Nenhum arquivo gerado.")
+        return False
+        
+    # Assume que todas as chaves do primeiro dicionário são os cabeçalhos
+    headers = list(devices[0].keys())
+    
+    try:
+        with open(filename, "w", newline="", encoding="utf-8") as csvfile:
+            writer = csv.DictWriter(csvfile, fieldnames=headers)
+            
+            # Escreve o cabeçalho
+            writer.writeheader()
+            
+            # Escreve os dados dos dispositivos
+            writer.writerows(devices)
+            
+        print(f"Inventário salvo com sucesso em {filename}")
+        return True
+    except Exception as e:
+        print(f"Erro ao gerar o arquivo CSV: {e}")
+        return False
+
+# Lista de dispositivos de exemplo
+network_devices = [
+    {"hostname": "R1", "ip": "192.168.1.1", "type": "router", "location": "DC1"},
+    {"hostname": "S1", "ip": "192.168.1.2", "type": "switch", "location": "DC1"},
+    {"hostname": "FW1", "ip": "192.168.1.254", "type": "firewall", "location": "Edge"},
+    {"hostname": "R2", "ip": "10.0.0.1", "type": "router", "location": "Branch1"},
+    {"hostname": "S2", "ip": "10.0.0.2", "type": "switch", "location": "Branch1"}
+]
+
+# Gerando o arquivo CSV
+csv_output_filename = "network_inventory_output.csv"
+generate_inventory_csv(network_devices, csv_output_filename)</code></pre>
+            </div>
+            
+            <div class="exercise">
+                <h4>Exercício 3: Carregador de Configuração JSON</h4>
+                <p>Crie um script que leia um arquivo JSON contendo a configuração de um dispositivo (ex: hostname, lista de interfaces com IPs, lista de VLANs) e imprima as informações de forma organizada.</p>
+            </div>
+            
+            <div class="solution">
+                <h4>Solução do Exercício 3:</h4>
+                <pre><code>#!/usr/bin/env python3
+# Carregador de Configuração JSON
+
+import json
+
+def load_and_display_json_config(filename):
+    """Carrega uma configuração de dispositivo de um arquivo JSON e a exibe."""
+    try:
+        with open(filename, "r", encoding="utf-8") as jsonfile:
+            config_data = json.load(jsonfile)
+            
+        print(f"\nConfiguração carregada de: {filename}")
+        print("-" * 40)
+        
+        # Exibindo informações básicas
+        print(f"Hostname: {config_data.get("hostname", "N/A")}")
+        print(f"Modelo: {config_data.get("model", "N/A")}")
+        print(f"Versão IOS: {config_data.get("ios_version", "N/A")}")
+        
+        # Exibindo Interfaces
+        if "interfaces" in config_data and isinstance(config_data["interfaces"], list):
+            print("\nInterfaces:")
+            for interface in config_data["interfaces"]:
+                name = interface.get("name", "N/A")
+                ip = interface.get("ip_address", "unassigned")
+                mask = interface.get("subnet_mask", "")
+                status = interface.get("status", "up")
+                print(f"  - {name}: IP={ip}/{mask}, Status={status}")
+        
+        # Exibindo VLANs
+        if "vlans" in config_data and isinstance(config_data["vlans"], list):
+            print("\nVLANs:")
+            for vlan in config_data["vlans"]:
+                vlan_id = vlan.get("id", "N/A")
+                vlan_name = vlan.get("name", "N/A")
+                print(f"  - ID: {vlan_id}, Nome: {vlan_name}")
+                
+        print("-" * 40)
+        return True
+        
+    except FileNotFoundError:
+        print(f"Erro: Arquivo {filename} não encontrado.")
+        return False
+    except json.JSONDecodeError as e:
+        print(f"Erro ao decodificar JSON no arquivo {filename}: {e}")
+        return False
+    except Exception as e:
+        print(f"Erro ao carregar ou processar o arquivo {filename}: {e}")
+        return False
+
+# Criando um arquivo JSON de configuração de exemplo
+json_config_data = {
+    "hostname": "Switch-Core-1",
+    "model": "Cisco Catalyst 9300",
+    "ios_version": "16.9.3",
+    "interfaces": [
+        {"name": "GigabitEthernet1/0/1", "ip_address": "unassigned", "status": "up"},
+        {"name": "GigabitEthernet1/0/2", "ip_address": "unassigned", "status": "down"},
+        {"name": "Vlan10", "ip_address": "10.1.10.1", "subnet_mask": "255.255.255.0", "status": "up"},
+        {"name": "Vlan20", "ip_address": "10.1.20.1", "subnet_mask": "255.255.255.0", "status": "up"}
+    ],
+    "vlans": [
+        {"id": 1, "name": "default"},
+        {"id": 10, "name": "Servers"},
+        {"id": 20, "name": "Users"},
+        {"id": 99, "name": "Management"}
+    ]
+}
+
+json_config_filename = "switch_config.json"
+with open(json_config_filename, "w", encoding="utf-8") as f:
+    json.dump(json_config_data, f, indent=4)
+
+# Carregando e exibindo a configuração
+load_and_display_json_config(json_config_filename)</code></pre>
+            </div>
+        </section>
+
+        <section id="avaliacao">
+            <h2>Avaliação do Módulo</h2>
+            
+            <div class="assessment">
+                <h4>Quiz de Conhecimentos</h4>
+                <p>Responda às seguintes perguntas para testar seu conhecimento sobre os conceitos apresentados neste módulo:</p>
+                
+                <ol>
+                    <li>Qual função é usada para abrir um arquivo em Python? Quais são os dois argumentos mais importantes?</li>
+                    <li>Qual é a diferença entre os modos de abertura <code>'w'</code> e <code>'a'</code>?</li>
+                    <li>Por que é importante fechar um arquivo após usá-lo?</li>
+                    <li>Qual é a maneira recomendada de garantir que um arquivo seja fechado automaticamente em Python?</li>
+                    <li>Qual método lê o conteúdo inteiro de um arquivo para uma única string?</li>
+                    <li>Qual método lê todas as linhas de um arquivo para uma lista de strings?</li>
+                    <li>Qual é a maneira mais eficiente em termos de memória para ler um arquivo grande linha por linha?</li>
+                    <li>O método <code>write()</code> adiciona automaticamente uma nova linha (<code>\n</code>) ao final da string escrita?</li>
+                    <li>Qual módulo Python é usado para trabalhar com arquivos CSV?</li>
+                    <li>Qual módulo Python é usado para trabalhar com dados JSON? Qual a função para ler de um arquivo e qual para escrever?</li>
+                </ol>
+            </div>
+            
+            <div class="solution">
+                <h4>Respostas do Quiz:</h4>
+                <ol>
+                    <li><strong>Função para abrir arquivo:</strong> <code>open()</code>. Os dois argumentos mais importantes são o caminho do arquivo (nome) e o modo de abertura (ex: 'r', 'w', 'a'). O argumento <code>encoding</code> também é muito importante.</li>
+                    <li><strong>Diferença entre 'w' e 'a':</strong> <code>'w'</code> (write) abre o arquivo para escrita; se o arquivo existir, seu conteúdo é apagado (sobrescrito). Se não existir, é criado. <code>'a'</code> (append) abre o arquivo para anexar; os dados são escritos no final do arquivo. Se não existir, é criado.</li>
+                    <li><strong>Importância de fechar arquivos:</strong> Para garantir que todos os dados sejam gravados no disco, liberar recursos do sistema (descritores de arquivo) e evitar que o arquivo fique bloqueado para outros processos.</li>
+                    <li><strong>Fechar arquivo automaticamente:</strong> Usar a instrução <code>with</code> (gerenciador de contexto). Ex: <code>with open(...) as f:</code>.</li>
+                    <li><strong>Ler arquivo inteiro para string:</strong> O método <code>read()</code> sem argumentos.</li>
+                    <li><strong>Ler todas as linhas para lista:</strong> O método <code>readlines()</code>.</li>
+                    <li><strong>Ler arquivo grande linha por linha:</strong> Iterar diretamente sobre o objeto arquivo usando um laço <code>for</code>. Ex: <code>for line in file_object:</code>.</li>
+                    <li><strong>write() adiciona nova linha?</strong> Não, o método <code>write()</code> não adiciona automaticamente um caractere de nova linha. Você precisa incluir <code>\n</code> na string se necessário.</li>
+                    <li><strong>Módulo para CSV:</strong> O módulo <code>csv</code>.</li>
+                    <li><strong>Módulo para JSON:</strong> O módulo <code>json</code>. A função para ler de um arquivo é <code>json.load(file_object)</code> e para escrever é <code>json.dump(python_object, file_object)</code>.</li>
+                </ol>
+            </div>
+            
+            <div class="assessment">
+                <h4>Projeto Prático</h4>
+                <p>Desenvolva um script Python que leia um arquivo de inventário CSV, colete (simule) o status de cada dispositivo (online/offline) e gere um relatório em formato JSON contendo o status atualizado de cada dispositivo.</p>
+                
+                <ol>
+                    <li>Crie uma função para ler o inventário de um arquivo CSV.</li>
+                    <li>Crie uma função para simular a verificação de status de um dispositivo (pode retornar "online" ou "offline" aleatoriamente).</li>
+                    <li>Itere sobre os dispositivos lidos, verifique o status de cada um.</li>
+                    <li>Armazene os resultados (incluindo o status) em uma nova estrutura de dados (lista de dicionários).</li>
+                    <li>Crie uma função para escrever essa estrutura de dados em um arquivo JSON formatado.</li>
+                </ol>
+            </div>
+        </section>
+
+        <section id="referencias">
+            <h2>Referências e Recursos Adicionais</h2>
+            
+            <div class="references">
+                <h3>Documentação Oficial</h3>
+                <ul>
+                    <li><a href="https://docs.python.org/3/tutorial/inputoutput.html#reading-and-writing-files" target="_blank">Tutorial Python: Lendo e Escrevendo Arquivos</a></li>
+                    <li><a href="https://docs.python.org/3/library/functions.html#open" target="_blank">Documentação Python: Função open()</a></li>
+                    <li><a href="https://docs.python.org/3/library/csv.html" target="_blank">Documentação Python: Módulo csv</a></li>
+                    <li><a href="https://docs.python.org/3/library/json.html" target="_blank">Documentação Python: Módulo json</a></li>
+                </ul>
+                
+                <h3>Livros Recomendados</h3>
+                <ul>
+                    <li>Al Sweigart - "Automate the Boring Stuff with Python" (Capítulos sobre Leitura/Escrita de Arquivos, CSV e JSON)</li>
+                    <li>Eric Matthes - "Python Crash Course" (Capítulo sobre Arquivos e Exceções)</li>
+                </ul>
+                
+                <h3>Recursos Online</h3>
+                <ul>
+                    <li><a href="https://realpython.com/read-write-files-python/" target="_blank">Real Python: Reading and Writing Files in Python</a></li>
+                    <li><a href="https://realpython.com/python-csv/" target="_blank">Real Python: Reading and Writing CSV Files in Python</a></li>
+                    <li><a href="https://realpython.com/python-json/" target="_blank">Real Python: Working With JSON Data in Python</a></li>
+                    <li><a href="https://www.w3schools.com/python/python_file_handling.asp" target="_blank">W3Schools: Python File Handling</a></li>
+                </ul>
+                
+                <h3>Recursos Específicos para Redes</h3>
+                <ul>
+                    <li><a href="https://pynet.twb-tech.com/blog/python/file-handling.html" target="_blank">PyNet: Python File Handling for Network Engineers</a></li>
+                    <li><a href="https://developer.cisco.com/learning/modules/programming-fundamentals/python-part3/step/1" target="_blank">Cisco DevNet: Python Programming for Network Engineers - Part 3 (File I/O)</a></li>
+                </ul>
+            </div>
+        </section>
+        
+        <div class="navigation-buttons">
+            <a href="modulo6.html" class="btn">← Módulo Anterior: Listas e Dicionários</a>
+            <a href="modulo8.html" class="btn">Próximo Módulo: Introdução à Automação de Redes com Python →</a>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Curso de Python para Profissionais de Redes Cisco. Todos os direitos reservados.</p>
+    </footer>
+</body>
+</html>

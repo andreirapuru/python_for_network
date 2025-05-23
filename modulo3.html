@@ -1,0 +1,1343 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Módulo 3: Estruturas Condicionais - Curso de Python para Redes Cisco</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Módulo 3: Estruturas Condicionais</h1>
+        <p>Curso de Python para Profissionais de Redes Cisco</p>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="index.html">Página Inicial</a></li>
+            <li><a href="modulo2.html">← Módulo Anterior</a></li>
+            <li><a href="#operadores">Operadores de Comparação</a></li>
+            <li><a href="#if-elif-else">Estruturas if, elif e else</a></li>
+            <li><a href="#operadores-logicos">Operadores Lógicos</a></li>
+            <li><a href="#aninhadas">Estruturas Aninhadas</a></li>
+            <li><a href="#exercicios">Exercícios</a></li>
+            <li><a href="#avaliacao">Avaliação</a></li>
+            <li><a href="#referencias">Referências</a></li>
+            <li><a href="modulo4.html">Próximo Módulo →</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section id="introducao">
+            <h2>Introdução às Estruturas Condicionais</h2>
+            
+            <p>As estruturas condicionais são fundamentais na programação, pois permitem que os programas tomem decisões com base em condições específicas. Em automação de redes, essas estruturas são essenciais para criar scripts inteligentes que podem reagir a diferentes situações, como verificar o status de dispositivos, tomar decisões com base em métricas de desempenho ou implementar lógica de troubleshooting.</p>
+            
+            <p>Neste módulo, exploraremos como implementar lógica de decisão em Python, permitindo que seus scripts avaliem condições e executem diferentes blocos de código dependendo do resultado dessas avaliações. Aprenderemos sobre operadores de comparação, estruturas if-elif-else, operadores lógicos e estruturas condicionais aninhadas, sempre com exemplos práticos voltados para o ambiente de redes Cisco.</p>
+            
+            <div class="note">
+                <h4>Importância para Profissionais de Redes:</h4>
+                <p>As estruturas condicionais são particularmente importantes para profissionais de redes porque permitem automatizar processos de tomada de decisão que normalmente exigiriam intervenção manual. Por exemplo, você pode criar scripts que verificam automaticamente a disponibilidade de dispositivos, analisam logs em busca de padrões específicos, ou implementam políticas de configuração com base em diferentes critérios.</p>
+            </div>
+        </section>
+
+        <section id="operadores">
+            <h2>Operadores de Comparação</h2>
+            
+            <p>Os operadores de comparação são usados para comparar valores e retornam um resultado booleano (True ou False). Esses operadores são a base para criar expressões condicionais em Python.</p>
+            
+            <h3>Principais Operadores de Comparação</h3>
+            
+            <table>
+                <tr>
+                    <th>Operador</th>
+                    <th>Nome</th>
+                    <th>Exemplo</th>
+                    <th>Resultado</th>
+                </tr>
+                <tr>
+                    <td>==</td>
+                    <td>Igual a</td>
+                    <td>5 == 5</td>
+                    <td>True</td>
+                </tr>
+                <tr>
+                    <td>!=</td>
+                    <td>Diferente de</td>
+                    <td>5 != 3</td>
+                    <td>True</td>
+                </tr>
+                <tr>
+                    <td>></td>
+                    <td>Maior que</td>
+                    <td>5 > 3</td>
+                    <td>True</td>
+                </tr>
+                <tr>
+                    <td><</td>
+                    <td>Menor que</td>
+                    <td>5 < 3</td>
+                    <td>False</td>
+                </tr>
+                <tr>
+                    <td>>=</td>
+                    <td>Maior ou igual a</td>
+                    <td>5 >= 5</td>
+                    <td>True</td>
+                </tr>
+                <tr>
+                    <td><=</td>
+                    <td>Menor ou igual a</td>
+                    <td>5 <= 3</td>
+                    <td>False</td>
+                </tr>
+            </table>
+            
+            <h3>Exemplos em Contexto de Redes</h3>
+            
+            <p>Vamos ver como esses operadores podem ser aplicados em cenários de redes:</p>
+            
+            <pre><code># Verificando se um dispositivo está ativo com base no código de status
+status_code = 1  # 1 = ativo, 0 = inativo
+is_active = status_code == 1
+print(f"O dispositivo está ativo? {is_active}")  # True
+
+# Verificando se a utilização de CPU está acima do limite
+cpu_utilization = 85.5
+threshold = 80
+is_high_cpu = cpu_utilization > threshold
+print(f"CPU está acima do limite? {is_high_cpu}")  # True
+
+# Verificando se a versão do IOS é compatível
+current_ios = "15.2"
+minimum_required = "15.0"
+is_compatible = current_ios >= minimum_required
+print(f"A versão do IOS é compatível? {is_compatible}")  # True
+
+# Verificando se um endereço IP pertence a uma sub-rede específica
+# (simplificado para fins didáticos)
+ip_first_octet = 192
+subnet_first_octet = 192
+is_same_subnet = ip_first_octet == subnet_first_octet
+print(f"O IP está na mesma sub-rede? {is_same_subnet}")  # True</code></pre>
+            
+            <h3>Comparação de Strings</h3>
+            
+            <p>Em Python, também podemos comparar strings usando os mesmos operadores. A comparação é feita lexicograficamente (ordem alfabética):</p>
+            
+            <pre><code># Comparando nomes de dispositivos
+device1 = "Router-Core-01"
+device2 = "Router-Edge-01"
+
+print(device1 == device2)  # False
+print(device1 != device2)  # True
+print(device1 < device2)   # False (R vem antes de S na ordem alfabética)
+print(device1 > device2)   # True
+
+# Verificando se um comando contém uma palavra específica
+command = "show ip interface brief"
+print("ip" in command)     # True
+print("vlan" in command)   # False
+
+# Verificando prefixos de interfaces
+interface = "GigabitEthernet0/1"
+print(interface.startswith("Gigabit"))  # True
+print(interface.endswith("0/1"))        # True</code></pre>
+            
+            <div class="note">
+                <h4>Dica para Profissionais de Redes:</h4>
+                <p>Ao comparar versões de software (como versões do IOS), lembre-se que a comparação de strings pode não funcionar como esperado. Por exemplo, "15.10" seria considerado menor que "15.2" em uma comparação de strings, embora numericamente 15.10 seja maior que 15.2. Para esses casos, considere converter as partes numéricas para inteiros antes de comparar.</p>
+            </div>
+        </section>
+
+        <section id="if-elif-else">
+            <h2>Estruturas if, elif e else</h2>
+            
+            <p>As estruturas condicionais em Python permitem executar diferentes blocos de código com base em condições específicas. A sintaxe básica inclui as palavras-chave <code>if</code>, <code>elif</code> (abreviação de "else if") e <code>else</code>.</p>
+            
+            <h3>Estrutura if Simples</h3>
+            
+            <p>A estrutura <code>if</code> mais básica executa um bloco de código apenas se uma condição for verdadeira:</p>
+            
+            <pre><code># Estrutura if simples
+interface_status = "up"
+
+if interface_status == "up":
+    print("A interface está ativa")
+    print("Nenhuma ação necessária")
+
+# Saída: A interface está ativa
+#        Nenhuma ação necessária</code></pre>
+            
+            <p>Observe que o bloco de código dentro do <code>if</code> é indentado. Em Python, a indentação é obrigatória e define o escopo do bloco. A convenção é usar 4 espaços para cada nível de indentação.</p>
+            
+            <h3>Estrutura if-else</h3>
+            
+            <p>A estrutura <code>if-else</code> permite executar um bloco de código se a condição for verdadeira e outro bloco se for falsa:</p>
+            
+            <pre><code># Estrutura if-else
+ping_response = False
+
+if ping_response:
+    print("O dispositivo está respondendo ao ping")
+    print("Continuando com a configuração")
+else:
+    print("O dispositivo não está respondendo ao ping")
+    print("Verificando conectividade física")
+
+# Saída: O dispositivo não está respondendo ao ping
+#        Verificando conectividade física</code></pre>
+            
+            <h3>Estrutura if-elif-else</h3>
+            
+            <p>A estrutura <code>if-elif-else</code> permite verificar múltiplas condições em sequência:</p>
+            
+            <pre><code># Estrutura if-elif-else
+cpu_utilization = 78
+
+if cpu_utilization >= 90:
+    print("ALERTA CRÍTICO: Utilização de CPU extremamente alta!")
+    print("Iniciando procedimentos de mitigação")
+elif cpu_utilization >= 80:
+    print("ALERTA: Utilização de CPU alta")
+    print("Monitorando de perto")
+elif cpu_utilization >= 70:
+    print("AVISO: Utilização de CPU moderada")
+    print("Verificando tendências")
+else:
+    print("Utilização de CPU normal")
+    print("Nenhuma ação necessária")
+
+# Saída: AVISO: Utilização de CPU moderada
+#        Verificando tendências</code></pre>
+            
+            <p>Neste exemplo, as condições são verificadas em ordem. Assim que uma condição verdadeira é encontrada, o bloco correspondente é executado e as condições restantes são ignoradas. Se nenhuma condição for verdadeira, o bloco <code>else</code> é executado.</p>
+            
+            <h3>Aplicação em Redes: Verificação de Alcançabilidade</h3>
+            
+            <p>Vamos ver um exemplo mais completo de como usar estruturas condicionais para verificar a alcançabilidade de dispositivos de rede:</p>
+            
+            <pre><code>import subprocess
+import platform
+
+def check_device_reachability(ip_address):
+    """
+    Verifica se um dispositivo está acessível via ping
+    Retorna um código de status e uma mensagem
+    """
+    # Determina o parâmetro correto para contagem de ping baseado no sistema operacional
+    param = "-n" if platform.system().lower() == "windows" else "-c"
+    
+    # Executa o comando ping
+    command = ["ping", param, "2", ip_address]
+    
+    try:
+        # Executa o ping e captura o resultado
+        result = subprocess.call(command, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        
+        # Analisa o resultado
+        if result == 0:
+            return 0, "Dispositivo acessível"
+        else:
+            return 1, "Dispositivo inacessível via ping"
+    except Exception as e:
+        return 2, f"Erro ao executar o ping: {e}"
+
+# Lista de dispositivos para verificar
+devices = [
+    {"name": "Router-Core", "ip": "192.168.1.1", "role": "core"},
+    {"name": "Switch-Access-1", "ip": "192.168.1.2", "role": "access"},
+    {"name": "Router-Edge", "ip": "192.168.1.254", "role": "edge"}
+]
+
+# Verificando cada dispositivo
+for device in devices:
+    print(f"\nVerificando dispositivo: {device['name']} ({device['ip']})")
+    status_code, message = check_device_reachability(device['ip'])
+    
+    if status_code == 0:
+        print(f"✅ {message}")
+        
+        # Ações específicas baseadas no papel do dispositivo
+        if device['role'] == "core":
+            print("  → Verificando tabela de roteamento do Core Router")
+        elif device['role'] == "access":
+            print("  → Verificando status das portas do Access Switch")
+        elif device['role'] == "edge":
+            print("  → Verificando conectividade WAN do Edge Router")
+    
+    elif status_code == 1:
+        print(f"❌ {message}")
+        print("  → Iniciando procedimento de troubleshooting:")
+        print("     1. Verificando conectividade física")
+        print("     2. Verificando configuração de IP")
+        print("     3. Verificando firewall e ACLs")
+    
+    else:
+        print(f"⚠️ {message}")
+        print("  → Verificando configuração do sistema local")</code></pre>
+            
+            <p>Este exemplo demonstra como usar estruturas condicionais para implementar uma lógica de verificação de dispositivos de rede, com ações específicas baseadas no papel de cada dispositivo e no resultado da verificação de alcançabilidade.</p>
+            
+            <div class="note">
+                <h4>Dica para Profissionais de Redes:</h4>
+                <p>Ao criar scripts de automação com estruturas condicionais, considere todos os possíveis estados e resultados. Em ambientes de rede, é importante tratar não apenas os casos de sucesso e falha, mas também situações intermediárias ou inesperadas, como timeouts, respostas parciais ou erros de autenticação.</p>
+            </div>
+        </section>
+
+        <section id="operadores-logicos">
+            <h2>Operadores Lógicos</h2>
+            
+            <p>Os operadores lógicos permitem combinar múltiplas condições em uma única expressão. Em Python, os principais operadores lógicos são <code>and</code>, <code>or</code> e <code>not</code>.</p>
+            
+            <h3>Operador and</h3>
+            
+            <p>O operador <code>and</code> retorna <code>True</code> apenas se ambas as condições forem verdadeiras:</p>
+            
+            <table>
+                <tr>
+                    <th>Expressão</th>
+                    <th>Resultado</th>
+                </tr>
+                <tr>
+                    <td>True and True</td>
+                    <td>True</td>
+                </tr>
+                <tr>
+                    <td>True and False</td>
+                    <td>False</td>
+                </tr>
+                <tr>
+                    <td>False and True</td>
+                    <td>False</td>
+                </tr>
+                <tr>
+                    <td>False and False</td>
+                    <td>False</td>
+                </tr>
+            </table>
+            
+            <pre><code># Exemplo com operador and
+cpu_high = True
+memory_low = False
+
+if cpu_high and memory_low:
+    print("Situação crítica: CPU alta e memória baixa")
+else:
+    print("Situação não crítica")
+
+# Saída: Situação não crítica</code></pre>
+            
+            <h3>Operador or</h3>
+            
+            <p>O operador <code>or</code> retorna <code>True</code> se pelo menos uma das condições for verdadeira:</p>
+            
+            <table>
+                <tr>
+                    <th>Expressão</th>
+                    <th>Resultado</th>
+                </tr>
+                <tr>
+                    <td>True or True</td>
+                    <td>True</td>
+                </tr>
+                <tr>
+                    <td>True or False</td>
+                    <td>True</td>
+                </tr>
+                <tr>
+                    <td>False or True</td>
+                    <td>True</td>
+                </tr>
+                <tr>
+                    <td>False or False</td>
+                    <td>False</td>
+                </tr>
+            </table>
+            
+            <pre><code># Exemplo com operador or
+link_primary_down = True
+link_backup_down = False
+
+if link_primary_down or link_backup_down:
+    print("Alerta: Pelo menos um link está inativo")
+else:
+    print("Todos os links estão ativos")
+
+# Saída: Alerta: Pelo menos um link está inativo</code></pre>
+            
+            <h3>Operador not</h3>
+            
+            <p>O operador <code>not</code> inverte o valor de uma expressão booleana:</p>
+            
+            <table>
+                <tr>
+                    <th>Expressão</th>
+                    <th>Resultado</th>
+                </tr>
+                <tr>
+                    <td>not True</td>
+                    <td>False</td>
+                </tr>
+                <tr>
+                    <td>not False</td>
+                    <td>True</td>
+                </tr>
+            </table>
+            
+            <pre><code># Exemplo com operador not
+interface_up = False
+
+if not interface_up:
+    print("A interface está inativa")
+else:
+    print("A interface está ativa")
+
+# Saída: A interface está inativa</code></pre>
+            
+            <h3>Combinando Operadores Lógicos</h3>
+            
+            <p>Os operadores lógicos podem ser combinados para criar expressões mais complexas:</p>
+            
+            <pre><code># Combinando operadores lógicos
+cpu_utilization = 85
+memory_utilization = 60
+disk_utilization = 90
+
+# Verificando se pelo menos dois recursos estão com alta utilização
+high_cpu = cpu_utilization > 80
+high_memory = memory_utilization > 80
+high_disk = disk_utilization > 80
+
+if (high_cpu and high_memory) or (high_cpu and high_disk) or (high_memory and high_disk):
+    print("ALERTA: Pelo menos dois recursos com alta utilização")
+else:
+    print("Situação normal ou apenas um recurso com alta utilização")
+
+# Saída: ALERTA: Pelo menos dois recursos com alta utilização</code></pre>
+            
+            <h3>Aplicação em Redes: Tomada de Decisão Baseada em Múltiplos Fatores</h3>
+            
+            <p>Vamos ver um exemplo mais completo de como usar operadores lógicos para tomar decisões em um ambiente de rede:</p>
+            
+            <pre><code># Função para verificar se um dispositivo precisa de manutenção
+def check_device_maintenance_needed(device_info):
+    """
+    Verifica se um dispositivo precisa de manutenção com base em múltiplos fatores
+    """
+    # Extraindo informações do dispositivo
+    uptime_days = device_info.get('uptime_days', 0)
+    cpu_avg = device_info.get('cpu_avg', 0)
+    memory_free_percent = device_info.get('memory_free_percent', 100)
+    interface_errors = device_info.get('interface_errors', 0)
+    ios_version = device_info.get('ios_version', '')
+    ios_vulnerabilities = device_info.get('ios_vulnerabilities', 0)
+    
+    # Definindo limiares
+    HIGH_UPTIME = 180  # 6 meses
+    HIGH_CPU = 75
+    LOW_MEMORY = 20
+    HIGH_ERRORS = 100
+    CRITICAL_VULNERABILITIES = 2
+    
+    # Verificando condições críticas (qualquer uma dessas condições justifica manutenção imediata)
+    critical_condition = (
+        (ios_vulnerabilities >= CRITICAL_VULNERABILITIES) or
+        (memory_free_percent <= LOW_MEMORY and cpu_avg >= HIGH_CPU)
+    )
+    
+    # Verificando condições de alerta (pelo menos duas dessas condições justificam manutenção planejada)
+    warning_conditions = [
+        uptime_days >= HIGH_UPTIME,
+        cpu_avg >= HIGH_CPU,
+        memory_free_percent <= LOW_MEMORY,
+        interface_errors >= HIGH_ERRORS
+    ]
+    
+    warning_count = sum(1 for condition in warning_conditions if condition)
+    warning_condition = warning_count >= 2
+    
+    # Determinando o resultado
+    if critical_condition:
+        return "CRÍTICO", "Manutenção imediata necessária"
+    elif warning_condition:
+        return "ALERTA", "Manutenção planejada recomendada"
+    else:
+        return "OK", "Nenhuma manutenção necessária no momento"
+
+# Exemplos de dispositivos
+devices = [
+    {
+        'name': 'Router-Core-01',
+        'uptime_days': 210,
+        'cpu_avg': 65,
+        'memory_free_percent': 35,
+        'interface_errors': 50,
+        'ios_version': '15.2(4)M1',
+        'ios_vulnerabilities': 1
+    },
+    {
+        'name': 'Switch-Access-02',
+        'uptime_days': 45,
+        'cpu_avg': 85,
+        'memory_free_percent': 15,
+        'interface_errors': 120,
+        'ios_version': '16.3.5',
+        'ios_vulnerabilities': 0
+    },
+    {
+        'name': 'Router-Edge-01',
+        'uptime_days': 30,
+        'cpu_avg': 45,
+        'memory_free_percent': 60,
+        'interface_errors': 10,
+        'ios_version': '15.1(4)M',
+        'ios_vulnerabilities': 3
+    }
+]
+
+# Verificando cada dispositivo
+print("Relatório de Manutenção de Dispositivos")
+print("======================================")
+
+for device in devices:
+    status, message = check_device_maintenance_needed(device)
+    
+    # Formatando a saída com base no status
+    if status == "CRÍTICO":
+        status_icon = "🔴"
+    elif status == "ALERTA":
+        status_icon = "🟠"
+    else:
+        status_icon = "🟢"
+    
+    print(f"\n{status_icon} {device['name']}: {status}")
+    print(f"   {message}")
+    
+    # Exibindo detalhes que contribuíram para a decisão
+    print("   Detalhes:")
+    print(f"   - Uptime: {device['uptime_days']} dias")
+    print(f"   - CPU média: {device['cpu_avg']}%")
+    print(f"   - Memória livre: {device['memory_free_percent']}%")
+    print(f"   - Erros de interface: {device['interface_errors']}")
+    print(f"   - Versão do IOS: {device['ios_version']}")
+    print(f"   - Vulnerabilidades conhecidas: {device['ios_vulnerabilities']}")</code></pre>
+            
+            <p>Este exemplo demonstra como usar operadores lógicos para implementar uma lógica de decisão complexa, avaliando múltiplos fatores para determinar se um dispositivo de rede precisa de manutenção.</p>
+            
+            <div class="note">
+                <h4>Dica para Profissionais de Redes:</h4>
+                <p>Ao criar scripts de automação com operadores lógicos, organize suas condições de forma clara e considere usar variáveis intermediárias para armazenar resultados parciais. Isso torna o código mais legível e facilita a manutenção, especialmente quando a lógica de decisão é complexa.</p>
+            </div>
+        </section>
+
+        <section id="aninhadas">
+            <h2>Estruturas Condicionais Aninhadas</h2>
+            
+            <p>As estruturas condicionais aninhadas ocorrem quando uma estrutura condicional está dentro de outra. Isso permite criar lógicas de decisão mais complexas e hierárquicas.</p>
+            
+            <h3>Sintaxe Básica</h3>
+            
+            <pre><code># Estrutura condicional aninhada
+interface_status = "up"
+interface_errors = 25
+
+if interface_status == "up":
+    print("Interface está ativa")
+    
+    if interface_errors > 0:
+        print("Mas há erros registrados")
+        
+        if interface_errors > 100:
+            print("Número de erros é crítico")
+        else:
+            print("Número de erros está dentro do aceitável")
+    else:
+        print("Sem erros registrados")
+else:
+    print("Interface está inativa")</code></pre>
+            
+            <p>Neste exemplo, temos três níveis de estruturas condicionais. Observe como a indentação aumenta para cada nível aninhado, tornando clara a hierarquia das condições.</p>
+            
+            <h3>Refatorando Estruturas Aninhadas</h3>
+            
+            <p>Embora as estruturas aninhadas sejam úteis, elas podem tornar o código difícil de ler quando há muitos níveis. Uma alternativa é usar operadores lógicos para combinar condições:</p>
+            
+            <pre><code># Versão original com estruturas aninhadas
+if device_reachable:
+    if device_type == "router":
+        if ios_version >= "15.0":
+            print("Dispositivo compatível")
+        else:
+            print("Versão do IOS incompatível")
+    else:
+        print("Tipo de dispositivo não suportado")
+else:
+    print("Dispositivo inacessível")
+
+# Versão refatorada com condições combinadas
+if not device_reachable:
+    print("Dispositivo inacessível")
+elif device_type != "router":
+    print("Tipo de dispositivo não suportado")
+elif ios_version < "15.0":
+    print("Versão do IOS incompatível")
+else:
+    print("Dispositivo compatível")</code></pre>
+            
+            <p>A versão refatorada é mais plana e geralmente mais fácil de entender, especialmente para lógicas complexas.</p>
+            
+            <h3>Aplicação em Redes: Troubleshooting de Conectividade</h3>
+            
+            <p>Vamos ver um exemplo de como usar estruturas condicionais aninhadas para implementar um fluxo de troubleshooting de conectividade:</p>
+            
+            <pre><code>def troubleshoot_connectivity(device_ip, device_type):
+    """
+    Implementa um fluxo de troubleshooting para problemas de conectividade
+    """
+    print(f"Iniciando troubleshooting para {device_ip} ({device_type})")
+    
+    # Verificar ping
+    ping_successful = check_ping(device_ip)
+    
+    if ping_successful:
+        print("✅ Dispositivo responde ao ping")
+        
+        # Verificar acesso SSH
+        ssh_successful = check_ssh_access(device_ip)
+        
+        if ssh_successful:
+            print("✅ Acesso SSH bem-sucedido")
+            
+            # Verificar status da interface
+            interface_status = get_interface_status(device_ip)
+            
+            if interface_status == "up":
+                print("✅ Interface está ativa")
+                print("Conectividade verificada com sucesso")
+            else:
+                print("❌ Interface está inativa")
+                print("Recomendação: Verificar configuração da interface")
+        else:
+            print("❌ Falha no acesso SSH")
+            
+            # Verificar se a porta SSH está aberta
+            ssh_port_open = check_port_open(device_ip, 22)
+            
+            if ssh_port_open:
+                print("✅ Porta SSH (22) está aberta")
+                print("Recomendação: Verificar credenciais SSH")
+            else:
+                print("❌ Porta SSH (22) está fechada")
+                print("Recomendação: Verificar se o serviço SSH está ativo no dispositivo")
+    else:
+        print("❌ Dispositivo não responde ao ping")
+        
+        # Verificar se o dispositivo está na mesma sub-rede
+        same_subnet = check_same_subnet(device_ip)
+        
+        if same_subnet:
+            print("✅ Dispositivo está na mesma sub-rede")
+            
+            # Verificar ARP
+            arp_entry = check_arp_entry(device_ip)
+            
+            if arp_entry:
+                print(f"✅ Entrada ARP encontrada: {arp_entry}")
+                print("Recomendação: Verificar firewall ou ACLs")
+            else:
+                print("❌ Nenhuma entrada ARP encontrada")
+                print("Recomendação: Verificar se o dispositivo está ligado e conectado à rede")
+        else:
+            print("❌ Dispositivo está em outra sub-rede")
+            
+            # Verificar roteamento
+            route_exists = check_route_exists(device_ip)
+            
+            if route_exists:
+                print("✅ Rota para o dispositivo existe")
+                print("Recomendação: Verificar firewall, ACLs ou roteamento no caminho")
+            else:
+                print("❌ Nenhuma rota para o dispositivo")
+                print("Recomendação: Adicionar rota ou verificar gateway padrão")
+
+# Funções auxiliares (simuladas para este exemplo)
+def check_ping(ip):
+    # Simulação: IPs que começam com 10. respondem ao ping
+    return ip.startswith("10.")
+
+def check_ssh_access(ip):
+    # Simulação: apenas alguns IPs específicos têm SSH acessível
+    return ip in ["10.0.0.1", "10.0.0.2"]
+
+def get_interface_status(ip):
+    # Simulação: status da interface
+    return "up" if ip == "10.0.0.1" else "down"
+
+def check_port_open(ip, port):
+    # Simulação: verificação de porta
+    return ip.startswith("10.")
+
+def check_same_subnet(ip):
+    # Simulação: verificação de sub-rede
+    return ip.startswith("10.") or ip.startswith("192.168.")
+
+def check_arp_entry(ip):
+    # Simulação: entrada ARP
+    if ip == "192.168.1.1":
+        return "00:1A:2B:3C:4D:5E"
+    return None
+
+def check_route_exists(ip):
+    # Simulação: verificação de rota
+    return not ip.startswith("172.")
+
+# Testando o troubleshooting com diferentes dispositivos
+test_devices = [
+    {"ip": "10.0.0.1", "type": "router"},  # Tudo OK
+    {"ip": "10.0.0.3", "type": "switch"},  # Ping OK, SSH falha, porta aberta
+    {"ip": "192.168.1.1", "type": "router"},  # Ping falha, mesma sub-rede, ARP OK
+    {"ip": "172.16.0.1", "type": "router"}   # Ping falha, outra sub-rede, sem rota
+]
+
+for device in test_devices:
+    print("\n" + "=" * 50)
+    troubleshoot_connectivity(device["ip"], device["type"])
+    print("=" * 50)</code></pre>
+            
+            <p>Este exemplo demonstra como usar estruturas condicionais aninhadas para implementar um fluxo de troubleshooting de conectividade, com diferentes caminhos de verificação dependendo dos resultados de cada etapa.</p>
+            
+            <div class="note">
+                <h4>Dica para Profissionais de Redes:</h4>
+                <p>Ao implementar fluxos de troubleshooting com estruturas condicionais aninhadas, considere desenhar um fluxograma antes de começar a codificar. Isso ajuda a visualizar a lógica e garantir que todos os caminhos possíveis sejam considerados. Além disso, considere dividir lógicas muito complexas em funções separadas para melhorar a legibilidade e manutenção do código.</p>
+            </div>
+        </section>
+
+        <section id="exercicios">
+            <h2>Exercícios Práticos</h2>
+            
+            <div class="exercise">
+                <h4>Exercício 1: Classificador de Dispositivos</h4>
+                <p>Crie um script Python que classifique dispositivos de rede com base em suas características. O script deve:</p>
+                <ol>
+                    <li>Solicitar ao usuário informações sobre um dispositivo (tipo, número de interfaces, suporte a PoE, velocidade máxima)</li>
+                    <li>Classificar o dispositivo em uma das seguintes categorias: "Core", "Distribution", "Access" ou "Endpoint"</li>
+                    <li>Exibir a classificação e uma breve descrição do papel típico desse tipo de dispositivo na rede</li>
+                </ol>
+                <p>Use estruturas condicionais e operadores lógicos para implementar a lógica de classificação.</p>
+            </div>
+            
+            <div class="solution">
+                <h4>Solução do Exercício 1:</h4>
+                <pre><code>#!/usr/bin/env python3
+# Classificador de Dispositivos de Rede
+
+def classify_device(device_type, num_interfaces, poe_support, max_speed):
+    """
+    Classifica um dispositivo de rede com base em suas características
+    """
+    # Convertendo entradas para tipos apropriados
+    num_interfaces = int(num_interfaces)
+    poe_support = poe_support.lower() in ['sim', 's', 'yes', 'y', 'true', 't']
+    max_speed = float(max_speed)  # em Gbps
+    
+    # Lógica de classificação
+    if device_type.lower() in ['router', 'roteador']:
+        if num_interfaces >= 24 and max_speed >= 10:
+            return "Core", "Roteador central que conecta diferentes partes da rede e geralmente lida com roteamento entre VLANs e conexões WAN."
+        elif num_interfaces >= 8 and max_speed >= 1:
+            return "Distribution", "Roteador intermediário que agrega conexões de dispositivos de acesso e aplica políticas."
+        else:
+            return "Access", "Roteador de borda que fornece conectividade direta para dispositivos finais ou conexões WAN menores."
+    
+    elif device_type.lower() in ['switch', 'comutador']:
+        if num_interfaces >= 48 and max_speed >= 40:
+            return "Core", "Switch central de alta capacidade que forma a espinha dorsal da rede."
+        elif num_interfaces >= 24 and max_speed >= 10:
+            return "Distribution", "Switch intermediário que agrega tráfego de switches de acesso e aplica políticas."
+        elif poe_support and num_interfaces <= 48:
+            return "Access", "Switch de acesso que conecta dispositivos finais como computadores, telefones IP e APs."
+        else:
+            return "Access", "Switch de acesso básico para conectar dispositivos finais."
+    
+    elif device_type.lower() in ['ap', 'access point', 'ponto de acesso']:
+        return "Access", "Dispositivo que fornece conectividade sem fio para dispositivos finais."
+    
+    elif device_type.lower() in ['firewall', 'ngfw']:
+        if num_interfaces >= 8 and max_speed >= 10:
+            return "Core", "Firewall de alta capacidade para proteção de perímetro ou segmentação interna crítica."
+        else:
+            return "Distribution", "Firewall para proteção de segmentos específicos da rede ou conexões WAN."
+    
+    else:
+        return "Endpoint", "Dispositivo final que consome serviços de rede, como computadores, impressoras ou telefones IP."
+
+# Interface do usuário
+print("Classificador de Dispositivos de Rede")
+print("====================================")
+
+try:
+    # Coletando informações do dispositivo
+    device_type = input("Tipo de dispositivo (router, switch, AP, firewall): ")
+    num_interfaces = input("Número de interfaces: ")
+    poe_support = input("Suporte a PoE (sim/não): ")
+    max_speed = input("Velocidade máxima (em Gbps): ")
+    
+    # Classificando o dispositivo
+    category, description = classify_device(device_type, num_interfaces, poe_support, max_speed)
+    
+    # Exibindo o resultado
+    print("\nResultado da Classificação:")
+    print(f"Categoria: {category}")
+    print(f"Descrição: {description}")
+    
+    # Recomendações baseadas na categoria
+    print("\nRecomendações de Configuração:")
+    
+    if category == "Core":
+        print("- Implementar protocolos de roteamento como OSPF ou BGP")
+        print("- Configurar redundância com HSRP/VRRP")
+        print("- Monitorar desempenho e utilização constantemente")
+        print("- Implementar QoS para priorizar tráfego crítico")
+    
+    elif category == "Distribution":
+        print("- Implementar VLANs e roteamento entre VLANs")
+        print("- Configurar ACLs para controle de tráfego")
+        print("- Implementar políticas de QoS")
+        print("- Considerar redundância para links críticos")
+    
+    elif category == "Access":
+        print("- Configurar segurança de porta (port-security)")
+        print("- Implementar VLANs para segmentação de tráfego")
+        print("- Configurar PoE para dispositivos compatíveis")
+        print("- Implementar proteções como DHCP snooping e ARP inspection")
+    
+    elif category == "Endpoint":
+        print("- Garantir atualizações regulares de firmware/software")
+        print("- Implementar autenticação segura na rede")
+        print("- Considerar segmentação em VLAN apropriada")
+
+except ValueError as e:
+    print(f"Erro: {e}")
+    print("Por favor, certifique-se de inserir valores numéricos para o número de interfaces e velocidade.")</code></pre>
+            </div>
+            
+            <div class="exercise">
+                <h4>Exercício 2: Analisador de Logs de Firewall</h4>
+                <p>Crie um script Python que analise entradas de log de um firewall e classifique-as com base na severidade e tipo de evento. O script deve:</p>
+                <ol>
+                    <li>Ler uma lista de entradas de log (fornecidas no código)</li>
+                    <li>Para cada entrada, extrair informações como timestamp, IP de origem, IP de destino, porta e ação (permitir/bloquear)</li>
+                    <li>Classificar cada entrada como "Crítica", "Alerta", "Aviso" ou "Informativa" com base em regras predefinidas</li>
+                    <li>Gerar um relatório resumido com contagens por categoria e listar os eventos críticos</li>
+                </ol>
+            </div>
+            
+            <div class="solution">
+                <h4>Solução do Exercício 2:</h4>
+                <pre><code>#!/usr/bin/env python3
+# Analisador de Logs de Firewall
+
+def parse_log_entry(log_entry):
+    """
+    Analisa uma entrada de log e extrai informações relevantes
+    """
+    parts = log_entry.split()
+    
+    # Estrutura básica esperada: timestamp action src_ip:src_port -> dst_ip:dst_port protocol
+    timestamp = parts[0] + " " + parts[1]
+    action = parts[2]
+    
+    # Extraindo IPs e portas
+    src_full = parts[3]
+    dst_full = parts[5]
+    
+    src_parts = src_full.split(":")
+    dst_parts = dst_full.split(":")
+    
+    src_ip = src_parts[0]
+    src_port = src_parts[1] if len(src_parts) > 1 else "N/A"
+    
+    dst_ip = dst_parts[0]
+    dst_port = dst_parts[1] if len(dst_parts) > 1 else "N/A"
+    
+    # Extraindo protocolo
+    protocol = parts[6] if len(parts) > 6 else "N/A"
+    
+    return {
+        "timestamp": timestamp,
+        "action": action,
+        "src_ip": src_ip,
+        "src_port": src_port,
+        "dst_ip": dst_ip,
+        "dst_port": dst_port,
+        "protocol": protocol
+    }
+
+def classify_log_entry(entry):
+    """
+    Classifica uma entrada de log com base em regras predefinidas
+    """
+    # Lista de portas sensíveis
+    sensitive_ports = ["22", "3389", "21", "23", "445", "1433", "3306", "5432"]
+    
+    # Lista de IPs internos (simplificada)
+    internal_networks = ["10.", "192.168.", "172.16."]
+    
+    # Verificando se é um IP interno
+    is_internal_src = any(entry["src_ip"].startswith(net) for net in internal_networks)
+    is_internal_dst = any(entry["dst_ip"].startswith(net) for net in internal_networks)
+    
+    # Regras de classificação
+    
+    # Regra 1: Bloqueios de tentativas de acesso a portas sensíveis de fora para dentro
+    if (entry["action"] == "BLOCK" and 
+        not is_internal_src and 
+        is_internal_dst and 
+        entry["dst_port"] in sensitive_ports):
+        return "Crítica", "Possível tentativa de invasão em porta sensível"
+    
+    # Regra 2: Múltiplos bloqueios do mesmo IP externo
+    if (entry["action"] == "BLOCK" and 
+        not is_internal_src and 
+        entry["src_ip"] in high_frequency_ips):
+        return "Crítica", "Múltiplas tentativas bloqueadas do mesmo IP externo"
+    
+    # Regra 3: Tráfego permitido de fora para dentro em portas sensíveis
+    if (entry["action"] == "ALLOW" and 
+        not is_internal_src and 
+        is_internal_dst and 
+        entry["dst_port"] in sensitive_ports):
+        return "Alerta", "Acesso externo permitido a porta sensível"
+    
+    # Regra 4: Tráfego bloqueado de dentro para fora
+    if (entry["action"] == "BLOCK" and 
+        is_internal_src and 
+        not is_internal_dst):
+        return "Aviso", "Tráfego de saída bloqueado"
+    
+    # Regra 5: Qualquer outro bloqueio
+    if entry["action"] == "BLOCK":
+        return "Aviso", "Tráfego bloqueado"
+    
+    # Regra 6: Qualquer outro permitido
+    return "Informativa", "Tráfego permitido"
+
+# Lista de entradas de log (simuladas)
+firewall_logs = [
+    "2023-05-10 08:15:23 BLOCK 203.0.113.42:39152 -> 10.0.0.15:22 TCP",
+    "2023-05-10 08:16:45 BLOCK 203.0.113.42:39153 -> 10.0.0.15:22 TCP",
+    "2023-05-10 08:17:12 BLOCK 203.0.113.42:39154 -> 10.0.0.15:22 TCP",
+    "2023-05-10 09:23:15 ALLOW 10.0.0.23:52125 -> 172.217.168.238:443 TCP",
+    "2023-05-10 10:45:32 ALLOW 192.168.1.5:58921 -> 192.168.1.1:53 UDP",
+    "2023-05-10 11:02:18 BLOCK 10.0.0.12:45678 -> 198.51.100.75:80 TCP",
+    "2023-05-10 11:15:42 ALLOW 198.51.100.30:443 -> 10.0.0.5:52126 TCP",
+    "2023-05-10 12:34:56 BLOCK 198.51.100.42:12345 -> 10.0.0.10:3389 TCP",
+    "2023-05-10 13:45:23 ALLOW 10.0.0.15:53124 -> 198.51.100.200:443 TCP",
+    "2023-05-10 14:22:11 ALLOW 192.168.1.100:58922 -> 192.168.1.1:53 UDP",
+    "2023-05-10 15:18:45 BLOCK 203.0.113.100:45678 -> 10.0.0.20:22 TCP",
+    "2023-05-10 16:30:12 ALLOW 10.0.0.30:60234 -> 198.51.100.150:80 TCP",
+    "2023-05-10 17:45:33 BLOCK 198.51.100.200:33218 -> 10.0.0.25:445 TCP",
+    "2023-05-10 18:12:48 ALLOW 10.0.0.40:52127 -> 198.51.100.10:443 TCP",
+    "2023-05-10 19:23:59 BLOCK 10.0.0.18:48765 -> 203.0.113.10:21 TCP"
+]
+
+# Pré-processamento para identificar IPs de alta frequência
+ip_frequency = {}
+for log in firewall_logs:
+    parsed = parse_log_entry(log)
+    src_ip = parsed["src_ip"]
+    ip_frequency[src_ip] = ip_frequency.get(src_ip, 0) + 1
+
+# IPs que aparecem mais de 2 vezes
+high_frequency_ips = [ip for ip, count in ip_frequency.items() if count > 2]
+
+# Analisando e classificando os logs
+parsed_logs = []
+classification_counts = {"Crítica": 0, "Alerta": 0, "Aviso": 0, "Informativa": 0}
+critical_events = []
+
+for log in firewall_logs:
+    parsed = parse_log_entry(log)
+    severity, reason = classify_log_entry(parsed)
+    
+    parsed["severity"] = severity
+    parsed["reason"] = reason
+    parsed_logs.append(parsed)
+    
+    classification_counts[severity] += 1
+    
+    if severity == "Crítica":
+        critical_events.append(parsed)
+
+# Gerando relatório
+print("Relatório de Análise de Logs de Firewall")
+print("=======================================")
+
+print("\nResumo por Categoria:")
+for category, count in classification_counts.items():
+    print(f"{category}: {count} eventos")
+
+print("\nEventos Críticos:")
+if critical_events:
+    for event in critical_events:
+        print(f"- {event['timestamp']} | {event['src_ip']}:{event['src_port']} -> {event['dst_ip']}:{event['dst_port']} | {event['reason']}")
+else:
+    print("Nenhum evento crítico identificado.")
+
+print("\nDistribuição de Ações:")
+allow_count = sum(1 for log in parsed_logs if log["action"] == "ALLOW")
+block_count = sum(1 for log in parsed_logs if log["action"] == "BLOCK")
+print(f"ALLOW: {allow_count} ({allow_count/len(parsed_logs)*100:.1f}%)")
+print(f"BLOCK: {block_count} ({block_count/len(parsed_logs)*100:.1f}%)")
+
+print("\nTop 3 IPs de Origem:")
+ip_counts = {}
+for log in parsed_logs:
+    src_ip = log["src_ip"]
+    ip_counts[src_ip] = ip_counts.get(src_ip, 0) + 1
+
+top_ips = sorted(ip_counts.items(), key=lambda x: x[1], reverse=True)[:3]
+for ip, count in top_ips:
+    print(f"{ip}: {count} eventos")</code></pre>
+            </div>
+            
+            <div class="exercise">
+                <h4>Exercício 3: Verificador de Configuração de Roteador</h4>
+                <p>Crie um script Python que analise uma configuração de roteador Cisco e verifique se ela atende a determinados requisitos de segurança. O script deve:</p>
+                <ol>
+                    <li>Analisar uma configuração fornecida como uma string multi-linha</li>
+                    <li>Verificar a presença de configurações de segurança essenciais (senha de enable, acesso SSH, ACLs, etc.)</li>
+                    <li>Gerar um relatório de conformidade, indicando quais requisitos foram atendidos e quais não foram</li>
+                    <li>Calcular uma pontuação geral de segurança (porcentagem de requisitos atendidos)</li>
+                </ol>
+            </div>
+            
+            <div class="solution">
+                <h4>Solução do Exercício 3:</h4>
+                <pre><code>#!/usr/bin/env python3
+# Verificador de Configuração de Roteador
+
+def check_router_security(config):
+    """
+    Analisa uma configuração de roteador Cisco e verifica requisitos de segurança
+    """
+    # Lista de requisitos de segurança a verificar
+    security_requirements = [
+        {
+            "name": "Senha de Enable Criptografada",
+            "check": lambda c: "enable secret" in c,
+            "importance": "Alta",
+            "recommendation": "Configure 'enable secret' para proteger o acesso privilegiado"
+        },
+        {
+            "name": "Acesso SSH Configurado",
+            "check": lambda c: "transport input ssh" in c or "transport input all" in c,
+            "importance": "Alta",
+            "recommendation": "Configure 'transport input ssh' nas linhas VTY"
+        },
+        {
+            "name": "Telnet Desabilitado",
+            "check": lambda c: "transport input ssh" in c and "transport input all" not in c and "transport input telnet" not in c,
+            "importance": "Alta",
+            "recommendation": "Desabilite telnet usando 'transport input ssh' (não use 'transport input all')"
+        },
+        {
+            "name": "Timeout de Login Configurado",
+            "check": lambda c: "exec-timeout" in c,
+            "importance": "Média",
+            "recommendation": "Configure 'exec-timeout' para encerrar sessões inativas"
+        },
+        {
+            "name": "Banner de Login Configurado",
+            "check": lambda c: "banner login" in c or "banner motd" in c,
+            "importance": "Baixa",
+            "recommendation": "Configure um banner de aviso usando 'banner login' ou 'banner motd'"
+        },
+        {
+            "name": "Serviço de Senha Criptografada",
+            "check": lambda c: "service password-encryption" in c,
+            "importance": "Média",
+            "recommendation": "Ative 'service password-encryption' para criptografar senhas em texto claro"
+        },
+        {
+            "name": "ACLs Aplicadas",
+            "check": lambda c: "access-group" in c,
+            "importance": "Alta",
+            "recommendation": "Aplique ACLs para restringir o acesso usando 'ip access-group'"
+        },
+        {
+            "name": "NTP Configurado",
+            "check": lambda c: "ntp server" in c,
+            "importance": "Média",
+            "recommendation": "Configure NTP para sincronização precisa de tempo"
+        },
+        {
+            "name": "Logging Configurado",
+            "check": lambda c: "logging" in c and not only_console_logging(c),
+            "importance": "Média",
+            "recommendation": "Configure logging para um servidor syslog externo"
+        },
+        {
+            "name": "SNMP v3 Configurado",
+            "check": lambda c: "snmp-server group" in c and "v3" in c,
+            "importance": "Média",
+            "recommendation": "Use SNMPv3 com autenticação e criptografia"
+        },
+        {
+            "name": "Serviços Desnecessários Desabilitados",
+            "check": lambda c: "no service" in c,
+            "importance": "Média",
+            "recommendation": "Desabilite serviços desnecessários como 'no service finger', 'no service pad', etc."
+        },
+        {
+            "name": "AAA Configurado",
+            "check": lambda c: "aaa new-model" in c,
+            "importance": "Alta",
+            "recommendation": "Configure AAA para autenticação, autorização e accounting"
+        }
+    ]
+    
+    # Normaliza a configuração (remove espaços extras, converte para minúsculas)
+    normalized_config = config.lower()
+    
+    # Verifica cada requisito
+    results = []
+    for req in security_requirements:
+        compliant = req["check"](normalized_config)
+        results.append({
+            "name": req["name"],
+            "compliant": compliant,
+            "importance": req["importance"],
+            "recommendation": req["recommendation"] if not compliant else None
+        })
+    
+    # Calcula pontuação geral
+    total_reqs = len(results)
+    compliant_reqs = sum(1 for r in results if r["compliant"])
+    security_score = (compliant_reqs / total_reqs) * 100
+    
+    # Calcula pontuação ponderada (Alta = 3, Média = 2, Baixa = 1)
+    weights = {"Alta": 3, "Média": 2, "Baixa": 1}
+    weighted_total = sum(weights[r["importance"]] for r in results)
+    weighted_compliant = sum(weights[r["importance"]] for r in results if r["compliant"])
+    weighted_score = (weighted_compliant / weighted_total) * 100 if weighted_total > 0 else 0
+    
+    return {
+        "results": results,
+        "security_score": security_score,
+        "weighted_score": weighted_score,
+        "total_requirements": total_reqs,
+        "compliant_requirements": compliant_reqs
+    }
+
+def only_console_logging(config):
+    """
+    Verifica se apenas logging de console está configurado
+    """
+    return "logging console" in config and "logging host" not in config and "logging buffered" not in config
+
+# Exemplo de configuração de roteador
+router_config = """
+hostname Router1
+!
+service password-encryption
+service timestamps debug datetime msec
+service timestamps log datetime msec
+!
+no service finger
+!
+enable secret 5 $1$mERr$hx5rVt7rPNoS4wqbXKX7m0
+!
+ip domain-name example.com
+ip name-server 8.8.8.8
+!
+username admin privilege 15 secret 5 $1$mERr$hx5rVt7rPNoS4wqbXKX7m0
+!
+interface GigabitEthernet0/0
+ description WAN Interface
+ ip address 203.0.113.1 255.255.255.0
+ ip access-group 100 in
+ no shutdown
+!
+interface GigabitEthernet0/1
+ description LAN Interface
+ ip address 192.168.1.1 255.255.255.0
+ no shutdown
+!
+ip access-list extended 100
+ deny ip any host 192.168.1.1
+ permit ip any any
+!
+logging buffered 16384
+logging host 192.168.1.100
+!
+ntp server 192.168.1.200
+!
+line con 0
+ exec-timeout 5 0
+ logging synchronous
+!
+line vty 0 4
+ exec-timeout 10 0
+ login local
+ transport input ssh
+!
+banner motd ^C
+WARNING: Unauthorized access is prohibited!
+^C
+!
+end
+"""
+
+# Analisando a configuração
+security_analysis = check_router_security(router_config)
+
+# Gerando relatório
+print("Relatório de Segurança de Configuração de Roteador")
+print("=================================================")
+
+print(f"\nPontuação de Segurança: {security_analysis['security_score']:.1f}%")
+print(f"Pontuação Ponderada: {security_analysis['weighted_score']:.1f}%")
+print(f"Requisitos Atendidos: {security_analysis['compliant_requirements']} de {security_analysis['total_requirements']}")
+
+print("\nDetalhes por Requisito:")
+print("-----------------------")
+
+# Agrupando por importância
+importance_groups = {"Alta": [], "Média": [], "Baixa": []}
+for result in security_analysis["results"]:
+    importance_groups[result["importance"]].append(result)
+
+# Exibindo resultados por importância
+for importance in ["Alta", "Média", "Baixa"]:
+    print(f"\n[{importance} Importância]")
+    for result in importance_groups[importance]:
+        status = "✅" if result["compliant"] else "❌"
+        print(f"{status} {result['name']}")
+        if not result["compliant"]:
+            print(f"   Recomendação: {result['recommendation']}")
+
+# Resumo de recomendações críticas
+print("\nRecomendações Críticas:")
+print("----------------------")
+critical_recommendations = [r for r in security_analysis["results"] 
+                          if not r["compliant"] and r["importance"] == "Alta"]
+
+if critical_recommendations:
+    for rec in critical_recommendations:
+        print(f"- {rec['recommendation']}")
+else:
+    print("Nenhuma recomendação crítica pendente.")
+
+# Avaliação geral
+print("\nAvaliação Geral:")
+if security_analysis["weighted_score"] >= 90:
+    print("Excelente: A configuração atende à maioria dos requisitos de segurança.")
+elif security_analysis["weighted_score"] >= 70:
+    print("Boa: A configuração atende a muitos requisitos, mas há espaço para melhorias.")
+elif security_analysis["weighted_score"] >= 50:
+    print("Regular: A configuração atende a alguns requisitos, mas precisa de melhorias significativas.")
+else:
+    print("Insuficiente: A configuração não atende à maioria dos requisitos de segurança e precisa de atenção imediata.")</code></pre>
+            </div>
+        </section>
+
+        <section id="avaliacao">
+            <h2>Avaliação do Módulo</h2>
+            
+            <div class="assessment">
+                <h4>Quiz de Conhecimentos</h4>
+                <p>Responda às seguintes perguntas para testar seu conhecimento sobre os conceitos apresentados neste módulo:</p>
+                
+                <ol>
+                    <li>Qual é a diferença entre os operadores <code>==</code> e <code>=</code> em Python?</li>
+                    <li>Quais são os três principais operadores lógicos em Python?</li>
+                    <li>O que acontece se você não indentar corretamente o código dentro de uma estrutura condicional?</li>
+                    <li>Como você pode verificar se uma string contém uma substring em Python?</li>
+                    <li>Qual é o resultado da expressão <code>True and False or True</code>?</li>
+                    <li>Qual é a diferença entre <code>elif</code> e <code>else if</code> em Python?</li>
+                    <li>Como você pode verificar se um valor está dentro de um intervalo em Python?</li>
+                    <li>O que é uma estrutura condicional aninhada?</li>
+                    <li>Qual operador você usaria para verificar se duas variáveis apontam para o mesmo objeto em memória?</li>
+                    <li>Como você pode simplificar estruturas condicionais aninhadas complexas?</li>
+                </ol>
+            </div>
+            
+            <div class="solution">
+                <h4>Respostas do Quiz:</h4>
+                <ol>
+                    <li><strong>Diferença entre == e =:</strong> O operador <code>=</code> é usado para atribuição de valores a variáveis, enquanto <code>==</code> é um operador de comparação que verifica se dois valores são iguais.</li>
+                    <li><strong>Três principais operadores lógicos:</strong> <code>and</code>, <code>or</code> e <code>not</code>.</li>
+                    <li><strong>Indentação incorreta:</strong> Python usa indentação para definir blocos de código. Se a indentação estiver incorreta, ocorrerá um erro de sintaxe (IndentationError) ou o código pode ser executado de forma inesperada, pois a indentação determina quais instruções pertencem a qual bloco.</li>
+                    <li><strong>Verificar substring:</strong> Você pode usar o operador <code>in</code>. Por exemplo: <code>"ip" in "show ip interface brief"</code> retornará <code>True</code>.</li>
+                    <li><strong>Resultado da expressão:</strong> <code>True and False or True</code> resulta em <code>True</code>. Primeiro, <code>True and False</code> é avaliado como <code>False</code>, depois <code>False or True</code> é avaliado como <code>True</code>.</li>
+                    <li><strong>Diferença entre elif e else if:</strong> <code>elif</code> é uma palavra-chave única em Python que significa "else if". Em Python, não existe a construção <code>else if</code> como em outras linguagens; usa-se <code>elif</code> para verificar condições adicionais após um <code>if</code>.</li>
+                    <li><strong>Verificar valor em intervalo:</strong> Você pode usar comparações encadeadas. Por exemplo: <code>0 <= x <= 10</code> verifica se x está entre 0 e 10 (inclusive).</li>
+                    <li><strong>Estrutura condicional aninhada:</strong> É uma estrutura condicional dentro de outra estrutura condicional. Ocorre quando você tem um <code>if</code>, <code>elif</code> ou <code>else</code> dentro de outro bloco <code>if</code>, <code>elif</code> ou <code>else</code>.</li>
+                    <li><strong>Verificar mesmo objeto:</strong> O operador <code>is</code> verifica se duas variáveis apontam para o mesmo objeto em memória.</li>
+                    <li><strong>Simplificar estruturas aninhadas:</strong> Você pode simplificar estruturas condicionais aninhadas usando operadores lógicos para combinar condições, usando expressões condicionais (operador ternário), refatorando o código em funções menores, ou usando estruturas de dados como dicionários para mapear condições a ações.</li>
+                </ol>
+            </div>
+            
+            <div class="assessment">
+                <h4>Projeto Prático</h4>
+                <p>Desenvolva um script Python que implemente um sistema de monitoramento de rede básico. O script deve:</p>
+                
+                <ol>
+                    <li>Ler uma lista de dispositivos de rede (nome, IP, tipo, importância) de um arquivo ou definida no código</li>
+                    <li>Verificar a conectividade de cada dispositivo (pode simular isso para fins do exercício)</li>
+                    <li>Implementar uma lógica de decisão que determine diferentes ações com base no tipo de dispositivo, sua importância e seu estado atual</li>
+                    <li>Gerar alertas com diferentes níveis de severidade dependendo da situação</li>
+                    <li>Produzir um relatório resumido do estado da rede</li>
+                </ol>
+                
+                <p>Use estruturas condicionais, operadores lógicos e estruturas aninhadas conforme necessário para implementar a lógica de decisão. Tente criar um sistema que seja flexível e possa ser facilmente expandido para incluir mais tipos de dispositivos e regras.</p>
+            </div>
+        </section>
+
+        <section id="referencias">
+            <h2>Referências e Recursos Adicionais</h2>
+            
+            <div class="references">
+                <h3>Documentação Oficial</h3>
+                <ul>
+                    <li><a href="https://docs.python.org/3/tutorial/controlflow.html" target="_blank">Tutorial Python: Estruturas de Controle de Fluxo</a></li>
+                    <li><a href="https://docs.python.org/3/library/stdtypes.html#boolean-operations-and-or-not" target="_blank">Operações Booleanas em Python</a></li>
+                    <li><a href="https://docs.python.org/3/reference/expressions.html#comparisons" target="_blank">Expressões de Comparação em Python</a></li>
+                </ul>
+                
+                <h3>Livros Recomendados</h3>
+                <ul>
+                    <li>Eric Matthes - "Python Crash Course" (Capítulo sobre Estruturas Condicionais)</li>
+                    <li>Al Sweigart - "Automate the Boring Stuff with Python" (Capítulo sobre Controle de Fluxo)</li>
+                    <li>Kirk Byers - "Python for Network Engineers" (Seções sobre Tomada de Decisão em Scripts de Rede)</li>
+                </ul>
+                
+                <h3>Recursos Online</h3>
+                <ul>
+                    <li><a href="https://realpython.com/python-conditional-statements/" target="_blank">Real Python: Conditional Statements in Python</a></li>
+                    <li><a href="https://www.w3schools.com/python/python_conditions.asp" target="_blank">W3Schools: Python Conditions</a></li>
+                    <li><a href="https://pynet.twb-tech.com/blog/python/if-statement.html" target="_blank">PyNet: Python If Statement</a></li>
+                </ul>
+                
+                <h3>Recursos Específicos para Redes</h3>
+                <ul>
+                    <li><a href="https://developer.cisco.com/learning/modules/programming-fundamentals/python-part1/step/1" target="_blank">Cisco DevNet: Python Programming for Network Engineers</a></li>
+                    <li><a href="https://www.ciscolive.com/c/dam/r/ciscolive/us/docs/2018/pdf/DEVNET-1695.pdf" target="_blank">Cisco Live: Network Programmability with Python</a></li>
+                    <li><a href="https://github.com/ktbyers/netmiko/tree/develop/examples" target="_blank">Exemplos do Netmiko no GitHub</a></li>
+                </ul>
+            </div>
+        </section>
+        
+        <div class="navigation-buttons">
+            <a href="modulo2.html" class="btn">← Módulo Anterior: Variáveis e Tipos de Dados</a>
+            <a href="modulo4.html" class="btn">Próximo Módulo: Laços de Repetição →</a>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Curso de Python para Profissionais de Redes Cisco. Todos os direitos reservados.</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Módulo 1: Introdução ao Python e Programação - Curso de Python para Redes Cisco</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Módulo 1: Introdução ao Python e Programação</h1>
+        <p>Curso de Python para Profissionais de Redes Cisco</p>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="index.html">Página Inicial</a></li>
+            <li><a href="#introducao">Introdução</a></li>
+            <li><a href="#instalacao">Instalação</a></li>
+            <li><a href="#primeiro-script">Primeiro Script</a></li>
+            <li><a href="#exercicios">Exercícios</a></li>
+            <li><a href="#avaliacao">Avaliação</a></li>
+            <li><a href="#referencias">Referências</a></li>
+            <li><a href="modulo2.html">Próximo Módulo →</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section id="introducao">
+            <h2>O que é Programação e Por que Python?</h2>
+            
+            <p>A programação é a arte de instruir computadores a realizar tarefas específicas através de uma sequência lógica de comandos. É como criar uma receita detalhada que o computador segue passo a passo para atingir um objetivo. No contexto de redes de computadores, a programação permite automatizar tarefas repetitivas, padronizar configurações, monitorar dispositivos e implementar soluções personalizadas para desafios específicos.</p>
+            
+            <p>Python se destaca como uma linguagem ideal para profissionais de redes por várias razões:</p>
+            
+            <ul>
+                <li><strong>Sintaxe clara e legível:</strong> Python foi projetado para ser facilmente compreendido, com uma sintaxe que se assemelha ao inglês cotidiano, reduzindo a curva de aprendizado.</li>
+                <li><strong>Versatilidade:</strong> É uma linguagem de propósito geral que pode ser aplicada em diversos contextos, desde scripts simples até aplicações complexas.</li>
+                <li><strong>Ecossistema rico:</strong> Possui uma vasta biblioteca padrão e inúmeros pacotes de terceiros específicos para redes, como Netmiko, Paramiko, NAPALM e pyATS.</li>
+                <li><strong>Suporte da comunidade:</strong> Conta com uma comunidade ativa de desenvolvedores e engenheiros de rede que compartilham conhecimento e ferramentas.</li>
+                <li><strong>Adoção pela indústria:</strong> Fabricantes como Cisco, Juniper e Arista oferecem APIs e SDKs em Python, facilitando a integração com seus dispositivos.</li>
+            </ul>
+            
+            <h3>História e Evolução do Python</h3>
+            
+            <p>Python foi criado por Guido van Rossum no final dos anos 1980 e lançado em 1991. O nome foi inspirado no grupo de comédia britânico Monty Python, refletindo a intenção de tornar a programação uma atividade divertida e acessível. Ao longo dos anos, Python evoluiu significativamente:</p>
+            
+            <ul>
+                <li><strong>Python 1.0 (1994):</strong> Primeira versão oficial, com recursos como funções lambda e ferramentas de processamento de mapas.</li>
+                <li><strong>Python 2.0 (2000):</strong> Introduziu list comprehensions, garbage collection e suporte a Unicode.</li>
+                <li><strong>Python 3.0 (2008):</strong> Uma revisão importante que quebrou compatibilidade com versões anteriores para corrigir falhas de design fundamentais.</li>
+                <li><strong>Python 3.6+ (2016 em diante):</strong> Versões modernas com recursos como f-strings, type hints e melhorias de desempenho.</li>
+            </ul>
+            
+            <p>Atualmente, Python é consistentemente classificado entre as linguagens de programação mais populares do mundo, com aplicações em automação de redes, ciência de dados, inteligência artificial, desenvolvimento web e muito mais.</p>
+            
+            <h3>Python na Automação de Redes Cisco</h3>
+            
+            <p>No universo das redes Cisco, Python tem se tornado uma ferramenta indispensável para engenheiros e administradores. A Cisco reconheceu essa tendência e desenvolveu várias plataformas e APIs que facilitam a integração com Python:</p>
+            
+            <ul>
+                <li><strong>Cisco DevNet:</strong> Uma plataforma dedicada a desenvolvedores com recursos, documentação e sandboxes para praticar automação de redes.</li>
+                <li><strong>Cisco pyATS:</strong> Um framework de automação de teste desenvolvido em Python para validar configurações e comportamentos de rede.</li>
+                <li><strong>Cisco NX-OS API:</strong> Permite interagir programaticamente com switches Nexus.</li>
+                <li><strong>Cisco IOS-XE RESTCONF/NETCONF:</strong> APIs baseadas em padrões para configuração e monitoramento de dispositivos.</li>
+            </ul>
+            
+            <p>Com Python, profissionais de redes Cisco podem:</p>
+            
+            <ul>
+                <li>Automatizar a configuração de múltiplos dispositivos simultaneamente</li>
+                <li>Coletar e analisar dados de desempenho de rede</li>
+                <li>Implementar sistemas de backup e restauração de configurações</li>
+                <li>Criar ferramentas personalizadas para troubleshooting</li>
+                <li>Integrar sistemas de rede com outras plataformas e serviços</li>
+            </ul>
+            
+            <div class="note">
+                <h4>Nota:</h4>
+                <p>Mesmo que você não tenha experiência prévia em programação, este curso foi projetado para guiá-lo desde os conceitos básicos até aplicações avançadas em redes Cisco. O importante é praticar regularmente e aplicar os conceitos em cenários reais.</p>
+            </div>
+        </section>
+
+        <section id="instalacao">
+            <h2>Instalação do Python</h2>
+            
+            <p>Antes de começar a programar, precisamos instalar o Python em seu sistema. O processo varia dependendo do sistema operacional que você utiliza. Vamos cobrir os passos para Windows e Linux, que são os ambientes mais comuns para profissionais de redes.</p>
+            
+            <h3>Instalação no Windows</h3>
+            
+            <p>No Windows, o método mais simples é utilizar o instalador oficial:</p>
+            
+            <ol>
+                <li>Acesse o site oficial do Python em <a href="https://www.python.org/downloads/" target="_blank">https://www.python.org/downloads/</a></li>
+                <li>Clique no botão "Download Python" para a versão mais recente (recomendamos Python 3.8 ou superior)</li>
+                <li>Execute o instalador baixado</li>
+                <li>Importante: Marque a opção "Add Python to PATH" antes de prosseguir</li>
+                <li>Clique em "Install Now" para uma instalação padrão ou "Customize installation" para opções avançadas</li>
+                <li>Aguarde a conclusão da instalação</li>
+            </ol>
+            
+            <p>Para verificar se a instalação foi bem-sucedida, abra o Prompt de Comando (cmd) e digite:</p>
+            
+            <pre><code>python --version</code></pre>
+            
+            <p>Você deverá ver a versão do Python instalada, como "Python 3.10.0".</p>
+            
+            <h3>Instalação no Linux</h3>
+            
+            <p>A maioria das distribuições Linux já vem com Python pré-instalado. No entanto, pode ser uma versão mais antiga. Para instalar a versão mais recente:</p>
+            
+            <h4>Ubuntu/Debian:</h4>
+            
+            <pre><code>sudo apt update
+sudo apt install python3 python3-pip</code></pre>
+            
+            <h4>CentOS/RHEL:</h4>
+            
+            <pre><code>sudo yum install python3 python3-pip</code></pre>
+            
+            <h4>Fedora:</h4>
+            
+            <pre><code>sudo dnf install python3 python3-pip</code></pre>
+            
+            <p>Para verificar a instalação no Linux, abra o terminal e digite:</p>
+            
+            <pre><code>python3 --version</code></pre>
+            
+            <h3>Ambientes Virtuais</h3>
+            
+            <p>Uma prática recomendada ao trabalhar com Python é utilizar ambientes virtuais. Eles permitem isolar dependências de projetos diferentes, evitando conflitos entre versões de pacotes. Para criar um ambiente virtual:</p>
+            
+            <h4>Windows:</h4>
+            
+            <pre><code>python -m venv venv
+venv\Scripts\activate</code></pre>
+            
+            <h4>Linux:</h4>
+            
+            <pre><code>python3 -m venv venv
+source venv/bin/activate</code></pre>
+            
+            <p>Quando o ambiente virtual está ativo, você verá o nome do ambiente (geralmente "venv") no início da linha de comando.</p>
+            
+            <h3>Instalação de Pacotes para Automação de Redes</h3>
+            
+            <p>Para trabalhar com automação de redes Cisco, precisaremos instalar alguns pacotes específicos. Com o ambiente virtual ativado, execute:</p>
+            
+            <pre><code>pip install netmiko paramiko pyyaml requests</code></pre>
+            
+            <p>Estes pacotes fornecem as ferramentas básicas para interagir com dispositivos de rede via SSH, processar dados em formato YAML e fazer requisições HTTP para APIs.</p>
+            
+            <div class="note">
+                <h4>Dica para Ambientes Corporativos:</h4>
+                <p>Em ambientes corporativos com restrições de acesso à internet, você pode baixar os pacotes em um computador com acesso e transferi-los para o ambiente restrito. Use <code>pip download</code> para baixar e <code>pip install --no-index --find-links=./</code> para instalar localmente.</p>
+            </div>
+        </section>
+
+        <section id="primeiro-script">
+            <h2>Criando e Executando seu Primeiro Script Python</h2>
+            
+            <p>Agora que temos o Python instalado, vamos criar e executar nosso primeiro script. Este é um passo importante para entender o fluxo básico de desenvolvimento em Python.</p>
+            
+            <h3>Criando um Arquivo Python</h3>
+            
+            <p>Os arquivos Python têm a extensão <code>.py</code>. Você pode criar estes arquivos usando qualquer editor de texto, mas recomendamos utilizar um editor específico para programação, como:</p>
+            
+            <ul>
+                <li><strong>Visual Studio Code:</strong> Editor gratuito e poderoso com excelente suporte para Python</li>
+                <li><strong>PyCharm:</strong> IDE completa para desenvolvimento Python (versão Community é gratuita)</li>
+                <li><strong>Sublime Text:</strong> Editor leve e rápido com suporte a plugins</li>
+                <li><strong>Notepad++:</strong> Alternativa simples para Windows</li>
+            </ul>
+            
+            <p>Para criar seu primeiro script:</p>
+            
+            <ol>
+                <li>Abra seu editor de texto preferido</li>
+                <li>Crie um novo arquivo</li>
+                <li>Salve-o com um nome descritivo e a extensão <code>.py</code>, por exemplo, <code>primeiro_script.py</code></li>
+            </ol>
+            
+            <h3>Escrevendo o Primeiro Script</h3>
+            
+            <p>Vamos criar um script simples que verifica a conectividade com um dispositivo de rede. Copie o código abaixo para seu arquivo:</p>
+            
+            <pre><code>#!/usr/bin/env python3
+# Meu primeiro script Python para verificação de conectividade de rede
+
+import subprocess
+import platform
+
+def verificar_conectividade(host):
+    """
+    Verifica a conectividade com um host usando ping
+    Retorna True se o host estiver acessível, False caso contrário
+    """
+    # Determina o parâmetro correto para contagem de ping baseado no sistema operacional
+    param = "-n" if platform.system().lower() == "windows" else "-c"
+    
+    # Executa o comando ping
+    comando = ["ping", param, "4", host]
+    
+    # Tenta executar o comando e captura o resultado
+    try:
+        resultado = subprocess.call(comando, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        return resultado == 0
+    except Exception as e:
+        print(f"Erro ao executar o ping: {e}")
+        return False
+
+# Endereço IP de um roteador Cisco (substitua pelo IP de um dispositivo real em sua rede)
+ip_roteador = "192.168.1.1"
+
+# Verifica a conectividade
+if verificar_conectividade(ip_roteador):
+    print(f"O dispositivo {ip_roteador} está acessível!")
+else:
+    print(f"Não foi possível alcançar o dispositivo {ip_roteador}.")
+
+# Demonstração de verificação de múltiplos dispositivos
+dispositivos = ["192.168.1.1", "10.0.0.1", "8.8.8.8"]
+print("\nVerificando múltiplos dispositivos:")
+
+for dispositivo in dispositivos:
+    status = "acessível" if verificar_conectividade(dispositivo) else "inacessível"
+    print(f"Dispositivo {dispositivo} está {status}")
+
+print("\nVerificação concluída!")</code></pre>
+            
+            <h3>Executando o Script</h3>
+            
+            <p>Para executar o script que acabamos de criar:</p>
+            
+            <h4>No Windows:</h4>
+            
+            <ol>
+                <li>Abra o Prompt de Comando (cmd)</li>
+                <li>Navegue até o diretório onde salvou o arquivo usando o comando <code>cd</code></li>
+                <li>Execute o script com o comando: <code>python primeiro_script.py</code></li>
+            </ol>
+            
+            <h4>No Linux:</h4>
+            
+            <ol>
+                <li>Abra o Terminal</li>
+                <li>Navegue até o diretório onde salvou o arquivo usando o comando <code>cd</code></li>
+                <li>Torne o script executável (opcional): <code>chmod +x primeiro_script.py</code></li>
+                <li>Execute o script com: <code>python3 primeiro_script.py</code> ou <code>./primeiro_script.py</code> se tornou executável</li>
+            </ol>
+            
+            <h3>Entendendo o Código</h3>
+            
+            <p>Vamos analisar o que cada parte do script faz:</p>
+            
+            <ul>
+                <li><code>#!/usr/bin/env python3</code>: Conhecida como "shebang", esta linha indica ao sistema operacional qual interpretador usar para executar o script (relevante principalmente em sistemas Unix/Linux).</li>
+                <li><code>import subprocess, platform</code>: Importa módulos da biblioteca padrão do Python que usaremos para executar comandos do sistema e detectar o sistema operacional.</li>
+                <li><code>def verificar_conectividade(host):</code>: Define uma função que aceita um parâmetro (o host a ser verificado).</li>
+                <li><code>param = "-n" if platform.system().lower() == "windows" else "-c"</code>: Usa uma expressão condicional para determinar o parâmetro correto do comando ping baseado no sistema operacional.</li>
+                <li><code>subprocess.call()</code>: Executa o comando ping como um processo separado e captura o código de retorno.</li>
+                <li>O loop <code>for</code> no final demonstra como podemos verificar múltiplos dispositivos iterando sobre uma lista.</li>
+            </ul>
+            
+            <p>Este script simples demonstra vários conceitos importantes em Python:</p>
+            
+            <ul>
+                <li>Importação de módulos</li>
+                <li>Definição de funções</li>
+                <li>Estruturas condicionais</li>
+                <li>Tratamento de exceções</li>
+                <li>Loops e iteração sobre listas</li>
+                <li>Interação com o sistema operacional</li>
+            </ul>
+            
+            <div class="note">
+                <h4>Aplicação em Redes Cisco:</h4>
+                <p>Este script básico pode ser o primeiro passo para criar uma ferramenta de monitoramento de rede. Em ambientes Cisco, você poderia expandir este conceito para verificar a disponibilidade de roteadores, switches e outros dispositivos críticos, enviando alertas quando um dispositivo ficar inacessível.</p>
+            </div>
+        </section>
+
+        <section id="exercicios">
+            <h2>Exercícios Práticos</h2>
+            
+            <div class="exercise">
+                <h4>Exercício 1: Verificação de Conectividade Aprimorada</h4>
+                <p>Modifique o script de verificação de conectividade para incluir as seguintes funcionalidades:</p>
+                <ol>
+                    <li>Solicitar ao usuário que informe os endereços IP a serem verificados</li>
+                    <li>Registrar o tempo de resposta de cada dispositivo</li>
+                    <li>Salvar os resultados em um arquivo de texto com data e hora</li>
+                </ol>
+            </div>
+            
+            <div class="solution">
+                <h4>Solução do Exercício 1:</h4>
+                <pre><code>#!/usr/bin/env python3
+# Script aprimorado para verificação de conectividade
+
+import subprocess
+import platform
+import datetime
+import time
+
+def verificar_conectividade(host):
+    """
+    Verifica a conectividade com um host usando ping
+    Retorna uma tupla (acessível, tempo_resposta)
+    """
+    # Determina o parâmetro correto para contagem de ping baseado no sistema operacional
+    param = "-n" if platform.system().lower() == "windows" else "-c"
+    
+    # Registra o tempo inicial
+    tempo_inicial = time.time()
+    
+    # Executa o comando ping
+    comando = ["ping", param, "4", host]
+    
+    # Tenta executar o comando e captura o resultado
+    try:
+        resultado = subprocess.call(comando, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        acessivel = resultado == 0
+    except Exception as e:
+        print(f"Erro ao executar o ping: {e}")
+        acessivel = False
+    
+    # Calcula o tempo decorrido
+    tempo_resposta = time.time() - tempo_inicial
+    
+    return (acessivel, round(tempo_resposta, 2))
+
+# Solicita endereços IP ao usuário
+print("Verificador de Conectividade de Rede")
+print("===================================")
+entrada = input("Digite os endereços IP a verificar (separados por vírgula): ")
+
+# Processa a entrada do usuário
+dispositivos = [ip.strip() for ip in entrada.split(",")]
+
+# Prepara o arquivo de resultados
+data_hora = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+nome_arquivo = f"verificacao_rede_{data_hora}.txt"
+
+# Realiza a verificação e salva os resultados
+with open(nome_arquivo, "w") as arquivo:
+    arquivo.write(f"Relatório de Verificação de Rede - {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
+    arquivo.write("="*50 + "\n\n")
+    
+    print("\nVerificando dispositivos...")
+    
+    for dispositivo in dispositivos:
+        acessivel, tempo = verificar_conectividade(dispositivo)
+        status = "ACESSÍVEL" if acessivel else "INACESSÍVEL"
+        resultado = f"Dispositivo {dispositivo}: {status} (tempo: {tempo}s)"
+        
+        print(resultado)
+        arquivo.write(resultado + "\n")
+    
+    arquivo.write("\nVerificação concluída!")
+
+print(f"\nResultados salvos em {nome_arquivo}")</code></pre>
+            </div>
+            
+            <div class="exercise">
+                <h4>Exercício 2: Informações do Sistema</h4>
+                <p>Crie um script Python que colete e exiba as seguintes informações do sistema:</p>
+                <ol>
+                    <li>Nome do sistema operacional e versão</li>
+                    <li>Nome do host</li>
+                    <li>Endereço IP da máquina</li>
+                    <li>Gateway padrão</li>
+                </ol>
+                <p>Dica: Utilize os módulos <code>platform</code>, <code>socket</code> e <code>subprocess</code>.</p>
+            </div>
+            
+            <div class="solution">
+                <h4>Solução do Exercício 2:</h4>
+                <pre><code>#!/usr/bin/env python3
+# Script para coletar informações do sistema
+
+import platform
+import socket
+import subprocess
+import re
+
+def obter_gateway_padrao():
+    """Obtém o gateway padrão do sistema"""
+    if platform.system().lower() == "windows":
+        # Comando para Windows
+        resultado = subprocess.check_output("ipconfig", text=True)
+        for linha in resultado.split('\n'):
+            if "Gateway Padrão" in linha or "Default Gateway" in linha:
+                match = re.search(r':\s*([^\s]+)', linha)
+                if match:
+                    return match.group(1)
+    else:
+        # Comando para Linux/Unix
+        try:
+            resultado = subprocess.check_output("ip route | grep default", shell=True, text=True)
+            match = re.search(r'default via\s+([^\s]+)', resultado)
+            if match:
+                return match.group(1)
+        except:
+            pass
+    
+    return "Não encontrado"
+
+def obter_endereco_ip():
+    """Obtém o endereço IP principal da máquina"""
+    try:
+        # Cria uma conexão temporária para determinar qual interface está sendo usada
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        s.connect(("8.8.8.8", 80))
+        ip = s.getsockname()[0]
+        s.close()
+        return ip
+    except:
+        return socket.gethostbyname(socket.gethostname())
+
+# Coleta as informações
+sistema_operacional = f"{platform.system()} {platform.release()}"
+nome_host = socket.gethostname()
+endereco_ip = obter_endereco_ip()
+gateway = obter_gateway_padrao()
+
+# Exibe as informações
+print("Informações do Sistema")
+print("=====================")
+print(f"Sistema Operacional: {sistema_operacional}")
+print(f"Nome do Host: {nome_host}")
+print(f"Endereço IP: {endereco_ip}")
+print(f"Gateway Padrão: {gateway}")
+
+print("\nEstas informações são úteis para documentação de rede e troubleshooting.")</code></pre>
+            </div>
+            
+            <div class="exercise">
+                <h4>Exercício 3: Conversor de Unidades de Rede</h4>
+                <p>Crie um script Python que converta entre diferentes unidades de medida comuns em redes:</p>
+                <ol>
+                    <li>Bits para bytes (e vice-versa)</li>
+                    <li>Kilobits para Megabits (e vice-versa)</li>
+                    <li>Megabytes para Gigabytes (e vice-versa)</li>
+                </ol>
+                <p>O script deve solicitar ao usuário a unidade de origem, o valor e a unidade de destino.</p>
+            </div>
+            
+            <div class="solution">
+                <h4>Solução do Exercício 3:</h4>
+                <pre><code>#!/usr/bin/env python3
+# Conversor de unidades de rede
+
+def converter_unidades(valor, unidade_origem, unidade_destino):
+    """
+    Converte entre diferentes unidades de medida de rede
+    Unidades suportadas: bit, byte, Kbit, Mbit, Gbit, KB, MB, GB
+    """
+    # Dicionário com fatores de conversão para bits
+    fatores = {
+        "bit": 1,
+        "byte": 8,
+        "kbit": 1000,
+        "mbit": 1000000,
+        "gbit": 1000000000,
+        "kb": 8000,
+        "mb": 8000000,
+        "gb": 8000000000
+    }
+    
+    # Verifica se as unidades são suportadas
+    unidade_origem = unidade_origem.lower()
+    unidade_destino = unidade_destino.lower()
+    
+    if unidade_origem not in fatores or unidade_destino not in fatores:
+        return "Unidade não suportada"
+    
+    # Converte para bits e depois para a unidade de destino
+    valor_em_bits = valor * fatores[unidade_origem]
+    resultado = valor_em_bits / fatores[unidade_destino]
+    
+    return resultado
+
+# Interface do usuário
+print("Conversor de Unidades de Rede")
+print("============================")
+print("Unidades suportadas: bit, byte, Kbit, Mbit, Gbit, KB, MB, GB")
+
+while True:
+    try:
+        valor = float(input("\nDigite o valor a ser convertido: "))
+        unidade_origem = input("Digite a unidade de origem: ")
+        unidade_destino = input("Digite a unidade de destino: ")
+        
+        resultado = converter_unidades(valor, unidade_origem, unidade_destino)
+        
+        if isinstance(resultado, str):
+            print(f"Erro: {resultado}")
+        else:
+            print(f"\n{valor} {unidade_origem} = {resultado:.6f} {unidade_destino}")
+        
+        continuar = input("\nDeseja fazer outra conversão? (s/n): ")
+        if continuar.lower() != 's':
+            break
+            
+    except ValueError:
+        print("Erro: Digite um valor numérico válido.")
+    except Exception as e:
+        print(f"Erro: {e}")
+
+print("\nObrigado por usar o conversor de unidades!")</code></pre>
+            </div>
+        </section>
+
+        <section id="avaliacao">
+            <h2>Avaliação do Módulo</h2>
+            
+            <div class="assessment">
+                <h4>Quiz de Conhecimentos</h4>
+                <p>Responda às seguintes perguntas para testar seu conhecimento sobre os conceitos apresentados neste módulo:</p>
+                
+                <ol>
+                    <li>Quais são as principais vantagens do Python para automação de redes Cisco?</li>
+                    <li>Qual comando é usado para verificar a versão do Python instalada no sistema?</li>
+                    <li>Por que é recomendado usar ambientes virtuais em projetos Python?</li>
+                    <li>Qual é a extensão padrão dos arquivos Python?</li>
+                    <li>Qual módulo Python é comumente usado para executar comandos do sistema operacional?</li>
+                    <li>Como você pode tornar um script Python executável em sistemas Linux?</li>
+                    <li>Qual é a função da linha "shebang" (#!) no início de um script Python?</li>
+                    <li>Cite pelo menos duas plataformas ou APIs da Cisco que facilitam a integração com Python.</li>
+                    <li>Qual é a diferença entre Python 2 e Python 3?</li>
+                    <li>Como você pode instalar pacotes Python adicionais?</li>
+                </ol>
+            </div>
+            
+            <div class="solution">
+                <h4>Respostas do Quiz:</h4>
+                <ol>
+                    <li><strong>Vantagens do Python para automação de redes Cisco:</strong> Sintaxe clara e legível, vasto ecossistema de bibliotecas específicas para redes (como Netmiko, Paramiko), suporte oficial da Cisco através de plataformas como DevNet e pyATS, grande comunidade de usuários e ampla documentação.</li>
+                    <li><strong>Comando para verificar a versão do Python:</strong> <code>python --version</code> (Windows) ou <code>python3 --version</code> (Linux/Mac).</li>
+                    <li><strong>Importância dos ambientes virtuais:</strong> Permitem isolar dependências de diferentes projetos, evitando conflitos entre versões de pacotes e facilitando a reprodução do ambiente em outros sistemas.</li>
+                    <li><strong>Extensão de arquivos Python:</strong> <code>.py</code></li>
+                    <li><strong>Módulo para executar comandos do sistema:</strong> <code>subprocess</code> (também pode ser mencionado <code>os</code> para funções mais simples)</li>
+                    <li><strong>Tornar script executável no Linux:</strong> Usando o comando <code>chmod +x nome_do_script.py</code></li>
+                    <li><strong>Função da linha shebang:</strong> Indica ao sistema operacional qual interpretador deve ser usado para executar o script quando ele é chamado diretamente como um executável.</li>
+                    <li><strong>Plataformas/APIs Cisco para Python:</strong> Cisco DevNet, pyATS, NX-OS API, IOS-XE RESTCONF/NETCONF, Cisco SDKs, etc.</li>
+                    <li><strong>Diferença entre Python 2 e 3:</strong> Python 3 é uma revisão importante que quebrou compatibilidade com versões anteriores para corrigir falhas de design. Principais diferenças incluem: tratamento de strings (Unicode por padrão em Python 3), divisão de inteiros (/ retorna float em Python 3), sintaxe de print (função em Python 3, instrução em Python 2), entre outras.</li>
+                    <li><strong>Instalação de pacotes Python:</strong> Usando o gerenciador de pacotes pip com o comando <code>pip install nome_do_pacote</code> ou <code>pip3 install nome_do_pacote</code>.</li>
+                </ol>
+            </div>
+            
+            <div class="assessment">
+                <h4>Projeto Prático</h4>
+                <p>Desenvolva um script Python que realize as seguintes tarefas:</p>
+                
+                <ol>
+                    <li>Solicite ao usuário uma lista de endereços IP de dispositivos de rede</li>
+                    <li>Verifique a conectividade com cada dispositivo</li>
+                    <li>Meça o tempo de resposta de cada dispositivo</li>
+                    <li>Classifique os dispositivos em "Bom" (resposta < 50ms), "Aceitável" (resposta entre 50ms e 100ms) e "Ruim" (resposta > 100ms)</li>
+                    <li>Gere um relatório em formato de tabela mostrando os resultados</li>
+                    <li>Salve o relatório em um arquivo de texto</li>
+                </ol>
+                
+                <p>Utilize os conceitos aprendidos neste módulo e pesquise recursos adicionais conforme necessário.</p>
+            </div>
+        </section>
+
+        <section id="referencias">
+            <h2>Referências e Recursos Adicionais</h2>
+            
+            <div class="references">
+                <h3>Documentação Oficial</h3>
+                <ul>
+                    <li><a href="https://www.python.org/doc/" target="_blank">Documentação Oficial do Python</a></li>
+                    <li><a href="https://docs.python.org/3/tutorial/" target="_blank">Tutorial Oficial do Python</a></li>
+                    <li><a href="https://developer.cisco.com/" target="_blank">Cisco DevNet</a></li>
+                </ul>
+                
+                <h3>Livros Recomendados</h3>
+                <ul>
+                    <li>Kirk Byers - "Python for Network Engineers"</li>
+                    <li>Eric Chou - "Mastering Python Networking"</li>
+                    <li>Al Sweigart - "Automate the Boring Stuff with Python"</li>
+                </ul>
+                
+                <h3>Cursos Online</h3>
+                <ul>
+                    <li><a href="https://www.codecademy.com/learn/learn-python-3" target="_blank">Codecademy - Learn Python 3</a></li>
+                    <li><a href="https://www.coursera.org/specializations/python" target="_blank">Coursera - Python for Everybody</a></li>
+                    <li><a href="https://developer.cisco.com/learning/tracks/netprog-basics/" target="_blank">Cisco DevNet - Network Programmability Basics</a></li>
+                </ul>
+                
+                <h3>Ferramentas e Recursos</h3>
+                <ul>
+                    <li><a href="https://code.visualstudio.com/" target="_blank">Visual Studio Code</a> - Editor de código recomendado</li>
+                    <li><a href="https://www.jetbrains.com/pycharm/" target="_blank">PyCharm Community Edition</a> - IDE Python gratuita</li>
+                    <li><a href="https://github.com/ktbyers/netmiko" target="_blank">Netmiko</a> - Biblioteca Python para automação de redes</li>
+                </ul>
+            </div>
+        </section>
+        
+        <div class="navigation-buttons">
+            <a href="index.html" class="btn">← Voltar para o Índice</a>
+            <a href="modulo2.html" class="btn">Próximo Módulo: Variáveis e Tipos de Dados →</a>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Curso de Python para Profissionais de Redes Cisco. Todos os direitos reservados.</p>
+    </footer>
+</body>
+</html>

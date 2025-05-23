@@ -1,0 +1,1414 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Módulo 2: Variáveis e Tipos de Dados - Curso de Python para Redes Cisco</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Módulo 2: Variáveis e Tipos de Dados</h1>
+        <p>Curso de Python para Profissionais de Redes Cisco</p>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="index.html">Página Inicial</a></li>
+            <li><a href="modulo1.html">← Módulo Anterior</a></li>
+            <li><a href="#variaveis">Variáveis</a></li>
+            <li><a href="#tipos-dados">Tipos de Dados</a></li>
+            <li><a href="#operadores">Operadores</a></li>
+            <li><a href="#strings">Strings</a></li>
+            <li><a href="#exercicios">Exercícios</a></li>
+            <li><a href="#avaliacao">Avaliação</a></li>
+            <li><a href="#referencias">Referências</a></li>
+            <li><a href="modulo3.html">Próximo Módulo →</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section id="variaveis">
+            <h2>Variáveis e Atribuição de Valores</h2>
+            
+            <p>No mundo da programação, variáveis são como contêineres que armazenam dados que podem ser modificados durante a execução do programa. Em Python, as variáveis são particularmente flexíveis e fáceis de usar, o que torna a linguagem ideal para iniciantes e profissionais de redes que estão começando a programar.</p>
+            
+            <h3>O que são Variáveis em Python?</h3>
+            
+            <p>Uma variável em Python é simplesmente um nome que referencia um valor armazenado na memória do computador. Diferentemente de algumas outras linguagens de programação, Python não exige que você declare o tipo de uma variável antes de usá-la. O tipo é determinado automaticamente com base no valor atribuído, o que torna o código mais limpo e fácil de escrever.</p>
+            
+            <h3>Criando e Atribuindo Valores a Variáveis</h3>
+            
+            <p>Para criar uma variável em Python, você simplesmente escolhe um nome e atribui um valor a ela usando o operador de atribuição <code>=</code>. Por exemplo:</p>
+            
+            <pre><code># Atribuindo valores a variáveis
+nome_do_roteador = "Router-Core-01"
+endereco_ip = "192.168.1.1"
+numero_de_interfaces = 24
+status_ativo = True
+taxa_de_transferencia = 1.5  # em Gbps</code></pre>
+            
+            <p>Neste exemplo, criamos cinco variáveis diferentes, cada uma armazenando um tipo diferente de dado: uma string para o nome do roteador, outra string para o endereço IP, um número inteiro para a quantidade de interfaces, um booleano para o status e um número de ponto flutuante para a taxa de transferência.</p>
+            
+            <h3>Regras para Nomes de Variáveis</h3>
+            
+            <p>Ao nomear variáveis em Python, é importante seguir algumas regras:</p>
+            
+            <ul>
+                <li>Os nomes podem conter letras, números e o caractere underscore (_)</li>
+                <li>Os nomes não podem começar com um número</li>
+                <li>Os nomes são case-sensitive (ou seja, <code>endereco_ip</code> e <code>Endereco_IP</code> são variáveis diferentes)</li>
+                <li>Os nomes não podem ser palavras reservadas do Python (como <code>if</code>, <code>for</code>, <code>while</code>, etc.)</li>
+            </ul>
+            
+            <h3>Convenções de Nomenclatura</h3>
+            
+            <p>Embora Python não imponha um estilo específico para nomear variáveis, existem convenções amplamente adotadas pela comunidade que tornam o código mais legível e consistente:</p>
+            
+            <ul>
+                <li><strong>snake_case:</strong> Palavras em minúsculas separadas por underscores (ex: <code>endereco_ip_gateway</code>)</li>
+                <li><strong>SCREAMING_SNAKE_CASE:</strong> Usado para constantes (ex: <code>MAX_CONEXOES</code>)</li>
+                <li><strong>CamelCase:</strong> Usado principalmente para nomes de classes (ex: <code>RouterCisco</code>)</li>
+            </ul>
+            
+            <p>Para profissionais de redes, é recomendável adotar nomes descritivos que indiquem claramente o propósito da variável. Por exemplo, <code>ip_roteador_principal</code> é muito mais informativo do que simplesmente <code>ip</code> ou <code>r</code>.</p>
+            
+            <h3>Variáveis Múltiplas</h3>
+            
+            <p>Python permite atribuir valores a múltiplas variáveis em uma única linha, o que pode ser útil para tornar o código mais conciso:</p>
+            
+            <pre><code># Atribuição múltipla
+ip_r1, ip_r2, ip_r3 = "192.168.1.1", "192.168.1.2", "192.168.1.3"
+
+# Atribuindo o mesmo valor a múltiplas variáveis
+porta_ssh = porta_telnet = porta_http = 0</code></pre>
+            
+            <h3>Variáveis em Contexto de Redes</h3>
+            
+            <p>No contexto de redes Cisco, as variáveis são fundamentais para armazenar informações como:</p>
+            
+            <ul>
+                <li>Endereços IP e máscaras de sub-rede</li>
+                <li>Nomes de dispositivos e interfaces</li>
+                <li>Configurações de protocolos</li>
+                <li>Estatísticas de desempenho</li>
+                <li>Credenciais de acesso (em variáveis temporárias)</li>
+            </ul>
+            
+            <p>Por exemplo, ao criar um script para configurar múltiplos switches, você poderia usar variáveis para armazenar as configurações específicas de cada dispositivo:</p>
+            
+            <pre><code># Configurações para um switch Cisco
+switch_hostname = "SW-FLOOR1-01"
+switch_ip = "10.0.1.10"
+switch_mask = "255.255.255.0"
+switch_gateway = "10.0.1.1"
+switch_vlan = 10
+switch_interfaces = ["Gi0/1", "Gi0/2", "Gi0/3", "Gi0/4"]
+switch_is_poe = True</code></pre>
+            
+            <div class="note">
+                <h4>Dica para Profissionais de Redes:</h4>
+                <p>Ao trabalhar com scripts de automação de rede, considere usar dicionários (que veremos no Módulo 6) para agrupar informações relacionadas a um dispositivo específico, em vez de criar múltiplas variáveis individuais.</p>
+            </div>
+        </section>
+
+        <section id="tipos-dados">
+            <h2>Tipos de Dados Básicos em Python</h2>
+            
+            <p>Python possui vários tipos de dados integrados que são essenciais para o desenvolvimento de scripts e aplicações. Compreender esses tipos é fundamental para manipular informações de rede de forma eficiente.</p>
+            
+            <h3>Números: Inteiros (int) e Ponto Flutuante (float)</h3>
+            
+            <p>Os números em Python são divididos principalmente em dois tipos:</p>
+            
+            <ul>
+                <li><strong>Inteiros (int):</strong> Números sem parte decimal, como 1, 100, -10</li>
+                <li><strong>Ponto Flutuante (float):</strong> Números com parte decimal, como 1.5, -0.001, 3.14159</li>
+            </ul>
+            
+            <pre><code># Exemplos de números em Python
+num_vlans = 10                # inteiro
+taxa_erro = 0.0001            # float
+mtu = 1500                    # inteiro
+utilizacao_link = 78.5        # float (percentual)
+temperatura_switch = -5.2     # float negativo</code></pre>
+            
+            <p>Em redes, os inteiros são frequentemente usados para representar contagens, IDs de VLAN, números de porta, enquanto os floats são úteis para métricas como utilização de largura de banda, taxas de erro e latência.</p>
+            
+            <h3>Strings (str)</h3>
+            
+            <p>Strings são sequências de caracteres usadas para representar texto. Em Python, as strings podem ser definidas usando aspas simples (<code>'</code>), aspas duplas (<code>"</code>) ou aspas triplas (<code>'''</code> ou <code>"""</code>) para strings multilinhas.</p>
+            
+            <pre><code># Exemplos de strings em Python
+hostname = "Router-Core-01"
+comando = 'show ip interface brief'
+descricao = """Este é o roteador principal 
+que conecta a rede corporativa 
+à Internet."""
+mac_address = '00:1A:2B:3C:4D:5E'</code></pre>
+            
+            <p>Em automação de redes, as strings são extremamente importantes, pois representam comandos, saídas de dispositivos, nomes de host, endereços MAC, mensagens de log e muito mais.</p>
+            
+            <h3>Booleanos (bool)</h3>
+            
+            <p>O tipo booleano representa valores de verdadeiro (<code>True</code>) ou falso (<code>False</code>). Eles são fundamentais para lógica condicional e tomada de decisões em scripts.</p>
+            
+            <pre><code># Exemplos de booleanos em Python
+interface_ativa = True
+link_redundante = False
+autenticacao_habilitada = True
+porta_bloqueada = False</code></pre>
+            
+            <p>Em scripts de rede, os booleanos são frequentemente usados para representar estados (ativo/inativo), flags de configuração e resultados de verificações.</p>
+            
+            <h3>None (NoneType)</h3>
+            
+            <p>Python tem um tipo especial chamado <code>None</code> que representa a ausência de valor ou um valor nulo. É frequentemente usado para inicializar variáveis que serão atribuídas posteriormente ou para indicar que uma função não retorna nada.</p>
+            
+            <pre><code># Exemplos de uso de None
+resultado_ping = None  # Será atribuído após executar o ping
+config_backup = None   # Será preenchido quando o backup for realizado</code></pre>
+            
+            <h3>Verificando o Tipo de uma Variável</h3>
+            
+            <p>Python fornece a função <code>type()</code> para verificar o tipo de uma variável, o que pode ser útil durante o desenvolvimento e depuração:</p>
+            
+            <pre><code># Verificando tipos de variáveis
+ip = "192.168.1.1"
+mascara = 24
+ativo = True
+
+print(type(ip))       # <class 'str'>
+print(type(mascara))  # <class 'int'>
+print(type(ativo))    # <class 'bool'></code></pre>
+            
+            <h3>Aplicação em Redes: Manipulação de Endereços IP</h3>
+            
+            <p>Um exemplo prático do uso de diferentes tipos de dados em redes é a manipulação de endereços IP. Vamos ver como podemos representar e trabalhar com endereços IP usando os tipos básicos:</p>
+            
+            <pre><code># Representação de endereços IP em diferentes formatos
+ip_string = "192.168.1.1"           # Formato string comum
+ip_octetos = [192, 168, 1, 1]       # Lista de octetos (veremos listas no Módulo 6)
+ip_inteiro = 3232235777             # Representação decimal do endereço IP
+mascara_cidr = 24                   # Notação CIDR (/24)
+mascara_decimal = "255.255.255.0"   # Máscara em notação decimal
+
+# Convertendo entre formatos
+# String para octetos
+octetos = ip_string.split(".")
+octetos_int = [int(octeto) for octeto in octetos]
+print(octetos_int)  # [192, 168, 1, 1]
+
+# Octetos para inteiro
+ip_int = (octetos_int[0] << 24) + (octetos_int[1] << 16) + (octetos_int[2] << 8) + octetos_int[3]
+print(ip_int)  # 3232235777
+
+# Inteiro para string
+primeiro_octeto = (ip_int >> 24) & 0xFF
+segundo_octeto = (ip_int >> 16) & 0xFF
+terceiro_octeto = (ip_int >> 8) & 0xFF
+quarto_octeto = ip_int & 0xFF
+ip_reconstruido = f"{primeiro_octeto}.{segundo_octeto}.{terceiro_octeto}.{quarto_octeto}"
+print(ip_reconstruido)  # 192.168.1.1</code></pre>
+            
+            <p>Este exemplo demonstra como podemos representar e converter endereços IP entre diferentes formatos usando os tipos de dados básicos do Python. Na prática, para manipulações mais complexas de endereços IP, você usaria a biblioteca <code>ipaddress</code> que veremos em módulos futuros.</p>
+        </section>
+
+        <section id="operadores">
+            <h2>Operadores Aritméticos e Lógicos</h2>
+            
+            <p>Os operadores em Python permitem realizar operações com variáveis e valores. Compreender esses operadores é essencial para criar scripts que possam processar e manipular dados de rede de forma eficiente.</p>
+            
+            <h3>Operadores Aritméticos</h3>
+            
+            <p>Os operadores aritméticos são usados para realizar operações matemáticas básicas:</p>
+            
+            <table>
+                <tr>
+                    <th>Operador</th>
+                    <th>Nome</th>
+                    <th>Exemplo</th>
+                    <th>Resultado</th>
+                </tr>
+                <tr>
+                    <td>+</td>
+                    <td>Adição</td>
+                    <td>5 + 3</td>
+                    <td>8</td>
+                </tr>
+                <tr>
+                    <td>-</td>
+                    <td>Subtração</td>
+                    <td>5 - 3</td>
+                    <td>2</td>
+                </tr>
+                <tr>
+                    <td>*</td>
+                    <td>Multiplicação</td>
+                    <td>5 * 3</td>
+                    <td>15</td>
+                </tr>
+                <tr>
+                    <td>/</td>
+                    <td>Divisão</td>
+                    <td>5 / 3</td>
+                    <td>1.6666...</td>
+                </tr>
+                <tr>
+                    <td>//</td>
+                    <td>Divisão inteira</td>
+                    <td>5 // 3</td>
+                    <td>1</td>
+                </tr>
+                <tr>
+                    <td>%</td>
+                    <td>Módulo (resto)</td>
+                    <td>5 % 3</td>
+                    <td>2</td>
+                </tr>
+                <tr>
+                    <td>**</td>
+                    <td>Exponenciação</td>
+                    <td>5 ** 3</td>
+                    <td>125</td>
+                </tr>
+            </table>
+            
+            <p>Exemplos em contexto de redes:</p>
+            
+            <pre><code># Cálculo de sub-redes
+num_hosts = 2 ** (32 - mascara_cidr) - 2
+print(f"Uma rede /{mascara_cidr} suporta {num_hosts} hosts")  # Uma rede /24 suporta 254 hosts
+
+# Cálculo de largura de banda
+largura_banda_mbps = 1000  # 1 Gbps em Mbps
+num_usuarios = 50
+banda_por_usuario = largura_banda_mbps / num_usuarios
+print(f"Cada usuário recebe aproximadamente {banda_por_usuario} Mbps")  # 20.0 Mbps
+
+# Cálculo de tempo de transferência
+tamanho_arquivo_mb = 150
+velocidade_download_mbps = 10
+tempo_segundos = tamanho_arquivo_mb * 8 / velocidade_download_mbps  # Convertendo MB para Mb
+print(f"Tempo estimado de download: {tempo_segundos} segundos")  # 120.0 segundos</code></pre>
+            
+            <h3>Operadores de Atribuição Combinados</h3>
+            
+            <p>Python oferece operadores de atribuição combinados que permitem atualizar o valor de uma variável com base em seu valor atual:</p>
+            
+            <table>
+                <tr>
+                    <th>Operador</th>
+                    <th>Exemplo</th>
+                    <th>Equivalente a</th>
+                </tr>
+                <tr>
+                    <td>+=</td>
+                    <td>x += 5</td>
+                    <td>x = x + 5</td>
+                </tr>
+                <tr>
+                    <td>-=</td>
+                    <td>x -= 5</td>
+                    <td>x = x - 5</td>
+                </tr>
+                <tr>
+                    <td>*=</td>
+                    <td>x *= 5</td>
+                    <td>x = x * 5</td>
+                </tr>
+                <tr>
+                    <td>/=</td>
+                    <td>x /= 5</td>
+                    <td>x = x / 5</td>
+                </tr>
+                <tr>
+                    <td>//=</td>
+                    <td>x //= 5</td>
+                    <td>x = x // 5</td>
+                </tr>
+                <tr>
+                    <td>%=</td>
+                    <td>x %= 5</td>
+                    <td>x = x % 5</td>
+                </tr>
+                <tr>
+                    <td>**=</td>
+                    <td>x **= 5</td>
+                    <td>x = x ** 5</td>
+                </tr>
+            </table>
+            
+            <p>Exemplo em contexto de redes:</p>
+            
+            <pre><code># Contagem de pacotes recebidos
+pacotes_recebidos = 1000
+
+# Recebendo mais pacotes
+pacotes_recebidos += 250  # Agora temos 1250 pacotes
+
+# Perdendo alguns pacotes
+pacotes_recebidos -= 30   # Agora temos 1220 pacotes
+
+# Dobrando o tráfego
+pacotes_recebidos *= 2    # Agora temos 2440 pacotes</code></pre>
+            
+            <h3>Operadores de Comparação</h3>
+            
+            <p>Os operadores de comparação são usados para comparar valores e retornam um resultado booleano (True ou False):</p>
+            
+            <table>
+                <tr>
+                    <th>Operador</th>
+                    <th>Nome</th>
+                    <th>Exemplo</th>
+                    <th>Resultado</th>
+                </tr>
+                <tr>
+                    <td>==</td>
+                    <td>Igual a</td>
+                    <td>5 == 5</td>
+                    <td>True</td>
+                </tr>
+                <tr>
+                    <td>!=</td>
+                    <td>Diferente de</td>
+                    <td>5 != 3</td>
+                    <td>True</td>
+                </tr>
+                <tr>
+                    <td>></td>
+                    <td>Maior que</td>
+                    <td>5 > 3</td>
+                    <td>True</td>
+                </tr>
+                <tr>
+                    <td><</td>
+                    <td>Menor que</td>
+                    <td>5 < 3</td>
+                    <td>False</td>
+                </tr>
+                <tr>
+                    <td>>=</td>
+                    <td>Maior ou igual a</td>
+                    <td>5 >= 5</td>
+                    <td>True</td>
+                </tr>
+                <tr>
+                    <td><=</td>
+                    <td>Menor ou igual a</td>
+                    <td>5 <= 3</td>
+                    <td>False</td>
+                </tr>
+            </table>
+            
+            <p>Exemplos em contexto de redes:</p>
+            
+            <pre><code># Verificando limites de utilização
+utilizacao_cpu = 85
+limite_alerta = 80
+if utilizacao_cpu > limite_alerta:
+    print("ALERTA: Utilização de CPU acima do limite!")
+
+# Verificando status de interface
+status_codigo = 1
+if status_codigo == 1:
+    print("Interface está ativa")
+elif status_codigo == 0:
+    print("Interface está inativa")
+else:
+    print("Status desconhecido")
+
+# Verificando disponibilidade de largura de banda
+largura_banda_disponivel = 500  # Mbps
+largura_banda_necessaria = 700  # Mbps
+if largura_banda_disponivel >= largura_banda_necessaria:
+    print("Largura de banda suficiente")
+else:
+    print("Largura de banda insuficiente")</code></pre>
+            
+            <h3>Operadores Lógicos</h3>
+            
+            <p>Os operadores lógicos são usados para combinar expressões condicionais:</p>
+            
+            <table>
+                <tr>
+                    <th>Operador</th>
+                    <th>Descrição</th>
+                    <th>Exemplo</th>
+                </tr>
+                <tr>
+                    <td>and</td>
+                    <td>Retorna True se ambas as expressões forem verdadeiras</td>
+                    <td>x > 5 and x < 10</td>
+                </tr>
+                <tr>
+                    <td>or</td>
+                    <td>Retorna True se pelo menos uma das expressões for verdadeira</td>
+                    <td>x < 5 or x > 10</td>
+                </tr>
+                <tr>
+                    <td>not</td>
+                    <td>Inverte o resultado, retorna False se o resultado for True</td>
+                    <td>not(x > 5 and x < 10)</td>
+                </tr>
+            </table>
+            
+            <p>Exemplos em contexto de redes:</p>
+            
+            <pre><code># Verificando condições de alerta em um roteador
+cpu_alta = utilizacao_cpu > 80
+memoria_baixa = memoria_disponivel < 500  # MB
+temperatura_alta = temperatura > 60  # °C
+
+if cpu_alta and memoria_baixa:
+    print("ALERTA CRÍTICO: Alta utilização de CPU e pouca memória disponível!")
+elif cpu_alta or temperatura_alta:
+    print("ALERTA: Verificar condições do roteador!")
+elif not (cpu_alta or memoria_baixa or temperatura_alta):
+    print("Roteador operando em condições normais.")</code></pre>
+            
+            <h3>Operadores de Identidade e Associação</h3>
+            
+            <p>Python também possui operadores para verificar identidade e associação:</p>
+            
+            <ul>
+                <li><strong>is</strong>: Retorna True se ambas as variáveis são o mesmo objeto</li>
+                <li><strong>is not</strong>: Retorna True se as variáveis não são o mesmo objeto</li>
+                <li><strong>in</strong>: Retorna True se um valor está presente em uma sequência</li>
+                <li><strong>not in</strong>: Retorna True se um valor não está presente em uma sequência</li>
+            </ul>
+            
+            <p>Exemplos em contexto de redes:</p>
+            
+            <pre><code># Verificando se um endereço IP está em uma lista de IPs permitidos
+ip_cliente = "192.168.1.50"
+ips_permitidos = ["192.168.1.10", "192.168.1.20", "192.168.1.30", "192.168.1.40"]
+
+if ip_cliente in ips_permitidos:
+    print("Acesso permitido")
+else:
+    print("Acesso negado")
+
+# Verificando se uma interface está na lista de interfaces desativadas
+interface = "GigabitEthernet0/1"
+interfaces_desativadas = ["GigabitEthernet0/2", "GigabitEthernet0/3"]
+
+if interface not in interfaces_desativadas:
+    print(f"Interface {interface} está ativa")
+else:
+    print(f"Interface {interface} está desativada")</code></pre>
+            
+            <div class="note">
+                <h4>Dica para Profissionais de Redes:</h4>
+                <p>Os operadores lógicos são fundamentais para criar scripts de automação que tomam decisões baseadas em múltiplas condições, como verificar o estado de vários dispositivos ou interfaces simultaneamente.</p>
+            </div>
+        </section>
+
+        <section id="strings">
+            <h2>Strings e Operações com Strings</h2>
+            
+            <p>As strings são um dos tipos de dados mais importantes em Python, especialmente para automação de redes, onde frequentemente precisamos manipular texto como comandos, saídas de dispositivos e configurações.</p>
+            
+            <h3>Criação de Strings</h3>
+            
+            <p>Como vimos anteriormente, strings em Python podem ser criadas usando aspas simples, duplas ou triplas:</p>
+            
+            <pre><code># Diferentes formas de criar strings
+comando1 = 'show ip interface brief'
+comando2 = "show running-config"
+saida_multilinha = """Interface                  IP-Address      OK? Method Status                Protocol
+GigabitEthernet0/0         192.168.1.1     YES NVRAM  up                    up      
+GigabitEthernet0/1         unassigned      YES NVRAM  administratively down down    
+"""</code></pre>
+            
+            <h3>Concatenação de Strings</h3>
+            
+            <p>Strings podem ser combinadas (concatenadas) usando o operador <code>+</code>:</p>
+            
+            <pre><code># Concatenação de strings
+prefixo = "show ip "
+comando = prefixo + "route"
+print(comando)  # show ip route
+
+# Concatenação com múltiplas strings
+hostname = "Router1"
+interface = "GigabitEthernet0/1"
+comando_config = "interface " + interface + "\n" + "description Conexão para " + hostname
+print(comando_config)
+# interface GigabitEthernet0/1
+# description Conexão para Router1</code></pre>
+            
+            <h3>Repetição de Strings</h3>
+            
+            <p>O operador <code>*</code> pode ser usado para repetir uma string:</p>
+            
+            <pre><code># Repetição de strings
+separador = "-" * 50
+print(separador)  # --------------------------------------------------
+
+# Útil para formatação de saída
+print("CONFIGURAÇÃO DO ROTEADOR")
+print(separador)
+print("Hostname: Router1")
+print("IP: 192.168.1.1")
+print(separador)</code></pre>
+            
+            <h3>Indexação e Fatiamento de Strings</h3>
+            
+            <p>As strings em Python são sequências de caracteres, e cada caractere tem uma posição (índice) começando do 0. Podemos acessar caracteres individuais ou fatias de uma string:</p>
+            
+            <pre><code># Indexação de strings
+ip = "192.168.1.1"
+primeiro_caractere = ip[0]  # '1'
+ultimo_caractere = ip[-1]   # '1' (índices negativos contam a partir do final)
+
+# Fatiamento de strings [início:fim:passo]
+primeiro_octeto = ip[0:3]    # '192'
+segundo_octeto = ip[4:7]     # '168'
+# Ou de forma mais prática:
+octetos = ip.split(".")      # ['192', '168', '1', '1']
+primeiro_octeto = octetos[0]  # '192'</code></pre>
+            
+            <h3>Métodos de Strings</h3>
+            
+            <p>Python oferece muitos métodos úteis para manipular strings:</p>
+            
+            <table>
+                <tr>
+                    <th>Método</th>
+                    <th>Descrição</th>
+                    <th>Exemplo</th>
+                </tr>
+                <tr>
+                    <td>upper()</td>
+                    <td>Converte para maiúsculas</td>
+                    <td>"router".upper() → "ROUTER"</td>
+                </tr>
+                <tr>
+                    <td>lower()</td>
+                    <td>Converte para minúsculas</td>
+                    <td>"ROUTER".lower() → "router"</td>
+                </tr>
+                <tr>
+                    <td>strip()</td>
+                    <td>Remove espaços em branco do início e fim</td>
+                    <td>"  router  ".strip() → "router"</td>
+                </tr>
+                <tr>
+                    <td>replace()</td>
+                    <td>Substitui ocorrências de uma substring</td>
+                    <td>"192.168.1.1".replace(".", ":") → "192:168:1:1"</td>
+                </tr>
+                <tr>
+                    <td>split()</td>
+                    <td>Divide a string em uma lista</td>
+                    <td>"192.168.1.1".split(".") → ["192", "168", "1", "1"]</td>
+                </tr>
+                <tr>
+                    <td>join()</td>
+                    <td>Une elementos de uma lista em uma string</td>
+                    <td>".".join(["192", "168", "1", "1"]) → "192.168.1.1"</td>
+                </tr>
+                <tr>
+                    <td>startswith()</td>
+                    <td>Verifica se a string começa com uma substring</td>
+                    <td>"GigabitEthernet0/1".startswith("Gigabit") → True</td>
+                </tr>
+                <tr>
+                    <td>endswith()</td>
+                    <td>Verifica se a string termina com uma substring</td>
+                    <td>"show ip route".endswith("route") → True</td>
+                </tr>
+                <tr>
+                    <td>find()</td>
+                    <td>Retorna o índice da primeira ocorrência ou -1</td>
+                    <td>"192.168.1.1".find(".") → 3</td>
+                </tr>
+                <tr>
+                    <td>count()</td>
+                    <td>Conta ocorrências de uma substring</td>
+                    <td>"192.168.1.1".count(".") → 3</td>
+                </tr>
+            </table>
+            
+            <p>Exemplos em contexto de redes:</p>
+            
+            <pre><code># Processando saída de um comando
+saida_show = """
+Interface                  IP-Address      OK? Method Status                Protocol
+GigabitEthernet0/0         192.168.1.1     YES NVRAM  up                    up      
+GigabitEthernet0/1         10.0.0.1        YES NVRAM  up                    up      
+GigabitEthernet0/2         unassigned      YES NVRAM  administratively down down    
+"""
+
+# Dividindo a saída em linhas
+linhas = saida_show.strip().split('\n')
+
+# Processando cada linha
+interfaces_ativas = []
+for linha in linhas[2:]:  # Pulando o cabeçalho
+    partes = linha.split()
+    if len(partes) >= 5:
+        interface = partes[0]
+        status = partes[4]
+        if status == "up":
+            interfaces_ativas.append(interface)
+
+print("Interfaces ativas:")
+for interface in interfaces_ativas:
+    print(f"- {interface}")
+
+# Verificando se uma string contém uma substring
+config_line = "ip route 0.0.0.0 0.0.0.0 192.168.1.254"
+if "route" in config_line and "0.0.0.0" in config_line:
+    print("Configuração de rota padrão encontrada")
+
+# Substituindo valores em uma configuração
+template_config = """
+hostname {hostname}
+interface {interface}
+ ip address {ip} {mask}
+ no shutdown
+"""
+
+config_aplicada = template_config.format(
+    hostname="Router-Edge-01",
+    interface="GigabitEthernet0/0",
+    ip="203.0.113.1",
+    mask="255.255.255.0"
+)
+
+print(config_aplicada)</code></pre>
+            
+            <h3>F-strings (Formatted String Literals)</h3>
+            
+            <p>A partir do Python 3.6, as f-strings fornecem uma maneira concisa e conveniente de incorporar expressões dentro de strings:</p>
+            
+            <pre><code># Usando f-strings para formatação
+hostname = "Router1"
+ip = "192.168.1.1"
+mask = "255.255.255.0"
+interface = "GigabitEthernet0/0"
+
+# Formatação tradicional
+config_old = "hostname {}\ninterface {}\n ip address {} {}\n no shutdown".format(hostname, interface, ip, mask)
+
+# Usando f-strings (mais legível)
+config_new = f"""hostname {hostname}
+interface {interface}
+ ip address {ip} {mask}
+ no shutdown"""
+
+print(config_new)
+
+# F-strings também permitem expressões
+num_hosts = 2 ** (32 - 24) - 2  # Para uma máscara /24
+print(f"Uma rede /24 suporta {num_hosts} hosts")
+
+# Formatação de números
+utilizacao = 0.7568
+print(f"Utilização do link: {utilizacao:.2%}")  # Utilização do link: 75.68%</code></pre>
+            
+            <h3>Aplicação em Redes: Parsing de Saída de Comandos</h3>
+            
+            <p>Um caso de uso comum em automação de redes é analisar (parsing) a saída de comandos para extrair informações específicas. Vamos ver um exemplo de como usar operações com strings para isso:</p>
+            
+            <pre><code># Exemplo: Parsing da saída do comando "show ip interface brief"
+saida_comando = """
+Interface                  IP-Address      OK? Method Status                Protocol
+GigabitEthernet0/0         192.168.1.1     YES NVRAM  up                    up      
+GigabitEthernet0/1         10.0.0.1        YES NVRAM  up                    up      
+GigabitEthernet0/2         unassigned      YES NVRAM  administratively down down    
+Loopback0                  172.16.1.1      YES NVRAM  up                    up      
+"""
+
+# Função para extrair informações das interfaces
+def parse_interfaces(output):
+    interfaces = []
+    
+    # Dividir a saída em linhas e remover linhas vazias
+    lines = [line.strip() for line in output.strip().split('\n') if line.strip()]
+    
+    # Pular a linha de cabeçalho
+    for line in lines[1:]:
+        # Dividir a linha em colunas
+        parts = line.split()
+        if len(parts) >= 6:
+            interface_info = {
+                'interface': parts[0],
+                'ip_address': parts[1],
+                'status': parts[4],
+                'protocol': parts[5]
+            }
+            interfaces.append(interface_info)
+    
+    return interfaces
+
+# Processar a saída
+interfaces = parse_interfaces(saida_comando)
+
+# Exibir informações formatadas
+print("Status das Interfaces:")
+print("-" * 50)
+for intf in interfaces:
+    status_icon = "✅" if intf['status'] == "up" else "❌"
+    print(f"{status_icon} {intf['interface']}: {intf['ip_address']} (Status: {intf['status']}, Protocol: {intf['protocol']})")
+
+# Contar interfaces por status
+up_count = sum(1 for intf in interfaces if intf['status'] == "up")
+down_count = len(interfaces) - up_count
+
+print("-" * 50)
+print(f"Total de interfaces: {len(interfaces)}")
+print(f"Interfaces ativas: {up_count}")
+print(f"Interfaces inativas: {down_count}")
+
+# Encontrar interfaces sem endereço IP
+sem_ip = [intf['interface'] for intf in interfaces if intf['ip_address'] == "unassigned"]
+if sem_ip:
+    print("\nInterfaces sem endereço IP:")
+    for intf in sem_ip:
+        print(f"- {intf}")
+</code></pre>
+            
+            <div class="note">
+                <h4>Dica para Profissionais de Redes:</h4>
+                <p>Embora o parsing manual de texto usando operações com strings seja útil para entender os conceitos básicos, em projetos reais de automação de redes, considere usar bibliotecas especializadas como TextFSM ou Genie (parte do pyATS da Cisco) para análise mais robusta de saídas de comandos.</p>
+            </div>
+        </section>
+
+        <section id="conversao">
+            <h2>Conversão entre Tipos de Dados</h2>
+            
+            <p>Em Python, muitas vezes precisamos converter dados de um tipo para outro. Isso é especialmente comum em automação de redes, onde frequentemente recebemos dados em formato de texto (strings) que precisam ser convertidos para outros tipos para processamento.</p>
+            
+            <h3>Funções de Conversão Básicas</h3>
+            
+            <p>Python fornece funções integradas para converter entre os tipos de dados básicos:</p>
+            
+            <ul>
+                <li><code>int()</code>: Converte para inteiro</li>
+                <li><code>float()</code>: Converte para ponto flutuante</li>
+                <li><code>str()</code>: Converte para string</li>
+                <li><code>bool()</code>: Converte para booleano</li>
+                <li><code>list()</code>: Converte para lista</li>
+                <li><code>tuple()</code>: Converte para tupla</li>
+                <li><code>set()</code>: Converte para conjunto</li>
+                <li><code>dict()</code>: Converte para dicionário</li>
+            </ul>
+            
+            <p>Exemplos básicos:</p>
+            
+            <pre><code># Conversão de string para número
+porta_str = "22"
+porta_int = int(porta_str)
+print(porta_int)  # 22 (inteiro)
+
+# Conversão de número para string
+vlan_id = 100
+vlan_str = str(vlan_id)
+print(vlan_str)  # "100" (string)
+
+# Conversão para float
+utilizacao = "75.5"
+utilizacao_float = float(utilizacao)
+print(utilizacao_float)  # 75.5 (float)
+
+# Conversão para booleano
+# Nota: Valores vazios, zero, None são convertidos para False, outros para True
+status_int = 0
+status_bool = bool(status_int)
+print(status_bool)  # False</code></pre>
+            
+            <h3>Conversões em Contexto de Redes</h3>
+            
+            <p>Vamos ver alguns exemplos práticos de conversão de tipos em cenários de rede:</p>
+            
+            <pre><code># Exemplo 1: Processando informações de VLAN
+vlan_config = "vlan 100"
+vlan_id_str = vlan_config.split()[1]  # Extrai "100"
+vlan_id = int(vlan_id_str)  # Converte para inteiro
+print(f"VLAN ID: {vlan_id}, Tipo: {type(vlan_id)}")
+
+# Exemplo 2: Calculando sub-redes
+ip = "192.168.1.0"
+mascara = "/24"
+prefixo = int(mascara.strip("/"))  # Remove "/" e converte para inteiro
+num_hosts = 2 ** (32 - prefixo) - 2
+print(f"Uma rede {mascara} suporta {num_hosts} hosts")
+
+# Exemplo 3: Processando estatísticas de interface
+estatisticas = """
+GigabitEthernet0/1 is up, line protocol is up
+  5 minute input rate 25000 bits/sec, 35 packets/sec
+  5 minute output rate 15000 bits/sec, 20 packets/sec
+"""
+
+# Extraindo taxas de bits
+for linha in estatisticas.strip().split('\n'):
+    if "input rate" in linha:
+        partes = linha.split()
+        taxa_bits = int(partes[3])
+        taxa_pacotes = int(partes[6])
+        print(f"Taxa de entrada: {taxa_bits} bits/s, {taxa_pacotes} pacotes/s")
+    elif "output rate" in linha:
+        partes = linha.split()
+        taxa_bits = int(partes[3])
+        taxa_pacotes = int(partes[6])
+        print(f"Taxa de saída: {taxa_bits} bits/s, {taxa_pacotes} pacotes/s")
+
+# Exemplo 4: Convertendo endereço MAC
+mac_com_pontos = "0000.1111.2222"
+mac_sem_pontos = mac_com_pontos.replace(".", "")
+mac_formatado = ":".join([mac_sem_pontos[i:i+2] for i in range(0, len(mac_sem_pontos), 2)])
+print(f"MAC original: {mac_com_pontos}")
+print(f"MAC formatado: {mac_formatado}")  # 00:00:11:11:22:22</code></pre>
+            
+            <h3>Tratando Erros de Conversão</h3>
+            
+            <p>Nem sempre a conversão entre tipos é possível. Por exemplo, tentar converter uma string que não representa um número para <code>int</code> resultará em um erro. É importante tratar esses casos:</p>
+            
+            <pre><code># Tratando erros de conversão
+def extrair_numero_porta(texto):
+    try:
+        # Tenta extrair e converter o número da porta
+        if "port" in texto.lower():
+            partes = texto.split()
+            for i, parte in enumerate(partes):
+                if parte.lower() == "port" and i < len(partes) - 1:
+                    return int(partes[i+1])
+        return None
+    except ValueError:
+        # Se a conversão falhar, retorna None
+        return None
+
+# Testando a função
+configs = [
+    "interface GigabitEthernet0/1",
+    "switchport access vlan 10",
+    "switchport mode access",
+    "spanning-tree port fast",
+    "service-policy input POLICY-IN",
+    "service-policy output POLICY-OUT",
+    "ip access-group ACL-IN in",
+    "ip access-group ACL-OUT out",
+    "port-security maximum 2",
+    "port-security violation restrict"
+]
+
+for linha in configs:
+    num_porta = extrair_numero_porta(linha)
+    if num_porta is not None:
+        print(f"Número de porta encontrado: {num_porta} na linha: {linha}")
+    else:
+        print(f"Nenhum número de porta encontrado na linha: {linha}")</code></pre>
+            
+            <h3>Conversão entre Sistemas Numéricos</h3>
+            
+            <p>Em redes, às vezes precisamos trabalhar com diferentes sistemas numéricos, como binário, octal e hexadecimal:</p>
+            
+            <pre><code># Conversão entre sistemas numéricos
+# Decimal para binário, octal e hexadecimal
+decimal = 168
+binario = bin(decimal)  # '0b10101000'
+octal = oct(decimal)    # '0o250'
+hexa = hex(decimal)     # '0xa8'
+
+print(f"Decimal: {decimal}")
+print(f"Binário: {binario}")
+print(f"Octal: {octal}")
+print(f"Hexadecimal: {hexa}")
+
+# Removendo prefixos
+binario_sem_prefixo = binario[2:]  # '10101000'
+octal_sem_prefixo = octal[2:]      # '250'
+hexa_sem_prefixo = hexa[2:]        # 'a8'
+
+# Conversão de outros sistemas para decimal
+binario_para_decimal = int('10101000', 2)  # 168
+octal_para_decimal = int('250', 8)         # 168
+hexa_para_decimal = int('a8', 16)          # 168
+
+print(f"Binário para decimal: {binario_para_decimal}")
+print(f"Octal para decimal: {octal_para_decimal}")
+print(f"Hexadecimal para decimal: {hexa_para_decimal}")
+
+# Aplicação: Conversão de endereço IP para binário
+def ip_para_binario(ip):
+    octetos = ip.split('.')
+    octetos_bin = [bin(int(octeto))[2:].zfill(8) for octeto in octetos]
+    return '.'.join(octetos_bin)
+
+ip = "192.168.1.1"
+ip_bin = ip_para_binario(ip)
+print(f"IP: {ip}")
+print(f"IP em binário: {ip_bin}")  # 11000000.10101000.00000001.00000001</code></pre>
+            
+            <div class="note">
+                <h4>Dica para Profissionais de Redes:</h4>
+                <p>A conversão entre sistemas numéricos é particularmente útil ao trabalhar com endereços IP, máscaras de sub-rede e endereços MAC. Compreender como converter entre decimal, binário e hexadecimal facilita o cálculo de sub-redes e a análise de pacotes.</p>
+            </div>
+        </section>
+
+        <section id="exercicios">
+            <h2>Exercícios Práticos</h2>
+            
+            <div class="exercise">
+                <h4>Exercício 1: Calculadora de Sub-redes</h4>
+                <p>Crie um script Python que receba um endereço IP e uma máscara de sub-rede (em notação CIDR, como /24) e calcule as seguintes informações:</p>
+                <ol>
+                    <li>Endereço de rede</li>
+                    <li>Endereço de broadcast</li>
+                    <li>Primeiro endereço IP utilizável</li>
+                    <li>Último endereço IP utilizável</li>
+                    <li>Número total de hosts na sub-rede</li>
+                </ol>
+                <p>Dica: Você precisará converter os endereços IP para binário para realizar os cálculos.</p>
+            </div>
+            
+            <div class="solution">
+                <h4>Solução do Exercício 1:</h4>
+                <pre><code>#!/usr/bin/env python3
+# Calculadora de Sub-redes
+
+def ip_para_binario(ip):
+    """Converte um endereço IP para sua representação binária."""
+    octetos = ip.split('.')
+    octetos_bin = [bin(int(octeto))[2:].zfill(8) for octeto in octetos]
+    return '.'.join(octetos_bin)
+
+def ip_para_decimal(ip_bin):
+    """Converte um endereço IP em binário para decimal."""
+    octetos_bin = ip_bin.split('.')
+    octetos_dec = [str(int(octeto, 2)) for octeto in octetos_bin]
+    return '.'.join(octetos_dec)
+
+def ip_para_inteiro(ip):
+    """Converte um endereço IP para um número inteiro."""
+    octetos = ip.split('.')
+    return (int(octetos[0]) << 24) + (int(octetos[1]) << 16) + (int(octetos[2]) << 8) + int(octetos[3])
+
+def inteiro_para_ip(num):
+    """Converte um número inteiro para um endereço IP."""
+    return f"{(num >> 24) & 0xFF}.{(num >> 16) & 0xFF}.{(num >> 8) & 0xFF}.{num & 0xFF}"
+
+def calcular_sub_rede(ip, mascara):
+    """Calcula informações de sub-rede para um IP e máscara dados."""
+    # Converter máscara CIDR para inteiro
+    prefixo = int(mascara.strip('/'))
+    
+    # Calcular máscara em formato decimal
+    mascara_bits = (0xFFFFFFFF << (32 - prefixo)) & 0xFFFFFFFF
+    mascara_decimal = inteiro_para_ip(mascara_bits)
+    
+    # Converter IP para inteiro
+    ip_int = ip_para_inteiro(ip)
+    
+    # Calcular endereço de rede
+    rede_int = ip_int & mascara_bits
+    rede = inteiro_para_ip(rede_int)
+    
+    # Calcular endereço de broadcast
+    broadcast_int = rede_int | (~mascara_bits & 0xFFFFFFFF)
+    broadcast = inteiro_para_ip(broadcast_int)
+    
+    # Calcular primeiro e último IP utilizáveis
+    primeiro_ip = inteiro_para_ip(rede_int + 1) if prefixo < 31 else rede
+    ultimo_ip = inteiro_para_ip(broadcast_int - 1) if prefixo < 31 else broadcast
+    
+    # Calcular número de hosts
+    num_hosts = 2 ** (32 - prefixo) - 2 if prefixo < 31 else (1 if prefixo == 31 else 0)
+    
+    return {
+        'rede': rede,
+        'broadcast': broadcast,
+        'primeiro_ip': primeiro_ip,
+        'ultimo_ip': ultimo_ip,
+        'num_hosts': num_hosts,
+        'mascara': mascara_decimal,
+        'prefixo': prefixo
+    }
+
+# Interface do usuário
+print("Calculadora de Sub-redes")
+print("========================")
+
+ip = input("Digite o endereço IP (ex: 192.168.1.1): ")
+mascara = input("Digite a máscara em notação CIDR (ex: /24): ")
+
+try:
+    resultado = calcular_sub_rede(ip, mascara)
+    
+    print("\nResultados:")
+    print(f"Endereço IP:           {ip}")
+    print(f"Máscara de Sub-rede:   {resultado['mascara']} ({mascara})")
+    print(f"Endereço de Rede:      {resultado['rede']}")
+    print(f"Endereço de Broadcast: {resultado['broadcast']}")
+    print(f"Primeiro IP Utilizável: {resultado['primeiro_ip']}")
+    print(f"Último IP Utilizável:  {resultado['ultimo_ip']}")
+    print(f"Número de Hosts:       {resultado['num_hosts']}")
+    
+    # Representação binária
+    print("\nRepresentação Binária:")
+    print(f"IP:                    {ip_para_binario(ip)}")
+    print(f"Máscara:               {ip_para_binario(resultado['mascara'])}")
+    print(f"Rede:                  {ip_para_binario(resultado['rede'])}")
+    print(f"Broadcast:             {ip_para_binario(resultado['broadcast'])}")
+    
+except Exception as e:
+    print(f"Erro: {e}")
+    print("Verifique se o endereço IP e a máscara estão no formato correto.")</code></pre>
+            </div>
+            
+            <div class="exercise">
+                <h4>Exercício 2: Conversor de Formatos de Endereço MAC</h4>
+                <p>Crie um script Python que converta endereços MAC entre diferentes formatos:</p>
+                <ol>
+                    <li>Formato Cisco (0000.1111.2222)</li>
+                    <li>Formato com hífens (00-00-11-11-22-22)</li>
+                    <li>Formato com dois pontos (00:00:11:11:22:22)</li>
+                    <li>Formato sem separadores (000011112222)</li>
+                </ol>
+                <p>O script deve aceitar um endereço MAC em qualquer um desses formatos e convertê-lo para os outros formatos.</p>
+            </div>
+            
+            <div class="solution">
+                <h4>Solução do Exercício 2:</h4>
+                <pre><code>#!/usr/bin/env python3
+# Conversor de Formatos de Endereço MAC
+
+def normalizar_mac(mac):
+    """Remove todos os separadores e converte para minúsculas."""
+    return mac.lower().replace(":", "").replace(".", "").replace("-", "")
+
+def validar_mac(mac_normalizado):
+    """Verifica se o MAC normalizado é válido."""
+    # Verifica se tem 12 caracteres hexadecimais
+    if len(mac_normalizado) != 12:
+        return False
+    
+    # Verifica se todos os caracteres são hexadecimais
+    try:
+        int(mac_normalizado, 16)
+        return True
+    except ValueError:
+        return False
+
+def formatar_mac(mac_normalizado, formato):
+    """Formata o MAC normalizado no formato especificado."""
+    if not validar_mac(mac_normalizado):
+        raise ValueError("Endereço MAC inválido")
+    
+    if formato == "cisco":
+        # Formato Cisco: 0000.1111.2222
+        return f"{mac_normalizado[0:4]}.{mac_normalizado[4:8]}.{mac_normalizado[8:12]}"
+    
+    elif formato == "hifen":
+        # Formato com hífens: 00-00-11-11-22-22
+        return "-".join([mac_normalizado[i:i+2] for i in range(0, 12, 2)])
+    
+    elif formato == "colon":
+        # Formato com dois pontos: 00:00:11:11:22:22
+        return ":".join([mac_normalizado[i:i+2] for i in range(0, 12, 2)])
+    
+    elif formato == "sem_separador":
+        # Formato sem separadores: 000011112222
+        return mac_normalizado
+    
+    else:
+        raise ValueError("Formato desconhecido")
+
+# Interface do usuário
+print("Conversor de Formatos de Endereço MAC")
+print("====================================")
+
+mac_input = input("Digite o endereço MAC em qualquer formato: ")
+mac_normalizado = normalizar_mac(mac_input)
+
+try:
+    if validar_mac(mac_normalizado):
+        print("\nEndereço MAC em diferentes formatos:")
+        print(f"Formato Cisco:          {formatar_mac(mac_normalizado, 'cisco')}")
+        print(f"Formato com hífens:     {formatar_mac(mac_normalizado, 'hifen')}")
+        print(f"Formato com dois pontos: {formatar_mac(mac_normalizado, 'colon')}")
+        print(f"Formato sem separadores: {formatar_mac(mac_normalizado, 'sem_separador')}")
+    else:
+        print("Erro: O endereço MAC fornecido é inválido.")
+        print("Um endereço MAC válido deve ter 12 caracteres hexadecimais (0-9, A-F).")
+except Exception as e:
+    print(f"Erro: {e}")</code></pre>
+            </div>
+            
+            <div class="exercise">
+                <h4>Exercício 3: Analisador de Configuração de ACL</h4>
+                <p>Crie um script Python que analise uma configuração de Access Control List (ACL) de um roteador Cisco e extraia as seguintes informações:</p>
+                <ol>
+                    <li>Número ou nome da ACL</li>
+                    <li>Tipo de ACL (standard ou extended)</li>
+                    <li>Número de regras permit e deny</li>
+                    <li>IPs de origem e destino em cada regra</li>
+                    <li>Portas de origem e destino em cada regra (se aplicável)</li>
+                </ol>
+                <p>Use o seguinte exemplo de configuração para testar:</p>
+                <pre>
+ip access-list extended RESTRICT-ACCESS
+ deny tcp any host 192.168.1.100 eq 22
+ deny tcp any host 192.168.1.100 eq 3389
+ permit ip 192.168.1.0 0.0.0.255 any
+ deny ip any any log
+                </pre>
+            </div>
+            
+            <div class="solution">
+                <h4>Solução do Exercício 3:</h4>
+                <pre><code>#!/usr/bin/env python3
+# Analisador de Configuração de ACL
+
+def analisar_acl(config):
+    """Analisa uma configuração de ACL e extrai informações relevantes."""
+    linhas = config.strip().split('\n')
+    
+    # Inicializar variáveis
+    acl_info = {
+        'nome': None,
+        'tipo': None,
+        'regras': [],
+        'count_permit': 0,
+        'count_deny': 0
+    }
+    
+    # Extrair nome e tipo da ACL
+    if linhas and 'access-list' in linhas[0]:
+        partes = linhas[0].split()
+        if len(partes) >= 3:
+            acl_info['nome'] = partes[2]
+            if 'extended' in linhas[0]:
+                acl_info['tipo'] = 'extended'
+            else:
+                acl_info['tipo'] = 'standard'
+    
+    # Analisar cada regra
+    for linha in linhas[1:]:
+        linha = linha.strip()
+        if not linha:
+            continue
+        
+        partes = linha.split()
+        if len(partes) < 2:
+            continue
+        
+        acao = partes[0]
+        protocolo = partes[1] if len(partes) > 1 else None
+        
+        regra = {
+            'acao': acao,
+            'protocolo': protocolo,
+            'origem': None,
+            'destino': None,
+            'porta_origem': None,
+            'porta_destino': None,
+            'log': 'log' in linha
+        }
+        
+        # Contar ações
+        if acao == 'permit':
+            acl_info['count_permit'] += 1
+        elif acao == 'deny':
+            acl_info['count_deny'] += 1
+        
+        # Extrair origem e destino
+        idx = 2
+        if idx < len(partes):
+            if partes[idx] == 'any':
+                regra['origem'] = 'any'
+                idx += 1
+            elif partes[idx] == 'host' and idx + 1 < len(partes):
+                regra['origem'] = partes[idx + 1]
+                idx += 2
+            elif idx + 1 < len(partes) and '.' in partes[idx]:
+                # Formato IP com wildcard
+                regra['origem'] = f"{partes[idx]} {partes[idx + 1]}"
+                idx += 2
+        
+        # Extrair destino (para ACLs extended)
+        if acl_info['tipo'] == 'extended' and idx < len(partes):
+            if partes[idx] == 'any':
+                regra['destino'] = 'any'
+                idx += 1
+            elif partes[idx] == 'host' and idx + 1 < len(partes):
+                regra['destino'] = partes[idx + 1]
+                idx += 2
+            elif idx + 1 < len(partes) and '.' in partes[idx]:
+                # Formato IP com wildcard
+                regra['destino'] = f"{partes[idx]} {partes[idx + 1]}"
+                idx += 2
+        
+        # Extrair portas
+        while idx < len(partes):
+            if partes[idx] == 'eq' and idx + 1 < len(partes):
+                # A porta pode ser para origem ou destino, dependendo da posição
+                if regra['porta_destino'] is None and regra['destino'] is not None:
+                    regra['porta_destino'] = partes[idx + 1]
+                else:
+                    regra['porta_origem'] = partes[idx + 1]
+                idx += 2
+            else:
+                idx += 1
+        
+        acl_info['regras'].append(regra)
+    
+    return acl_info
+
+# Configuração de exemplo
+config_acl = """ip access-list extended RESTRICT-ACCESS
+ deny tcp any host 192.168.1.100 eq 22
+ deny tcp any host 192.168.1.100 eq 3389
+ permit ip 192.168.1.0 0.0.0.255 any
+ deny ip any any log"""
+
+# Analisar a configuração
+resultado = analisar_acl(config_acl)
+
+# Exibir resultados
+print("Análise de ACL")
+print("=============")
+print(f"Nome da ACL: {resultado['nome']}")
+print(f"Tipo: {resultado['tipo']}")
+print(f"Total de regras: {len(resultado['regras'])}")
+print(f"Regras permit: {resultado['count_permit']}")
+print(f"Regras deny: {resultado['count_deny']}")
+
+print("\nDetalhes das Regras:")
+for i, regra in enumerate(resultado['regras'], 1):
+    print(f"\nRegra {i}:")
+    print(f"  Ação: {regra['acao']}")
+    print(f"  Protocolo: {regra['protocolo']}")
+    print(f"  Origem: {regra['origem']}")
+    print(f"  Destino: {regra['destino']}")
+    
+    if regra['porta_origem']:
+        print(f"  Porta de Origem: {regra['porta_origem']}")
+    
+    if regra['porta_destino']:
+        print(f"  Porta de Destino: {regra['porta_destino']}")
+    
+    if regra['log']:
+        print("  Log: Habilitado")
+
+# Resumo de segurança
+print("\nResumo de Segurança:")
+hosts_restritos = set()
+for regra in resultado['regras']:
+    if regra['acao'] == 'deny' and regra['destino'] and regra['destino'].startswith('host'):
+        hosts_restritos.add(regra['destino'].split()[-1])
+
+print(f"Hosts com acesso restrito: {', '.join(hosts_restritos) if hosts_restritos else 'Nenhum'}")
+
+# Verificar se há uma regra de negação no final
+ultima_regra = resultado['regras'][-1] if resultado['regras'] else None
+if ultima_regra and ultima_regra['acao'] == 'deny' and ultima_regra['origem'] == 'any' and ultima_regra['destino'] == 'any':
+    print("A ACL tem uma regra de negação implícita no final (deny any any).")
+else:
+    print("AVISO: A ACL não tem uma regra de negação implícita no final.")</code></pre>
+            </div>
+        </section>
+
+        <section id="avaliacao">
+            <h2>Avaliação do Módulo</h2>
+            
+            <div class="assessment">
+                <h4>Quiz de Conhecimentos</h4>
+                <p>Responda às seguintes perguntas para testar seu conhecimento sobre os conceitos apresentados neste módulo:</p>
+                
+                <ol>
+                    <li>Quais são os quatro tipos de dados básicos em Python?</li>
+                    <li>Como você declara uma variável em Python?</li>
+                    <li>Qual é a diferença entre <code>==</code> e <code>=</code> em Python?</li>
+                    <li>Como você converte uma string para um número inteiro em Python?</li>
+                    <li>O que são f-strings e como elas são usadas?</li>
+                    <li>Qual método de string é usado para dividir uma string em uma lista?</li>
+                    <li>Como você pode verificar o tipo de uma variável em Python?</li>
+                    <li>Qual operador é usado para calcular o resto da divisão?</li>
+                    <li>Como você pode concatenar duas strings em Python?</li>
+                    <li>Qual é a diferença entre <code>and</code> e <code>or</code> em expressões lógicas?</li>
+                </ol>
+            </div>
+            
+            <div class="solution">
+                <h4>Respostas do Quiz:</h4>
+                <ol>
+                    <li><strong>Quatro tipos de dados básicos:</strong> Inteiros (int), Ponto Flutuante (float), Strings (str) e Booleanos (bool).</li>
+                    <li><strong>Declaração de variável:</strong> Em Python, você declara uma variável simplesmente atribuindo um valor a ela usando o operador <code>=</code>. Por exemplo: <code>nome = "Router1"</code>.</li>
+                    <li><strong>Diferença entre == e =:</strong> <code>=</code> é o operador de atribuição, usado para atribuir um valor a uma variável. <code>==</code> é o operador de comparação, usado para verificar se dois valores são iguais.</li>
+                    <li><strong>Conversão de string para inteiro:</strong> Usando a função <code>int()</code>. Por exemplo: <code>numero = int("123")</code>.</li>
+                    <li><strong>F-strings:</strong> F-strings (formatted string literals) são strings precedidas por 'f' ou 'F' que permitem incluir expressões dentro de chaves {}. Elas são usadas para formatar strings de maneira mais legível. Exemplo: <code>f"O roteador {hostname} tem o IP {ip}"</code>.</li>
+                    <li><strong>Método para dividir string:</strong> O método <code>split()</code>. Por exemplo: <code>partes = "192.168.1.1".split(".")</code> resultará em <code>["192", "168", "1", "1"]</code>.</li>
+                    <li><strong>Verificar tipo de variável:</strong> Usando a função <code>type()</code>. Por exemplo: <code>type(variavel)</code>.</li>
+                    <li><strong>Operador de resto:</strong> O operador <code>%</code> (módulo). Por exemplo: <code>5 % 2</code> resulta em <code>1</code>.</li>
+                    <li><strong>Concatenação de strings:</strong> Usando o operador <code>+</code>. Por exemplo: <code>"Hello" + " " + "World"</code> resulta em <code>"Hello World"</code>.</li>
+                    <li><strong>Diferença entre and e or:</strong> <code>and</code> retorna True apenas se ambas as expressões forem verdadeiras. <code>or</code> retorna True se pelo menos uma das expressões for verdadeira.</li>
+                </ol>
+            </div>
+            
+            <div class="assessment">
+                <h4>Projeto Prático</h4>
+                <p>Desenvolva um script Python que realize as seguintes tarefas:</p>
+                
+                <ol>
+                    <li>Solicite ao usuário informações sobre dispositivos de rede (nome, modelo, endereço IP, máscara, gateway)</li>
+                    <li>Valide os dados inseridos (por exemplo, verificar se o IP está no formato correto)</li>
+                    <li>Calcule e exiba informações adicionais sobre cada dispositivo (como endereço de rede, broadcast, etc.)</li>
+                    <li>Formate e exiba um relatório com todas as informações coletadas e calculadas</li>
+                    <li>Salve o relatório em um arquivo de texto</li>
+                </ol>
+                
+                <p>O script deve utilizar variáveis, diferentes tipos de dados, operadores e conversões entre tipos conforme necessário. Utilize os conceitos aprendidos neste módulo e pesquise recursos adicionais conforme necessário.</p>
+            </div>
+        </section>
+
+        <section id="referencias">
+            <h2>Referências e Recursos Adicionais</h2>
+            
+            <div class="references">
+                <h3>Documentação Oficial</h3>
+                <ul>
+                    <li><a href="https://docs.python.org/3/tutorial/introduction.html" target="_blank">Tutorial Python: Introdução a Python</a></li>
+                    <li><a href="https://docs.python.org/3/library/stdtypes.html" target="_blank">Tipos Padrão do Python</a></li>
+                    <li><a href="https://docs.python.org/3/library/functions.html" target="_blank">Funções Integradas do Python</a></li>
+                </ul>
+                
+                <h3>Livros Recomendados</h3>
+                <ul>
+                    <li>Eric Matthes - "Python Crash Course"</li>
+                    <li>Al Sweigart - "Automate the Boring Stuff with Python"</li>
+                    <li>Kirk Byers - "Python for Network Engineers"</li>
+                </ul>
+                
+                <h3>Recursos Online</h3>
+                <ul>
+                    <li><a href="https://realpython.com/python-data-types/" target="_blank">Real Python: Python Data Types</a></li>
+                    <li><a href="https://www.w3schools.com/python/python_variables.asp" target="_blank">W3Schools: Python Variables</a></li>
+                    <li><a href="https://pynet.twb-tech.com/blog/python/python-strings.html" target="_blank">PyNet: Working with Python Strings</a></li>
+                </ul>
+                
+                <h3>Ferramentas e Bibliotecas</h3>
+                <ul>
+                    <li><a href="https://docs.python.org/3/library/ipaddress.html" target="_blank">ipaddress</a> - Módulo para manipulação de endereços IP</li>
+                    <li><a href="https://github.com/ktbyers/netmiko" target="_blank">Netmiko</a> - Biblioteca para automação de redes</li>
+                    <li><a href="https://pypi.org/project/mac-vendor-lookup/" target="_blank">mac-vendor-lookup</a> - Biblioteca para identificar fabricantes a partir de endereços MAC</li>
+                </ul>
+            </div>
+        </section>
+        
+        <div class="navigation-buttons">
+            <a href="modulo1.html" class="btn">← Módulo Anterior: Introdução ao Python</a>
+            <a href="modulo3.html" class="btn">Próximo Módulo: Estruturas Condicionais →</a>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Curso de Python para Profissionais de Redes Cisco. Todos os direitos reservados.</p>
+    </footer>
+</body>
+</html>
